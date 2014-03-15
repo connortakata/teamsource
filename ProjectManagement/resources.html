@@ -94,7 +94,7 @@
 					<td style="text-align:right">12:28pm</td>
 					<td style="text-align:right">121kb</td>
 					<td style="text-align:right">
-					<button type="button" class="btn btn-default">Download</button>
+						<button id="btnDownload" type="button" class="btn btn-default" onclick="btnDownloadClick()">Download</button>
 					</td>
 				</tr>
 			</table>
@@ -107,6 +107,10 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/docs.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>    <script>
+    	function btnDownloadClick(){
+    		alert("File has Downloaded");
+    	}
+    </script> 
   </body>
 </html>
