@@ -1,0 +1,46 @@
+﻿.LeftPanel{
+	position:absolute;
+	top:50px;
+	left:10%;
+	width:50%;
+	height:700px;
+	background-color:#DFF5FF
+}
+.RightPanel{
+	position:absolute;
+	top:50px;
+	left:60%;
+	width:30%;
+	height:700px;
+	background-color:#DFF5FF
+}
+.LeftPanelColor{
+	position:absolute;
+	top:50px;
+	left:50%;
+	width:10%;
+	height:100%;
+	background-color:#DFF5FF
+}
+.BottomPanel{
+	position:absolute;
+	top:750px;
+	left:20%
+}
+.TextboxSize{
+	width:100%;
+	margin-left:25%;
+}
+.rowSpaces{
+	height:10px;
+}
+.contentCurve{
+	border-bottom:1px solid #ccc;
+	font-size:1px;
+	height:8px;
+	margin-bottom:8px;
+	position:absolute;
+	top:750px;
+	left:20%
+
+}
