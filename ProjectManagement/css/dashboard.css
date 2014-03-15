@@ -79,6 +79,17 @@ body {
   margin-top: 0;
 }
 
+.well {
+  min-height: 80%;
+  height: 80%;
+}
+
+div.well {
+  float:left;
+  width:50%;
+
+}
+
 
 /*
  * Placeholder dashboard ideas
