@@ -49,9 +49,9 @@
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>
+          </div>
         </div>
       </div>
-    </div>
 
     <div class="container-fluid">
       <div class="row">
@@ -63,19 +63,54 @@
             <li class="active"><a href="tasks.html">Task</a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
-          <div align="left" style="padding-bottom:10px">
+        </div>
+
+        <div align="left" style="display:table; margin:0 auto; padding-bottom:10px">
             <a href="add-task.html" rel="#overlay" stype="text-decoration:none">
               <button type="button" class="btn btn-default btn-med">
                 <span class="glyphicon glyphicon-plus"></span> Add Task
               </button>
             </a>
           <button type="button" class="btn btn-default btn-med">
-            <span class="glyphicon glyphicon-remove"></span> Remove Task
+            <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
           </button>
-          </div>
-          <div style="display:table; width:100%" class="well"> Lists of Tasks appear here
+        </div>
+
+          <div style="display:table; margin:0 auto; width:60%" class="well">
+		  <div class="list-group">
+		    <a href="#" class="list-group-item">
+		    	<h4 class="list-group-item-heading">
+		    	<table width="100%">
+		    		<td><input type="checkbox">  Task 1</td>
+		    		<td style="text-align:center;">Due Date: 03/16/2014</td>
+		    		<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-down"></span></td>
+		    	</table>
+		    	</h4>
+		    </a>
+		    <a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">
+				<table width="100%">
+					<td><input type="checkbox">  Task 2</td>
+					<td style="text-align:center;">Due Date: 03/16/2014</td>
+					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-up"></span></td>
+				</table>
+				</h4>
+		    </a>
+		    <a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">
+				<table width="100%">
+					<td><input type="checkbox">  Task 3</td>
+					<td style="text-align:center;">Due Date: 03/16/2014</td>
+					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-exclamation-sign"></span></td>
+				</table>
+				</h4>
+		    </a>
+		  </div>
+		</div>
+
           </div>
 
         </div>
