@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html ng-app lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.2/angular.min.js"></script>
+    <script src="http://backbonejs.org/backbone-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -70,7 +74,7 @@
            <div class="panel panel-default">
            <!-- Default panel contents -->
             <div class="panel-heading"><b>Group Chat:</b></div>
-              <div class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
+              <div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
                 <p><b>Drew:</b> Hey guys, the project is coming along great</p>        <!--Temporary hardcode for chat entries-->
                 <p><b>Connor:</b> Yeah man,</p>
                 <p><b>Daniel:</b> Shut up</p>
@@ -79,8 +83,8 @@
             </div>
 
           <div class="talk">
-            <input type="text" style="width:80%" placeholder="Type Your Message Here...">
-            <button style="margin-left: 20px;" align="right" type="button" class="btn btn-submit">Submit</button>
+            <input id="GrpChatTxtInput" type="text" style="width:80%" placeholder="Type Your Message Here...">
+            <button id="GrpChatbutton" style="margin-left: 20px;" align="right" type="button" class="btn btn-submit">Submit</button>
           </div>
 
         </div>
@@ -102,10 +106,31 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.2/angular.min.js"></script>
-    <script src="http://backbonejs.org/backbone-min.js"></script>
+    <script>
+    /* 	this a prototype of how the javascript functions are going to work 
+     	this currently uses firebase as a way to track the chat, 
+    	which will only work for our chat for our group
+    */
+
+    var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com');
+      $('#GrpChatbutton').click(function () {
+          var name = "Joe"
+          var text = $('#GrpChatTxtInput').val();
+          myDataRef.push({name: name, text: text});
+          $('#GrpChatTxtInput').val('');
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+      });
+      function displayChatMessage(name, text) {
+        $('<p/>').text(text).prepend($('<b/>').text(name+': ')).appendTo($('#ChatBox'));
+        $('#ChatBox')[0].scrollTop = $('#ChatBox')[0].scrollHeight;
+      };
+    </script>
+    
   </body>
 </html>
