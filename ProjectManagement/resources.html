@@ -8,6 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+    <script src="js/angular.min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/firebase.js"></script>
+
 
     <title>Dashboard Template for Bootstrap</title>
 
@@ -22,8 +27,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
     <![endif]-->
   </head>
 
@@ -71,11 +76,10 @@
 	  <div style="display:table; margin:0 250px; float:none; width:40%" class="well">
 		<div class="panel panel-default">
 		<!-- Default panel contents -->
-		<div class="panel-heading">Files for team &lsaquo;team&rsaquo;</div>
-			<div class="panel-body">
+		<div class="panel-heading">
 			<table>
 				<tr>
-					<td style="width:70%"></td>
+					<td style="width:70%">Files for team &lsaquo;team&rsaquo;</td>
 					<td style="width:25%"></td>
 					<td style="width:5%"></td>
 					<td style="width:10%;">
@@ -83,13 +87,10 @@
 					</td>
 				</tr>
 			</table>
-				
-				
+		</div>
+			<div class="panel-body">				
+				Your Documents
 			</div>
-			<div id="pop-up" style="display:none;">
-			
-			</div>
-
 			<!-- Table -->
 			<table class="table">
 				<tr>
@@ -116,7 +117,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>    <script>
     	function btnDownloadClick(){
