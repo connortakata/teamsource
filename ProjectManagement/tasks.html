@@ -27,6 +27,34 @@
   </head>
 
   <body>
+  	<div id="pop-up" style="display:none; position:fixed; top:150px; left:250px; width:100%">
+		<div class="well">
+			<div class="panel panel-primary" >
+			  <div class="panel-heading">
+				<input type="text" class="form-control" placeholder="Task Title">			    
+			  </div>
+			  <div class="panel-body">
+		
+			    Task Issued By: Daniel<br><br>
+			    Issued on: 3/15/2014 at 1:52:00pm<br>
+			    Finish By: 3/16/2014<br><br>
+			    Issued To: Connor, Drew, Joe, Daniel<br><br>
+			    Task Description: <br>
+			    <div class="panel-info">
+			    	<textarea rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
+			    </div>
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-ok"></span> Complete</button>
+				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				</div>
+		
+			  </div>
+			</div>
+			</div>
+
+		</div>
+
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -67,19 +95,17 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
         </div>
-
-        <div align="left" style="display:table; margin:0 auto; padding-bottom:10px">
-            <a href="add-task.html" rel="#overlay" stype="text-decoration:none">
-              <button type="button" class="btn btn-default btn-med">
+        <div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
+            <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
+              <button type="button" class="btn btn-default btn-med" onclick="DisplayPopup()">
                 <span class="glyphicon glyphicon-plus"></span> Add Task
               </button>
-            </a>
+            <!--</a>-->
           <button type="button" class="btn btn-default btn-med">
             <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
           </button>
         </div>
-
-          <div style="display:table; margin:0 auto; float:none; width:60%" class="well">
+		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  <div class="list-group">
 		    <a href="#" class="list-group-item">
 		    	<h4 class="list-group-item-heading">
@@ -114,14 +140,24 @@
           </div>
 
         </div>
-      </div>
-    </div>
-
+     
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
+    <script>
+    	function DisplayPopup(){
+    		$("#pop-up").show();
+    		$("#mainContainer").hide();
+    		$("#mainButtons").hide();
+    	}
+    	function HidePopup(){
+    		$("#pop-up").hide();
+    		$("#mainContainer").show();
+    		$("#mainButtons").show();
+    	}
+    </script>
   </body>
 </html>
