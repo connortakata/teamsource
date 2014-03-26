@@ -43,7 +43,7 @@
 			    Task Issued By: Daniel<br><br>
 			    Issued on: 3/15/2014 at 1:52:00pm<br>
 			    Finish By: 3/16/2014<br><br>
-			    Issued To: Connor, Drew, Joe, Daniel<br><br>
+			    Issued To:<label id="IssuedTo"></label><br><br>
 			    Task Description: <br>
 			    <div class="panel-info">
 			    	<textarea rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
@@ -164,5 +164,22 @@
     		$("#mainButtons").show();
     	}
     </script>
+    <script>
+    /* 	this a prototype of how the javascript functions are going to work 
+     	this currently uses firebase as a way to track the chat, 
+    	which will only work for our chat for our group.
+    	This will be in place till we have a database in place.
+    */
+
+    	var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/users');
+    	
+    	myDataRef.on('child_added', function(snapshot){
+    		var data = snapshot.val();
+    		data += " ";
+    		document.getElementById("IssuedTo").innerHTML += data;
+       	});
+    	
+    </script>
+
   </body>
 </html>
