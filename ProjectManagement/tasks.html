@@ -31,19 +31,19 @@
     <![endif]-->
   </head>
 
-  <body>
-  	<div id="pop-up" style="display:none; position:fixed; top:150px; left:250px; width:100%">
-		<div class="well">
-			<div class="panel panel-primary" >
+  <body>; 
+  	<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:250px; width:600px; height:auto;">
+		<div class="well" style="width:100%; height:auto;">
+			<div class="panel panel-primary" style="height:auto">
 			  <div class="panel-heading">
 				<input type="text" class="form-control" placeholder="Task Title">			    
 			  </div>
 			  <div class="panel-body">
 		
-			    Task Issued By: Daniel<br><br>
+			    Task Issued By: <select id="IssuedBy"></select><br><br>
 			    Issued on: 3/15/2014 at 1:52:00pm<br>
 			    Finish By: 3/16/2014<br><br>
-			    Issued To:<label id="IssuedTo"></label><br><br>
+			    Issued To: <select id="IssuedTo"></select><br><br>
 			    Task Description: <br>
 			    <div class="panel-info">
 			    	<textarea rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
@@ -75,7 +75,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.html">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="Settings.html">Settings</a></li>
             <li><a href="#">Account</a></li>
             <li><a href="#">Sign Out</a></li>
           </ul>
@@ -176,7 +176,8 @@
     	myDataRef.on('child_added', function(snapshot){
     		var data = snapshot.val();
     		data += " ";
-    		document.getElementById("IssuedTo").innerHTML += data;
+    		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
+    		document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
        	});
     	
     </script>
