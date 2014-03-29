@@ -36,22 +36,21 @@
 		<div class="well" style="width:100%; height:auto;">
 			<div class="panel panel-primary" style="height:auto">
 			  <div class="panel-heading">
-				<input type="text" class="form-control" placeholder="Task Title">			    
+				<input id="TaskTitle" type="text" class="form-control" placeholder="Task Title">			    
 			  </div>
 			  <div class="panel-body">
 		
 			    Task Issued By: <select id="IssuedBy"></select><br><br>
-			    Issued on: 3/15/2014 at 1:52:00pm<br>
-			    Finish By: 3/16/2014<br><br>
+			    Finish By: <input id="FinishBy" type="date" style="height:25px"/><br><br>
 			    Issued To: <select id="IssuedTo"></select><br><br>
 			    Task Description: <br>
 			    <div class="panel-info">
-			    	<textarea rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
+			    	<textarea id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
 			    </div>
 				<div class="btn-group">
-				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-ok"></span> Complete</button>
-				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
-				  <button type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
+				  <button id="btnEdit" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+				  <button id="btnDelete" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
 				</div>
 		
 			  </div>
@@ -111,7 +110,7 @@
           </button>
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
-		  <div class="list-group">
+		  <div id="TaskList" class="list-group">
 		    <a href="#" class="list-group-item">
 		    	<h4 class="list-group-item-heading">
 		    	<table width="100%">
@@ -171,13 +170,37 @@
     	This will be in place till we have a database in place.
     */
 
-    	var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/users');
+    	var myDataRefUsers = new Firebase('https://burning-fire-7708.firebaseio.com/users');
+    	var myDataRefTasks = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
     	
-    	myDataRef.on('child_added', function(snapshot){
+    	$('#btnComplete').click(function(){
+    		var TaskTitle = $('#TaskTitle').val(); 
+    		var IssuedTo = $('#IssuedTo').val();
+    		var IssuedBy = $('#IssuedBy').val();
+    		var FinishBy = $('#FinishBy').val();
+    		var TaskDes = $('#TaskDes').val();
+    		myDataRefTasks.push({Title: TaskTitle, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
+    		HidePopup();
+    	});
+    	
+    	myDataRefUsers.on('child_added', function(snapshot){
     		var data = snapshot.val();
     		data += " ";
     		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
     		document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
+       	});
+       	
+       	myDataRefTasks.on('child_added', function(snapshot){
+       		var data = snapshot.val();
+       		document.getElementById("TaskList").innerHTML += ("<a href='#' class='list-group-item'>" +
+       			"<h4 class='list-group-item-heading'>" +
+		    	"<table width='100%'>" +
+		    		"<td><input type='checkbox'> " + data.Title + "</td>" +
+		    		"<td style='text-align:center;'>" + "Due Date: " + data.FinishDate +"</td>" +
+		    		"<td style='text-align:right;'>Priority: </td>" +
+		    	"</table>" +
+		    	"</h4>" +
+		    "</a>");
        	});
     	
     </script>
