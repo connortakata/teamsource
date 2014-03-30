@@ -43,6 +43,7 @@
 			    Task Issued By: <select id="IssuedBy"></select><br><br>
 			    Finish By: <input id="FinishBy" type="date" style="height:25px"/><br><br>
 			    Issued To: <select id="IssuedTo"></select><br><br>
+			    Priority: <select id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
 			    Task Description: <br>
 			    <div class="panel-info">
 			    	<textarea id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
@@ -56,7 +57,32 @@
 			  </div>
 			</div>
 			</div>
-
+		</div>
+	<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:250px; width:600px; height:auto;">
+		<div class="well" style="width:100%; height:auto;">
+			<div class="panel panel-primary" style="height:auto">
+			  <div class="panel-heading">
+				<input id="selTaskTitle" type="text" class="form-control" disabled="disabled" placeholder="Task Title">			    
+			  </div>
+			  <div class="panel-body">
+		
+			    Task Issued By: <label id="selIssuedBy"></label><br><br>
+			    Finish By: <input id="selFinishBy" disabled="disabled" type="date" style="height:25px"/><br><br>
+			    Issued To: <label id="selIssuedTo"></label><br><br>
+			    Priority: <label id="selPriority"></label><br><br>
+			    Task Description: <br>
+			    <div class="panel-info">
+			    	<label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></label>
+			    </div>
+				<div class="btn-group">
+				  <button id="btnSelComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
+				  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+				  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				</div>
+		
+			  </div>
+			</div>
+			</div>
 		</div>
 
 
@@ -111,7 +137,7 @@
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  <div id="TaskList" class="list-group">
-		    <a href="#" class="list-group-item">
+		    <!--<a href="#" class="list-group-item">
 		    	<h4 class="list-group-item-heading">
 		    	<table width="100%">
 		    		<td><input type="checkbox">  Task 1</td>
@@ -137,7 +163,7 @@
 					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-exclamation-sign"></span></td>
 				</table>
 				</h4>
-		    </a>
+		    </a>-->
 		  </div>
 		</div>
 
@@ -148,10 +174,11 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <script>
+        	
     	function DisplayPopup(){
     		$("#pop-up").show();
     		$("#mainContainer").hide();
@@ -161,6 +188,38 @@
     		$("#pop-up").hide();
     		$("#mainContainer").show();
     		$("#mainButtons").show();
+    	}
+    	function DisplaySelectedPopup(){
+    		$('#SelectedPopup').show();
+    		$('#mainContainer').hide();
+    		$('#mainButtons').hide();
+    	}
+    	function HideSelectedPopup(){
+    		$('#SelectedPopup').hide();
+    		$('#mainContainer').show();
+    		$('#mainButtons').show();
+    	}
+    	function EditPopup(task){
+    		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/tasks/' + task + '/');
+    		myDataRef.on('value', function(snapshot){
+    			var title = snapshot.val().Title;
+    			var TaskPri = snapshot.val().Priority;
+    			var IssuedTo = snapshot.val().To;
+    			var IssuedBy = snapshot.val().By;
+    			var FinishBy = snapshot.val().FinishDate;
+    			var TaskDes = snapshot.val().Description;
+    			var test1 = document.getElementById("selTaskDes");
+    			var test2 = document.getElementById("selFinishby");
+    			$('#selTaskTitle').val(title);
+    			$('#selTaskTitle').attr('disable', 'disable');
+    			$('#selTaskDes').text(TaskDes);
+    			$('#selIssuedTo').text(IssuedTo);
+    			$('#selIssuedBy').text(IssuedBy);
+    			$('#selFinishBy').val(FinishBy);
+    			$('#selFinishBy').attr('disable', 'disable');
+    			$('#selPriority').text(TaskPri);
+    		});
+    		DisplaySelectedPopup();
     	}
     </script>
     <script>
@@ -179,7 +238,8 @@
     		var IssuedBy = $('#IssuedBy').val();
     		var FinishBy = $('#FinishBy').val();
     		var TaskDes = $('#TaskDes').val();
-    		myDataRefTasks.push({Title: TaskTitle, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
+    		var TaskPri = $('#Priority').val();
+    		myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
     		HidePopup();
     	});
     	
@@ -195,9 +255,9 @@
        		document.getElementById("TaskList").innerHTML += ("<a href='#' class='list-group-item'>" +
        			"<h4 class='list-group-item-heading'>" +
 		    	"<table width='100%'>" +
-		    		"<td><input type='checkbox'> " + data.Title + "</td>" +
-		    		"<td style='text-align:center;'>" + "Due Date: " + data.FinishDate +"</td>" +
-		    		"<td style='text-align:right;'>Priority: </td>" +
+		    		"<td name='TaskTitle' onclick='EditPopup(" + '"'+ snapshot.name() +'"' + ")' class='overflowX' style='width:150px;'><input type='checkbox'> " + data.Title + "</td>" +
+		    		"<td onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' style='text-align:center;'>" + "Due Date: " + data.FinishDate +"</td>" +
+		    		"<td onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' style='text-align:right;'>Priority: " + data.Priority + "</td>" +
 		    	"</table>" +
 		    	"</h4>" +
 		    "</a>");
