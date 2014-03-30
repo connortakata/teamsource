@@ -252,10 +252,11 @@
        	
        	myDataRefTasks.on('child_added', function(snapshot){
        		var data = snapshot.val();
-       		document.getElementById("TaskList").innerHTML += ("<a href='#' class='list-group-item'>" +
+       		document.getElementById("TaskList").innerHTML += (
+       		"<a href='#' class='list-group-item'>" +
        			"<h4 class='list-group-item-heading'>" +
 		    	"<table width='100%'>" +
-		    		"<td name='TaskTitle' onclick='EditPopup(" + '"'+ snapshot.name() +'"' + ")' class='overflowX' style='width:150px;'><input type='checkbox'> " + data.Title + "</td>" +
+		    		"<td name='TaskTitle' class='overflowX' style='width:150px;'><input type='checkbox'> " + data.Title + "</td>" +
 		    		"<td onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' style='text-align:center;'>" + "Due Date: " + data.FinishDate +"</td>" +
 		    		"<td onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' style='text-align:right;'>Priority: " + data.Priority + "</td>" +
 		    	"</table>" +
