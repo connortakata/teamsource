@@ -50,8 +50,8 @@
 			    </div>
 				<div class="btn-group">
 				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
-				  <button id="btnEdit" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
-				  <button id="btnDelete" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				  <button id="btnEdit" type="button" class="btn btn-default" onclick="clearTaskData(); HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+				  <button id="btnDelete" type="button" class="btn btn-default" onclick="clearTaskData(); HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
 				</div>
 		
 			  </div>
@@ -199,6 +199,11 @@
     		$('#mainContainer').show();
     		$('#mainButtons').show();
     	}
+    	function clearTaskData(){
+    		$('#TaskTitle').val("");
+    		$('#TaskDes').val("");
+    		$('#FinishBy').val("");
+    	}
     	function EditPopup(task){
     		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/tasks/' + task + '/');
     		myDataRef.on('value', function(snapshot){
@@ -208,8 +213,6 @@
     			var IssuedBy = snapshot.val().By;
     			var FinishBy = snapshot.val().FinishDate;
     			var TaskDes = snapshot.val().Description;
-    			var test1 = document.getElementById("selTaskDes");
-    			var test2 = document.getElementById("selFinishby");
     			$('#selTaskTitle').val(title);
     			$('#selTaskTitle').attr('disable', 'disable');
     			$('#selTaskDes').text(TaskDes);
@@ -239,8 +242,14 @@
     		var FinishBy = $('#FinishBy').val();
     		var TaskDes = $('#TaskDes').val();
     		var TaskPri = $('#Priority').val();
+    		if (FinishBy == "" || TaskTitle == "")
+    		{
+    			alert("Task title and due date must be speificed when making a task.");
+    			return;
+    		}
     		myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
     		HidePopup();
+    		clearTaskData();
     	});
     	
     	myDataRefUsers.on('child_added', function(snapshot){
