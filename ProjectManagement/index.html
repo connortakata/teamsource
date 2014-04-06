@@ -117,7 +117,7 @@
 
     var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/chat');
       $('#GrpChatbutton').click(function () {
-          var name = "Joe"
+          var name = "Daniel"
           var text = $('#GrpChatTxtInput').val();
           myDataRef.push({name: name, text: text});
           $('#GrpChatTxtInput').val('');
