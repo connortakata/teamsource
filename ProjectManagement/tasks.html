@@ -12,7 +12,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/firebase.js"></script>
 	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
-
+	<script src="js/Validation.js"></script>
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -28,6 +28,7 @@
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
+      
     <![endif]-->
   </head>
 
@@ -36,17 +37,17 @@
 		<div class="well" style="width:100%; height:auto;">
 			<div class="panel panel-primary" style="height:auto">
 			  <div class="panel-heading">
-				<input id="TaskTitle" type="text" class="form-control" placeholder="Task Title">			    
+				<input name="popItem" id="TaskTitle" type="text" class="form-control" placeholder="Task Title">			    
 			  </div>
 			  <div class="panel-body">
 		
-			    Task Issued By: <select id="IssuedBy"></select><br><br>
-			    Finish By: <input id="FinishBy" type="date" style="height:25px"/><br><br>
-			    Issued To: <select id="IssuedTo"></select><br><br>
-			    Priority: <select id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
+			    Task Issued By: <select name="popItem" id="IssuedBy"></select><br><br>
+			    Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
+			    Issued To: <select name="popItem" id="IssuedTo"></select><br><br>
+			    Priority: <select name="popItem" id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
 			    Task Description: <br>
 			    <div class="panel-info">
-			    	<textarea id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
+			    	<textarea name="popItem" id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
 			    </div>
 				<div class="btn-group">
 				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Submit</button>
@@ -232,20 +233,14 @@
     	var myDataRefTasks = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
     	
     	$('#btnComplete').click(function(){
-    		var TaskTitle = $('#TaskTitle').val(); 
-    		var IssuedTo = $('#IssuedTo').val();
-    		var IssuedBy = $('#IssuedBy').val();
-    		var FinishBy = $('#FinishBy').val();
-    		var TaskDes = $('#TaskDes').val();
-    		var TaskPri = $('#Priority').val();
-    		if (FinishBy == "" || TaskTitle == "")
+    	
+    		var validateSuccess = validatePopUp(document.getElementsByName("popItem"));
+    		//myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
+    		if (validateSuccess == 0)
     		{
-    			alert("Task title and due date must be speificed when making a task.");
-    			return;
+    			HidePopup();
+    			clearTaskData();
     		}
-    		myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
-    		HidePopup();
-    		clearTaskData();
     	});
     	
     	myDataRefUsers.on('child_added', function(snapshot){
