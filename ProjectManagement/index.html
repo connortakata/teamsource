@@ -122,9 +122,10 @@
       $('#GrpChatbutton').click(function () {
           var name = "Joe"
           var text = $('#GrpChatTxtInput').val();
+          var date = new Date();
           var encrypt = CryptoJS.enc.Latin1.parse(text)
           var base64 = CryptoJS.enc.Latin1.stringify(encrypt);
-          myDataRef.push({name: name, text: base64});
+          myDataRef.push({name: name, text: base64, TimeStamp: date.toLocaleString()});
           $('#GrpChatTxtInput').val('');
       });
       myDataRef.on('child_added', function(snapshot) {

@@ -32,7 +32,7 @@
   </head>
 
   <body>; 
-  	<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:250px; width:600px; height:auto;">
+  	<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
 		<div class="well" style="width:100%; height:auto;">
 			<div class="panel panel-primary" style="height:auto">
 			  <div class="panel-heading">
@@ -49,16 +49,15 @@
 			    	<textarea id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
 			    </div>
 				<div class="btn-group">
-				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
-				  <button id="btnEdit" type="button" class="btn btn-default" onclick="clearTaskData(); HidePopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
-				  <button id="btnDelete" type="button" class="btn btn-default" onclick="clearTaskData(); HidePopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Submit</button>
+				  <button id="btnDelete" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 				</div>
 		
 			  </div>
 			</div>
-			</div>
 		</div>
-	<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:250px; width:600px; height:auto;">
+	</div>
+	<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
 		<div class="well" style="width:100%; height:auto;">
 			<div class="panel panel-primary" style="height:auto">
 			  <div class="panel-heading">
@@ -82,8 +81,8 @@
 		
 			  </div>
 			</div>
-			</div>
 		</div>
+	</div>
 
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -136,7 +135,7 @@
           </button>
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
-		  <div id="TaskList" class="list-group">
+		  	<div id="TaskList" class="list-group">
 		    <!--<a href="#" class="list-group-item">
 		    	<h4 class="list-group-item-heading">
 		    	<table width="100%">
@@ -164,8 +163,8 @@
 				</table>
 				</h4>
 		    </a>-->
+		  	</div>
 		  </div>
-		</div>
 
           </div>
 
@@ -181,24 +180,21 @@
         	
     	function DisplayPopup(){
     		$("#pop-up").show();
-    		$("#mainContainer").hide();
-    		$("#mainButtons").hide();
-    	}
+    		var pop = document.getElementById("pop-up");
+    		pop.style.zIndex = 10;
+       	}
     	function HidePopup(){
     		$("#pop-up").hide();
-    		$("#mainContainer").show();
-    		$("#mainButtons").show();
-    	}
+    		clearTaskData();
+       	}
     	function DisplaySelectedPopup(){
     		$('#SelectedPopup').show();
-    		$('#mainContainer').hide();
-    		$('#mainButtons').hide();
+    		var pop = document.getElementById("SelectedPopup");
+    		pop.style.zIndex = 10;    
     	}
     	function HideSelectedPopup(){
     		$('#SelectedPopup').hide();
-    		$('#mainContainer').show();
-    		$('#mainButtons').show();
-    	}
+    		    	}
     	function clearTaskData(){
     		$('#TaskTitle').val("");
     		$('#TaskDes').val("");
