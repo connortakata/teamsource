@@ -13,6 +13,7 @@
     <script src="js/firebase.js"></script>
 	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
 	<script src="js/Validation.js"></script>
+    <script src="js/AlertPopUp.js"></script>
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -32,7 +33,22 @@
     <![endif]-->
   </head>
 
-  <body>; 
+  <body>
+    <div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+        <div class="well" style="width:100%; height:100%;">
+            <div class="panel panel-primary" style="height:100%;">
+                <div class="panel-heading">
+                    <label id="AlertPopUpTitle"></label>
+                </div>
+                <div id="AlertPopUpBody" class="panel-body">
+
+                </div>
+                <div class="btn-group">
+                    <input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+                </div>
+            </div>
+        </div>
+    </div>   
   	<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
 		<div class="well" style="width:100%; height:auto;">
 			<div class="panel panel-primary" style="height:auto">
@@ -251,7 +267,8 @@
        	});
        	
        	myDataRefTasks.on('child_added', function(snapshot){
-       		var data = snapshot.val();
+       	    var data = snapshot.val();
+       	    DisplayAlertPopUp("Title", "This is a test");
        		document.getElementById("TaskList").innerHTML += (
        		"<a href='#' class='list-group-item'>" +
        			"<h4 class='list-group-item-heading'>" +
