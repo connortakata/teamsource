@@ -21,6 +21,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/overlay.css" rel="stylesheet">
+        <script src="js/overlay.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -140,6 +142,7 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
+          <div align="left" style="padding-bottom:10px">
         </div>
         <div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
             <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
@@ -150,6 +153,12 @@
           <button type="button" class="btn btn-default btn-med">
             <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
           </button>
+          <div id="dialog" href="taskwindow.html">
+            <div id="contentWrap"></div>
+          </div>
+          </div>
+          <div style="display:table; width:100%" class="well"> Lists of Tasks appear here
+=======
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">
@@ -182,14 +191,17 @@
 		    </a>-->
 		  	</div>
 		  </div>
-
           </div>
-
+          
         </div>
      
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
