@@ -218,7 +218,7 @@
     		$('#FinishBy').val("");
     	}
     	function EditPopup(task){
-    		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/tasks/' + task + '/');
+    		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/test/tasks/' + task + '/');
     		myDataRef.on('value', function(snapshot){
     			var title = snapshot.val().Title;
     			var TaskPri = snapshot.val().Priority;
@@ -245,8 +245,8 @@
     	This will be in place till we have a database in place.
     */
 
-    	var myDataRefUsers = new Firebase('https://burning-fire-7708.firebaseio.com/users');
-    	var myDataRefTasks = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
+    	var myDataRefUsers = new Firebase('https://burning-fire-7708.firebaseio.com/test/users');
+    	var myDataRefTasks = new Firebase('https://burning-fire-7708.firebaseio.com/test/tasks');
     	
     	$('#btnComplete').click(function(){
     	
