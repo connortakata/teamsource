@@ -7,7 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-
+    <script src="js/angular.min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/firebase.js"></script>
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
+	<script src="js/Validation.js"></script>
+    <script src="js/AlertPopUp.js"></script>
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -23,12 +29,80 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      
     <![endif]-->
   </head>
 
   <body>
+    <div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+        <div class="well" style="width:100%; height:100%;">
+            <div class="panel panel-primary" style="height:100%;">
+                <div class="panel-heading">
+                    <label id="AlertPopUpTitle"></label>
+                </div>
+                <div id="AlertPopUpBody" class="panel-body">
+
+                </div>
+                <div class="btn-group">
+                    <input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+                </div>
+            </div>
+        </div>
+    </div>   
+  	<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
+		<div class="well" style="width:100%; height:auto;">
+			<div class="panel panel-primary" style="height:auto">
+			  <div class="panel-heading">
+				<input name="popItem" id="TaskTitle" type="text" class="form-control" placeholder="Task Title">			    
+			  </div>
+			  <div class="panel-body">
+		
+			    Task Issued By: <select name="popItem" id="IssuedBy"></select><br><br>
+			    Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
+			    Issued To: <select name="popItem" id="IssuedTo"></select><br><br>
+			    Priority: <select name="popItem" id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
+			    Task Description: <br>
+			    <div class="panel-info">
+			    	<textarea name="popItem" id="TaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></textarea>
+			    </div>
+				<div class="btn-group">
+				  <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Submit</button>
+				  <button id="btnDelete" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+				</div>
+		
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
+		<div class="well" style="width:100%; height:auto;">
+			<div class="panel panel-primary" style="height:auto">
+			  <div class="panel-heading">
+				<input id="selTaskTitle" type="text" class="form-control" disabled="disabled" placeholder="Task Title">			    
+			  </div>
+			  <div class="panel-body">
+		
+			    Task Issued By: <label id="selIssuedBy"></label><br><br>
+			    Finish By: <input id="selFinishBy" disabled="disabled" type="date" style="height:25px"/><br><br>
+			    Issued To: <label id="selIssuedTo"></label><br><br>
+			    Priority: <label id="selPriority"></label><br><br>
+			    Task Description: <br>
+			    <div class="panel-info">
+			    	<label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></label>
+			    </div>
+				<div class="btn-group">
+				  <button id="btnSelComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
+				  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+				  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+				</div>
+		
+			  </div>
+			</div>
+		</div>
+	</div>
+
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -39,21 +113,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Team Source</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="Settings.html">Settings</a></li>
+            <li><a href="#">Account</a></li>
+            <li><a href="#">Sign Out</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>
+          </div>
         </div>
       </div>
-    </div>
 
     <div class="container-fluid">
       <div class="row">
@@ -65,32 +139,173 @@
             <li class="active"><a href="tasks.html">Task</a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
+<<<<<<< HEAD
           <div align="left" style="padding-bottom:10px">
             <button class="opener"type="button" class="btn btn-default btn-med">
               <span class="glyphicon glyphicon-plus"></span> Add Task
             </button>
+=======
+        </div>
+        <div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
+            <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
+              <button type="button" class="btn btn-default btn-med" onclick="DisplayPopup()">
+                <span class="glyphicon glyphicon-plus"></span> Add Task
+              </button>
+            <!--</a>-->
+>>>>>>> e58e3ccdfd54f718c6ca3bc3050bc2bc1b5a3403
           <button type="button" class="btn btn-default btn-med">
-            <span class="glyphicon glyphicon-remove"></span> Remove Task
+            <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
           </button>
+<<<<<<< HEAD
           <div id="dialog" href="taskwindow.html">
             <div id="contentWrap"></div>
           </div>
           </div>
           <div style="display:table; width:100%" class="well"> Lists of Tasks appear here
+=======
+        </div>
+		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
+		  	<div id="TaskList" class="list-group">
+		    <!--<a href="#" class="list-group-item">
+		    	<h4 class="list-group-item-heading">
+		    	<table width="100%">
+		    		<td><input type="checkbox">  Task 1</td>
+		    		<td style="text-align:center;">Due Date: 03/16/2014</td>
+		    		<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-down"></span></td>
+		    	</table>
+		    	</h4>
+		    </a>
+		    <a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">
+				<table width="100%">
+					<td><input type="checkbox">  Task 2</td>
+					<td style="text-align:center;">Due Date: 03/16/2014</td>
+					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-up"></span></td>
+				</table>
+				</h4>
+		    </a>
+		    <a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">
+				<table width="100%">
+					<td><input type="checkbox">  Task 3</td>
+					<td style="text-align:center;">Due Date: 03/16/2014</td>
+					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-exclamation-sign"></span></td>
+				</table>
+				</h4>
+		    </a>-->
+		  	</div>
+		  </div>
+
+>>>>>>> e58e3ccdfd54f718c6ca3bc3050bc2bc1b5a3403
           </div>
           
         </div>
-      </div>
-
+     
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
+=======
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
+    <script>
+        	
+    	function DisplayPopup(){
+    		$("#pop-up").show();
+    		var pop = document.getElementById("pop-up");
+    		pop.style.zIndex = 10;
+       	}
+    	function HidePopup(){
+    		$("#pop-up").hide();
+    		clearTaskData();
+       	}
+    	function DisplaySelectedPopup(){
+    		$('#SelectedPopup').show();
+    		var pop = document.getElementById("SelectedPopup");
+    		pop.style.zIndex = 10;    
+    	}
+    	function HideSelectedPopup(){
+    		$('#SelectedPopup').hide();
+    		    	}
+    	function clearTaskData(){
+    		$('#TaskTitle').val("");
+    		$('#TaskDes').val("");
+    		$('#FinishBy').val("");
+    	}
+    	function EditPopup(task){
+    		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/tasks/' + task + '/');
+    		myDataRef.on('value', function(snapshot){
+    			var title = snapshot.val().Title;
+    			var TaskPri = snapshot.val().Priority;
+    			var IssuedTo = snapshot.val().To;
+    			var IssuedBy = snapshot.val().By;
+    			var FinishBy = snapshot.val().FinishDate;
+    			var TaskDes = snapshot.val().Description;
+    			$('#selTaskTitle').val(title);
+    			$('#selTaskTitle').attr('disable', 'disable');
+    			$('#selTaskDes').text(TaskDes);
+    			$('#selIssuedTo').text(IssuedTo);
+    			$('#selIssuedBy').text(IssuedBy);
+    			$('#selFinishBy').val(FinishBy);
+    			$('#selFinishBy').attr('disable', 'disable');
+    			$('#selPriority').text(TaskPri);
+    		});
+    		DisplaySelectedPopup();
+    	}
+    </script>
+    <script>
+    /* 	this a prototype of how the javascript functions are going to work 
+     	this currently uses firebase as a way to track the chat, 
+    	which will only work for our chat for our group.
+    	This will be in place till we have a database in place.
+    */
+
+    	var myDataRefUsers = new Firebase('https://burning-fire-7708.firebaseio.com/users');
+    	var myDataRefTasks = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
+    	
+    	$('#btnComplete').click(function(){
+    	
+    		var validateSuccess = validatePopUp(document.getElementsByName("popItem"));
+    		//myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
+    		if (validateSuccess == 0)
+    		{
+    			HidePopup();
+    			clearTaskData();
+    		}
+    	});
+    	
+    	myDataRefUsers.on('child_added', function(snapshot){
+    		var data = snapshot.val();
+    		data += " ";
+    		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
+    		document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
+       	});
+       	
+       	myDataRefTasks.on('child_added', function(snapshot){
+       	    var data = snapshot.val();
+       		document.getElementById("TaskList").innerHTML += (
+       		"<a href='#' class='list-group-item'>" +
+       			"<h4 class='list-group-item-heading'>" +
+		    	"<table width='100%'>" +
+		    		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " + data.Title + "</td>" +
+		    	    "<td style='width:200px;text-align:right' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >" + "Due: " + data.FinishDate +"</td>" +
+		    		"<td style='width:200px; text-align:center' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >To: " + data.To + "</td>" +
+		    		"<td style='width:150px; text-align:right' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >Priority: " + data.Priority + "</td>" +
+		    	"</table>" +
+		    	"</h4>" +
+		    "</a>");
+       	});
+    	
+    </script>
+>>>>>>> e58e3ccdfd54f718c6ca3bc3050bc2bc1b5a3403
 
   </body>
 </html>

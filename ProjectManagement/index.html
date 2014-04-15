@@ -1,6 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html ng-app lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-
+    
+	<script src="js/angular.min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-utf16-min.js"></script>
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+    <script src="js/firebase.js"></script>
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -22,8 +28,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
     <![endif]-->
   </head>
 
@@ -38,14 +44,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Team Source</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="Settings.html">Settings</a></li>
+            <li><a href="#">Account</a></li>
+            <li><a href="#">Sign Out</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -67,33 +73,70 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
-          <div style="display:table; margin:0 auto; width:50%; align:left" class="well">
+          <div align="left" style="display:table; width:50%; height: 500px; margin-right: 25px;" class="well">
            <div class="panel panel-default">
            <!-- Default panel contents -->
-            <div class="panel-heading">Group Chat:</div>
-              <div class="panel-body">
-                <p><b>Drew:</b> Hey guys, the project is coming along great</p>
-                <p><b>Connor:</b> Yeah man, it's all because of me</p>
-                <p><b>Daniel:</b> STFU Connor!</p>
-                <p><b>Joe:</b> Yeah Connor, you are an idiot</p>
+            <div class="panel-heading"><b>Group Chat:</b></div>
+              <div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
+              <!-- Chat goes here -->               
+                             
               </div>
             </div>
 
-          <div styple="display:table; margin;10 auto; width:50%" class="talk">
-            <input type="text" style="width:80%" placeholder="Type Your Message Here...">
-            <button align="right" type="button" class="btn btn-submit">Submit</button>
-
+          <div class="talk">
+            <input id="GrpChatTxtInput" type="text" style="width:75%" placeholder="Type Your Message Here...">
+            <button id="GrpChatbutton" style="margin-left: 3%;" align="right" type="button" class="btn btn-submit">Submit</button>
           </div>
 
         </div>
+          <div style="display:table; width:40%; height: 200px;" class ="well">
+        	<div class="panel panel-default" style="float:middle;">
+            	<div class="panel-heading"><b>Team Roster:</b></div>
+              		<div class="panel-body" style="height: 150px;">
+		                <p><b>Drew Howard</b> - Client</p>
+		                <p><b>Connor Takata</b> - Team Manager / Satan's Mistress</p>
+		                <p><b>Daniel Franz</b> - Code Master</p>
+		                <p><b>Joe Jazdzewski</b> - Code Master</p>
+		     
+              		</div>
+            	</div>
+          	</div>
+		  </div>
       </div>
     </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
+    <script>
+    /* 	this a prototype of how the javascript functions are going to work 
+     	this currently uses firebase as a way to track the chat, 
+    	which will only work for our chat for our group.
+    	This will be in place till we have a database in place.
+    */
+
+    var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/chat');
+      $('#GrpChatbutton').click(function () {
+          var name = "Joe"
+          var text = $('#GrpChatTxtInput').val();
+          var date = new Date();
+          var encrypt = CryptoJS.enc.Latin1.parse(text)
+          var base64 = CryptoJS.enc.Latin1.stringify(encrypt);
+          myDataRef.push({name: name, text: base64, TimeStamp: date.toLocaleString()});
+          $('#GrpChatTxtInput').val('');
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text)//CryptoJS.enc.Latin1.stringify(message.text));
+      });
+      function displayChatMessage(name, text) {
+        $('<p/>').text(text).prepend($('<b/>').text(name+': ')).appendTo($('#ChatBox'));
+        $('#ChatBox')[0].scrollTop = $('#ChatBox')[0].scrollHeight;
+      };
+    </script>
+    
   </body>
 </html>

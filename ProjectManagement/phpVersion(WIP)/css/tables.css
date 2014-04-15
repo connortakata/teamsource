@@ -1,0 +1,33 @@
+table.months
+{
+	padding: 10px 10px 10px 10px;
+}
+table.calender
+{
+	border: 2px solid #428bca;
+	height: 100%;
+	width: 100%;
+}
+
+tr.dayDetail
+{
+	border: 1px solid #428bca;
+	height: 100px;
+}
+
+tr.day
+{
+	border: 1px solid #428bca;
+	height: 100px;
+}
+
+tr.date
+{
+	border-collapse:collapse;
+}
+
+td.days
+{
+	border: 1px solid #428bca;
+}
+
