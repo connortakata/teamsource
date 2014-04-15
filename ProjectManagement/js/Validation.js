@@ -17,7 +17,7 @@ function validatePopUp(object)
 }
 function pushValidatedTasks(object)
 {
-	var fb = new Firebase('https://burning-fire-7708.firebaseio.com/test/tasks');
+	var fb = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
 	fb.push({Title: object[0].value, Priority: object[4].value, To: object[3].value, By: object[1].value, FinishDate: object[2].value, Description: object[5].value});
 }
 function DateValidation(Day) {
