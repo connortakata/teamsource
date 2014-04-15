@@ -5,7 +5,7 @@ function validatePopUp(object)
 	{
 		if ($(object[i]).val() == "")
 		{
-			alert("Task title and due date must be speificed when making a task.");
+			DisplayAlertPopUp("Validation Error","Task title and due date must be speificed when making a task.");
     		return 1;
 		}
 	}
@@ -23,7 +23,7 @@ function pushValidatedTasks(object)
 function DateValidation(Day) {
     var Today = new Date();
     if (Today.toLocaleDateString() >= Day) {
-        alert("The date must be set to a day in the future.");
+        DisplayAlertPopUp("Validation Error", "The date must be set to a day in the future.");
         return 1;
     }
     return 0;
