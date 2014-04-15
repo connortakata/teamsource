@@ -22,7 +22,21 @@ function pushValidatedTasks(object)
 }
 function DateValidation(Day) {
     var Today = new Date();
-    if (Today.toLocaleDateString() >= Day) {
+    var month, day;
+    if ((month = Today.getMonth() + 1) < 10) {
+        month = "0" + (Today.getMonth() + 1).toString();
+    }
+    else {
+        month = month.toString();
+    }
+    if ((day = Today.getDate()) < 10) {
+        day = "0" + Today.getDate.toString()
+    }
+    else {
+        day = day.toString();
+    }
+    var CompareValue = Today.getFullYear().toString() + "-" + month + "-" + day;
+    if (CompareValue >= Day) {
         DisplayAlertPopUp("Validation Error", "The date must be set to a day in the future.");
         return 1;
     }
