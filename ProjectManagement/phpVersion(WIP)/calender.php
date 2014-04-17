@@ -3,7 +3,7 @@
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
 
-	print <<<END 
+	print '
 		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
 		<ul style="display:table; margin:0 auto;" class="pagination">
 				<li><a href="#">&laquo;</a></li>
@@ -140,7 +140,6 @@
 				<td class="days" width="11.43%"></td>
 			</tr>
 		</table>
-		</div>
-	END;
+		</div>';
 	require "includes/footer.php";
 ?>

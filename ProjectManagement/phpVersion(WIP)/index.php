@@ -3,7 +3,7 @@
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
 
-	print <<<END 
+	print '
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Dashboard</h1>
 
@@ -49,23 +49,21 @@
     	This will be in place till we have a database in place.
     */
 
-    var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/chat');
-      $('#GrpChatbutton').click(function () {
+    var myDataRef = new Firebase("https://burning-fire-7708.firebaseio.com/chat");
+      $("#GrpChatbutton").click(function () {
           var name = "Daniel"
-          var text = $('#GrpChatTxtInput').val();
+          var text = $("#GrpChatTxtInput").val();
           myDataRef.push({name: name, text: text});
-          $('#GrpChatTxtInput').val('');
+          $("#GrpChatTxtInput").val("");
       });
-      myDataRef.on('child_added', function(snapshot) {
+      myDataRef.on("child_added", function(snapshot) {
         var message = snapshot.val();
         displayChatMessage(message.name, message.text);
       });
       function displayChatMessage(name, text) {
-        $('<p/>').text(text).prepend($('<b/>').text(name+': ')).appendTo($('#ChatBox'));
-        $('#ChatBox')[0].scrollTop = $('#ChatBox')[0].scrollHeight;
+        $("<p/>").text(text).prepend($("<b/>").text(name+": ")).appendTo($("#ChatBox"));
+        $("#ChatBox")[0].scrollTop = $("#ChatBox")[0].scrollHeight;
       };
-    </script>
-	
-	END;
+    </script>';
 	require "includes/footer.php";
 ?>
