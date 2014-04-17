@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,7 +28,26 @@
   </head>
 
   <body>
-
+    <div id="CalendarPopUp" class="PopupShadow" style="display:inline; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
+        <div class="well" style="width:100%; height:100%;">
+            <div class="panel panel-primary" style="top:25px; height:95%;">
+                <div class="panel-heading">
+                    <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Calendar Title">	
+                </div>
+                <div class="panel-body">
+                    <input name="CalendarItem" id="AssignDate" type="date" style="height:25px"/><br /><br />
+                    Description
+                    <div class="panel-info">
+			    	    <textarea name="CalendarItem" id="CalendarDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
+			        </div>
+                </div>
+                <div class="btn-group">
+                    <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" />
+                    <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp('CalendarPopUp', 'CalendarItem');" />
+                </div>
+            </div>
+        </div>
+    </div>   
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -214,5 +232,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
+    <script src="js/Validation.js"></script>
+    <script src="js/AlertPopUp.js"></script>
+    <script>
+        $("#CalAdd").click(function () {
+            var controls = document.getElementsByName("CalendarItem");
+            validatePopUp(controls, "Calendar");
+        });
+    </script>
   </body>
 </html>

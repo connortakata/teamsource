@@ -250,7 +250,7 @@
     	
     	$('#btnComplete').click(function(){
     	
-    		var validateSuccess = validatePopUp(document.getElementsByName("popItem"));
+    		var validateSuccess = validatePopUp(document.getElementsByName("popItem"), "Task");
     		//myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
     		if (validateSuccess == 0)
     		{
