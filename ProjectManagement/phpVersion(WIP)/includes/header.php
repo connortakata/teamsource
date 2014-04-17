@@ -11,6 +11,9 @@
 		<script src="js/angular.min.js"></script>
 		<script src="js/backbone-min.js"></script>
 		<script src="js/jquery.min.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-utf16-min.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
 		<script src="js/firebase.js"></script>
 		<script src="js/Validation.js"></script>
     	<script src="js/AlertPopUp.js"></script>
