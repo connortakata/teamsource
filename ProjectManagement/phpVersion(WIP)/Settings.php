@@ -3,7 +3,7 @@
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
 
-	print <<<END 
+	print '
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	        <h1 class="page-header">Settings</h1>
 		</div>
@@ -17,7 +17,7 @@
 		  			<option>2</option>
 		  		</select>
 		  	</div>
-		</div>
-	END;
+		</div>';
+	
 	require "includes/footer.php";
 ?>

@@ -7,12 +7,12 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Team Source</a>
+			<a class="navbar-brand" href="index.php">Team Source</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="index.html">Dashboard</a></li>
-				<li><a href="Settings.html">Settings</a></li>
+				<li><a href="index.php">Dashboard</a></li>
+				<li><a href="Settings.php">Settings</a></li>
 				<li><a href="#">Account</a></li>
 				<li><a href="#">Sign Out</a></li>
 			</ul>

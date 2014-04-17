@@ -3,7 +3,7 @@
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
 
-	print <<<END 
+	print '
 		<div style="display:table; margin:0 250px; float:none; width:40%" class="well">
 		<div class="panel panel-default">
 		<!-- Default panel contents -->
@@ -43,6 +43,6 @@
 			</table>
 		</div>
 	  </div>
-	END;
+	END';
 	require "includes/footer.php";
 ?>

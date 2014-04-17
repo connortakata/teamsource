@@ -1,6 +1,6 @@
 ﻿<?php
 
-	print <<<END 
+	print '
 		<!DOCTYPE html>
 		<html lang="en">
 		  <head>
@@ -134,7 +134,5 @@
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
 		  </body>
-		</html>
-
-	END;
+		</html>';
 ?>
