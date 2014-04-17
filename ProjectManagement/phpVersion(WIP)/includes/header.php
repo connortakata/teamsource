@@ -12,6 +12,8 @@
 		<script src="js/backbone-min.js"></script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/firebase.js"></script>
+		<script src="js/Validation.js"></script>
+    	<script src="js/AlertPopUp.js"></script>
 		<title>Dashboard Template for Bootstrap</title>
 
 		<!-- Bootstrap core CSS -->
