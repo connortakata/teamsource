@@ -49,20 +49,23 @@
     	This will be in place till we have a database in place.
     */
 
-    var myDataRef = new Firebase("https://burning-fire-7708.firebaseio.com/chat");
-      $("#GrpChatbutton").click(function () {
-          var name = "Daniel"
-          var text = $("#GrpChatTxtInput").val();
-          myDataRef.push({name: name, text: text});
-          $("#GrpChatTxtInput").val("");
+    var myDataRef = new Firebase(\'https://burning-fire-7708.firebaseio.com/chat\');
+      $(\'#GrpChatbutton\').click(function () {
+          var name = "TestUser"
+          var text = $(\'#GrpChatTxtInput\').val();
+          var date = new Date();
+          var encrypt = CryptoJS.enc.Latin1.parse(text)
+          var base64 = CryptoJS.enc.Latin1.stringify(encrypt);
+          myDataRef.push({name: name, text: base64, TimeStamp: date.toLocaleString()});
+          $(\'#GrpChatTxtInput\').val(\'\');
       });
-      myDataRef.on("child_added", function(snapshot) {
+      myDataRef.on(\'child_added\', function(snapshot) {
         var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
+        displayChatMessage(message.name, message.text)//CryptoJS.enc.Latin1.stringify(message.text));
       });
       function displayChatMessage(name, text) {
-        $("<p/>").text(text).prepend($("<b/>").text(name+": ")).appendTo($("#ChatBox"));
-        $("#ChatBox")[0].scrollTop = $("#ChatBox")[0].scrollHeight;
+        $(\'<p/>\').text(text).prepend($(\'<b/>\').text(name+\': \')).appendTo($(\'#ChatBox\'));
+        $(\'#ChatBox\')[0].scrollTop = $(\'#ChatBox\')[0].scrollHeight;
       };
     </script>';
 	require "includes/footer.php";
