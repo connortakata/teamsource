@@ -4,6 +4,9 @@
 	require "includes/sidebar.php";
 
 	print '
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Calender</h1>
+        </div>
 		<link href="css/tables.css" rel="stylesheet">
 		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
 		<ul style="display:table; margin:0 auto;" class="pagination">
@@ -21,17 +24,23 @@
 				<li><a href="#">Nov</a></li>
 				<li><a href="#">Dec</a></li>
 				<li><a href="#">&raquo;</a></li>
-		  </ul>
-		  <table style="margin: 0px auto;" class="calender">
-		<tr class="date">
-			<td class="days" width="11.43%">Sun</td>
-			<td class="days" width="11.43%">Mon</td>
-			<td class="days" width="11.43%">Tue</td>
-			<td class="days" width="11.43%">Wed</td>
-			<td class="days" width="11.43%">Thu</td>
-			<td class="days" width="11.43%">Fri</td>
-			<td class="days" width="11.43%">Sat</td>
-		</tr>
+		</ul>';
+		print 
+			'<table style="margin: 0px auto;" class="calender">
+			<tr class="date">
+				<td class="days" width="11.43%">Sun</td>
+				<td class="days" width="11.43%">Mon</td>
+				<td class="days" width="11.43%">Tue</td>
+				<td class="days" width="11.43%">Wed</td>
+				<td class="days" width="11.43%">Thu</td>
+				<td class="days" width="11.43%">Fri</td>
+				<td class="days" width="11.43%">Sat</td>
+			</tr>';
+
+		$day = date("j");
+		print $day;
+
+		print '
 		<tr class="date">
 			<td class="days" width="11.43%" style="color:grey">23</td>
 			<td class="days" width="11.43%" style="color:grey">24</td>

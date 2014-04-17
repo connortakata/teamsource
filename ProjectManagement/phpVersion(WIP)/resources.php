@@ -4,6 +4,9 @@
 	require "includes/sidebar.php";
 
 	print '
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Resources</h1>
+        </div>
 		<div style="display:table; margin:0 250px; float:none; width:40%" class="well">
 		<div class="panel panel-default">
 		<!-- Default panel contents -->
