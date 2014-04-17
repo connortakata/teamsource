@@ -39,117 +39,27 @@
 
 		$day = date("j");
 		print $day;
+        $day = 0;
+        for( $i=0; $i<6; $i++)
+        {
+            print '<tr class="date">';
+            for( $j=0; $j<7; $j++)
+            {
+                print '<td class="days" width="11.43%" style="color:grey">';
+                print $day;
+                print '</td>';
+                $day++;
+            }
+            print '</tr>';
 
-		print '
-		<tr class="date">
-			<td class="days" width="11.43%" style="color:grey">23</td>
-			<td class="days" width="11.43%" style="color:grey">24</td>
-			<td class="days" width="11.43%" style="color:grey">25</td>
-			<td class="days" width="11.43%" style="color:grey">26</td>
-			<td class="days" width="11.43%" style="color:grey">27</td>
-			<td class="days" width="11.43%" style="color:grey">28</td>
-			<td class="days" width="11.43%">1</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-		<tr class="date">
-			<td class="days" width="11.43%">2</td>
-			<td class="days" width="11.43%">3</td>
-			<td class="days" width="11.43%">4</td>
-			<td class="days" width="11.43%">5</td>
-			<td class="days" width="11.43%">6</td>
-			<td class="days" width="11.43%">7</td>
-			<td class="days" width="11.43%">8</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-		<tr class="date">
-			<td class="days" width="11.43%">9</td>
-			<td class="days" width="11.43%">10</td>
-			<td class="days" width="11.43%">11</td>
-			<td class="days" width="11.43%">12</td>
-			<td class="days" width="11.43%">13</td>
-			<td class="days" width="11.43%" style="background-color:#eee">14</td>
-			<td class="days" width="11.43%">15</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%" style="background-color:#eee"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-		<tr class="date">
-			<td class="days" width="11.43%">16</td>
-			<td class="days" width="11.43%">17</td>
-			<td class="days" width="11.43%">18</td>
-			<td class="days" width="11.43%">19</td>
-			<td class="days" width="11.43%">20</td>
-			<td class="days" width="11.43%">21</td>
-			<td class="days" width="11.43%">22</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-		<tr class="date">
-			<td class="days" width="11.43%">23</td>
-			<td class="days" width="11.43%">24</td>
-			<td class="days" width="11.43%">25</td>
-			<td class="days" width="11.43%">26</td>
-			<td class="days" width="11.43%">27</td>
-			<td class="days" width="11.43%">28</td>
-			<td class="days" width="11.43%">29</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-		<tr class="date">
-			<td class="days" width="11.43%">30</td>
-			<td class="days" width="11.43%">31</td>
-			<td class="days" width="11.43%" style="color:grey">1</td>
-			<td class="days" width="11.43%" style="color:grey">2</td>
-			<td class="days" width="11.43%" style="color:grey">3</td>
-			<td class="days" width="11.43%" style="color:grey">4</td>
-			<td class="days" width="11.43%" style="color:grey">5</td>
-		</tr>
-		<tr class="dayDetail">
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-			<td class="days" width="11.43%"></td>
-		</tr>
-	</table>
-		</div>';
+            print '<tr class="dayDetail">';
+            for( $j=0; $j<7; $j++)
+            {
+                print '<td class="days" width="11.43%"></td>';
+            }
+            print '</tr>';
+        }
+        print '</table>
+            </div>';
 	require "includes/footer.php";
 ?>
