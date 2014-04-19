@@ -36,8 +36,22 @@
 					<td style="text-align:right">Modified</td>
 					<td style="text-align:right">Size</td>
 					<td style="text-align:right">Action</td>
-				</tr>
-				<tr>
+				</tr>';
+
+                $con=mysqli_connect("localhost","ODBC","","test");
+                $sql = "SELECT * FROM files";
+                $result = mysqli_query($con,$sql);
+                while($row = mysqli_fetch_array($result)){
+                    print '<tr>';
+                    print '<td>' . $row['filename'] . '</td>';
+                    print '<td style="text-align:right">' . $row['added'] . '</td>';
+                    print '<td style="text-align:right">' . $row['added'] . '</td>';
+                    print '<td style="text-align:right">' . $row['size'] . '</td>';
+                    print '<td style="text-align:right"><a href="upload/' . $row['filename'] . '">Download</a></td>';
+                    print '</tr>';
+                }
+				print '
+                <tr>
 					<td>file1.txt</td>
 					<td style="text-align:right">Mar 13, 2014</td>
 					<td style="text-align:right">12:28pm</td>
@@ -48,6 +62,9 @@
 				</tr>
 			</table>
 		</div>
-	  </div>';
+	  </div>
+	  <script>
+
+	  </script>';
 	require "includes/footer.php";
 ?>
