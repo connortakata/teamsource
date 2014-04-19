@@ -211,7 +211,7 @@
     	}
     	function HideSelectedPopup(){
     		$('#SelectedPopup').hide();
-    		    	}
+        }
     	function clearTaskData(){
     		$('#TaskTitle').val("");
     		$('#TaskDes').val("");
@@ -272,7 +272,7 @@
        		"<a href='#' class='list-group-item'>" +
        			"<h4 class='list-group-item-heading'>" +
 		    	"<table width='100%'>" +
-		    		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " + data.Title + "</td>" +
+		    		"<td name='TaskTitle' style='width:200px;'><input type='checkbox'> " + data.Title + "</td>" +
 		    	    "<td style='width:200px;text-align:right' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >" + "Due: " + data.FinishDate +"</td>" +
 		    		"<td style='width:200px; text-align:center' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >To: " + data.To + "</td>" +
 		    		"<td style='width:150px; text-align:right' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >Priority: " + data.Priority + "</td>" +

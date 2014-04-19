@@ -16,7 +16,9 @@ function HideAlertPopUp() {
     aPopBody.innerText = "";
     aPopUp.style.display = "none";
 }
-
+function DisplayPopUp(PopId) {
+    $("#" + PopId).show()
+}
 function HidePopUp(PopId, ItemsInPopId) {
     var aPopUp = document.getElementById(PopId);
     aPopUp.style.display = "none";
