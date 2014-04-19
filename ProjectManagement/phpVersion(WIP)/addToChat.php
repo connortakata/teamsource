@@ -1,6 +1,6 @@
 ﻿<?php 
     
-    $con = mysqli_connect(localhost, "", "", chat);
+    $con = mysqli_connect("localhost", "root", "", "chat");
 
     if (mysqli_connect_errno())
         {
@@ -9,10 +9,9 @@
     
     $user = $_REQUEST['user'];
     $message = $_REQUEST['message'];
-    $timestamp = $_REQUEST['timestamp']; 
+    $timestamp = $_REQUEST['TimeStamp']; 
     
-	mysqli_query($con, "INSERT INTO myChat ( Message, UserName, TimpStamp) VALUES (" . 
-	$message . ", " . $user . ", " . $timestamp . ");");       
+	mysqli_query($con, "INSERT INTO mychat ( Message, UserName, TimpStamp) VALUES ('$message', '$user', '$timestamp' );");       
     
     mysqli_close($con);    
 ?>

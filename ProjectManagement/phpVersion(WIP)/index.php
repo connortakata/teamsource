@@ -12,9 +12,32 @@
 				<!-- Default panel contents -->
 					<div class="panel-heading"><b>Group Chat:</b></div>
 						<div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
-						<!-- Chat goes here -->               
-                             
-						</div>
+						<!-- Chat goes here --> ';              
+              			$con = mysqli_connect("localhost", "root", "", "chat");
+
+					    if (mysqli_connect_errno())
+					        {
+					            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					        }    
+						mysqli_select_db($con, "chat");
+						$sql = "SELECT * FROM mychat;";
+						$result = mysqli_query($con, $sql);
+						
+						echo "<table>";
+						
+						while($row = mysqli_fetch_array($result))
+						{
+							echo "<tr>";
+							echo "<td>" . $row['UserName'] . ":" . "</td>";
+							echo "<td>" . $row['Message'] . "</td>";
+							echo "<td>" . $row['TimpStamp'] . "</td>";
+							echo "</tr>";
+						}
+						
+						echo "</table>";
+						mysqli_close($con);
+               
+	print	'			</div>
 					</div>
 
 					<div class="talk">
@@ -40,7 +63,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
+    
     <script>
     /* 	this a prototype of how the javascript functions are going to work 
      	this currently uses firebase as a way to track the chat, 
@@ -48,24 +71,42 @@
     	This will be in place till we have a database in place.
     */
 
-    var myDataRef = new Firebase(\'https://burning-fire-7708.firebaseio.com/chat\');
       $(\'#GrpChatbutton\').click(function () {
-          var name = "TestUser"
-          var text = $(\'#GrpChatTxtInput\').val();
-          var date = new Date();
-          var encrypt = CryptoJS.enc.Latin1.parse(text)
-          var base64 = CryptoJS.enc.Latin1.stringify(encrypt);
-          myDataRef.push({name: name, text: base64, TimeStamp: date.toLocaleString()});
-          $(\'#GrpChatTxtInput\').val(\'\');
+      		var xmlhttp;
+      		var user = "Joe"
+      		var date = new Date(); 
+      		var myMessage = document.getElementById("GrpChatTxtInput").value;
+      		if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.onreadystatechange=function()
+			  {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			    {
+			    document.getElementById("ChatBox").innerHTML=xmlhttp.responseText;
+			    }
+			  }
+			xmlhttp.open("POST","addToChat.php",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("user=" + user +  "&message=" + myMessage + "&TimeStamp=" + date.toLocaleString());
+			
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			  
+			xmlhttp.open("GET","getChat.php",true);
+			xmlhttp.send();
       });
-      myDataRef.on(\'child_added\', function(snapshot) {
-        var message = snapshot.val();
-        displayChatMessage(message.name, message.text)//CryptoJS.enc.Latin1.stringify(message.text));
-      });
-      function displayChatMessage(name, text) {
-        $(\'<p/>\').text(text).prepend($(\'<b/>\').text(name+\': \')).appendTo($(\'#ChatBox\'));
-        $(\'#ChatBox\')[0].scrollTop = $(\'#ChatBox\')[0].scrollHeight;
-      };
-    </script>';
+</script>';
 	require "includes/footer.php";
 ?>
