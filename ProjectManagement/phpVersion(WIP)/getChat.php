@@ -14,10 +14,10 @@
 	while($row = mysqli_fetch_array($result))
 	{
 		echo "<tr>";
-		echo "<td style='width:100px;'><b>" . $row['UserName'] . ": " . "</b></td>";
-		echo "<td style='width:200px;'>" . $row['Message'] . "</td>";
-		echo "<td style='width:100px;'>" . $row['TimpStamp'] . "</td>";
-		echo "</tr>";
+        echo "<td style='width:50px;'><b>" . $row['UserName'] . ": " . "</b></td>";
+        echo "<td style='width:200px;'>" . $row['Message'] . "</td>";
+        echo "<td style='width:150px;'>" . $row['TimpStamp'] . "</td>";
+        echo "</tr>";
 	}
 	
 	echo "</table>";
