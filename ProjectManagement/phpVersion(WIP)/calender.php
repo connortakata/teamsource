@@ -9,24 +9,23 @@
         </div>
 		<link href="css/tables.css" rel="stylesheet">
 		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
-		<ul style="display:table; margin:0 auto;" class="pagination">
-				<li><a href="#">&laquo;</a></li>
-				<li><a href="#">Jan</a></li>
-				<li><a href="#">Feb</a></li>
-				<li class="active"><a href="#">Mar<span class="sr-only">(current)</span></a></li>
-				<li><a href="#">Apr</a></li>
-				<li><a href="#">May</a></li>
-				<li><a href="#">Jun</a></li>
-				<li><a href="#">Jul</a></li>
-				<li><a href="#">Aug</a></li>
-				<li><a href="#">Sep</a></li>
-				<li><a href="#">Oct</a></li>
-				<li><a href="#">Nov</a></li>
-				<li><a href="#">Dec</a></li>
-				<li><a href="#">&raquo;</a></li>
-		</ul>';
-		print 
-			'<table style="margin: 0px auto;" class="calender">
+		<ul style="display:table; margin:0 auto;" class="pagination">';
+        print   '<li><a href="#">&laquo;</a></li>';
+        for($i = 1;$i<=12;$i++)
+        {
+            if($i==date('m'))
+            {
+                print '<li class="active"><a href="#">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
+            }
+            else
+            {
+                print '<li><a href="#">' . date("M", mktime(0, 0, 0, $i, 10)) . '</a></li>';
+            }
+        }
+        print '<li><a href="#">&raquo;</a></li>';
+		print '</ul>';
+
+		print '<table style="margin: 0px auto;" class="calender">
 			<tr class="date">
 				<td class="days" width="11.43%">Sun</td>
 				<td class="days" width="11.43%">Mon</td>
