@@ -70,6 +70,31 @@
 				</div>
 			</div>
 		</div>
+		<div id="EditPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
+        <div class="well" style="width:100%; height:auto;">
+          <div class="panel panel-primary" style="height:auto">
+            <div class="panel-heading">
+            <input id="selTaskTitle" type="text" class="form-control" disabled="disabled" placeholder="Task Title">
+            </div>
+            <div class="panel-body">
+
+              Task Issued By: <label id="selIssuedBy"></label><br><br>
+              Finish By: <input id="selFinishBy" disabled="disabled" type="date" style="height:25px"/><br><br>
+              Issued To: <label id="selIssuedTo"></label><br><br>
+              Priority: <label id="selPriority"></label><br><br>
+              Task Description: <br>
+              <div class="panel-info">
+                <label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></label>
+              </div>
+            <div class="btn-group">
+              <button id="btnComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Submit</button>
+              <button id="btnDelete" type="button" class="btn btn-default" onclick="HidePopup()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
         </div>
@@ -132,36 +157,46 @@
     	function DisplaySelectedPopup(){
     		$(\'#SelectedPopup\').show();
     		var pop = document.getElementById("SelectedPopup");
-    		pop.style.zIndex = 10;    
+    		pop.style.zIndex = 10;
     	}
     	function HideSelectedPopup(){
-    		$(\'#SelectedPopup\').hide();
-    		    	}
+            $(\'#SelectedPopup\').hide();
+        }
     	function clearTaskData(){
-    		$(\'#TaskTitle\').val("");
-    		$(\'#TaskDes\').val("");
-    		$(\'#FinishBy\').val("");
-    	}
-    	function EditPopup(task){
-    		var myDataRef = new Firebase(\'https://burning-fire-7708.firebaseio.com/tasks/\' + task + \'/\');
-    		myDataRef.on(\'value\', function(snapshot){
-    			var title = snapshot.val().Title;
-    			var TaskPri = snapshot.val().Priority;
-    			var IssuedTo = snapshot.val().To;
-    			var IssuedBy = snapshot.val().By;
-    			var FinishBy = snapshot.val().FinishDate;
-    			var TaskDes = snapshot.val().Description;
-    			$(\'#selTaskTitle\').val(title);
-    			$(\'#selTaskTitle\').attr(\'disable\', \'disable\');
-    			$(\'#selTaskDes\').text(TaskDes);
-    			$(\'#selIssuedTo\').text(IssuedTo);
-    			$(\'#selIssuedBy\').text(IssuedBy);
-    			$(\'#selFinishBy\').val(FinishBy);
-    			$(\'#selFinishBy\').attr(\'disable\', \'disable\');
-    			$(\'#selPriority\').text(TaskPri);
-    		});
-    		DisplaySelectedPopup();
-    	}
+            $(\'#TaskTitle\').val("");
+            $(\'#TaskDes\').val("");
+            $(\'#FinishBy\').val("");
+        }
+    	function ViewPopup(task){
+            var myDataRef = new Firebase(\'https://burning-fire-7708.firebaseio.com/tasks/\' + task + \'/\');
+            myDataRef.on(\'value\', function(snapshot){
+                var title = snapshot.val().Title;
+                var TaskPri = snapshot.val().Priority;
+                var IssuedTo = snapshot.val().To;
+                var IssuedBy = snapshot.val().By;
+                var FinishBy = snapshot.val().FinishDate;
+                var TaskDes = snapshot.val().Description;
+                $(\'#selTaskTitle\').val(title);
+                $(\'#selTaskTitle\').attr(\'disable\', \'disable\');
+                $(\'#selTaskDes\').text(TaskDes);
+                $(\'#selIssuedTo\').text(IssuedTo);
+                $(\'#selIssuedBy\').text(IssuedBy);
+                $(\'#selFinishBy\').val(FinishBy);
+                $(\'#selFinishBy\').attr(\'disable\', \'disable\');
+                $(\'#selPriority\').text(TaskPri);
+            });
+            DisplaySelectedPopup();
+        }
+
+      $(document).mouseup(function (e)
+      {
+          var container = $(".PopupShadow");
+
+          if (!container.is(e.target)&& container.has(e.target).length === 0) // if the target of the click isnt the container nor a descendant of the container
+          {
+              container.hide();
+          }
+      });
     </script>
     <script>
     /* 	this a prototype of how the javascript functions are going to work 
@@ -172,39 +207,39 @@
 
     	var myDataRefUsers = new Firebase(\'https://burning-fire-7708.firebaseio.com/users\');
     	var myDataRefTasks = new Firebase(\'https://burning-fire-7708.firebaseio.com/tasks\');
-    	
+
     	$(\'#btnComplete\').click(function(){
-    	
-    		var validateSuccess = validatePopUp(document.getElementsByName("popItem"));
-    		//myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
-    		if (validateSuccess == 0)
-    		{
-    			HidePopup();
-    			clearTaskData();
-    		}
-    	});
-    	
+
+            var validateSuccess = validatePopUp(document.getElementsByName("popItem"), "Task");
+            //myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
+            if (validateSuccess == 0)
+            {
+                HidePopup();
+                clearTaskData();
+            }
+        });
+
     	myDataRefUsers.on(\'child_added\', function(snapshot){
-    		var data = snapshot.val();
-    		data += " ";
-    		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
-    		document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
-       	});
-       	
+            var data = snapshot.val();
+            data += " ";
+            document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
+            document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
+        });
+
        	myDataRefTasks.on(\'child_added\', function(snapshot){
-       	    var data = snapshot.val();
-       		document.getElementById("TaskList").innerHTML += (
-       		"<a href=\'#\' class=\'list-group-item\'>" +
-       			"<h4 class=\'list-group-item-heading\'>" +
-		    	"<table width=\'100%\'>" +
-		    		"<td name=\'TaskTitle\' style=\'width:200px;\' size=\'15\';><input type=\'checkbox\'> " + data.Title + "</td>" +
-		    	    "<td style=\'width:200px;text-align:right\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >" + "Due: " + data.FinishDate +"</td>" +
-		    		"<td style=\'width:200px; text-align:center\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >To: " + data.To + "</td>" +
-		    		"<td style=\'width:150px; text-align:right\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >Priority: " + data.Priority + "</td>" +
-		    	"</table>" +
-		    	"</h4>" +
-		    "</a>");
-       	});
+            var data = snapshot.val();
+            document.getElementById("TaskList").innerHTML += (
+                "<a href=\'#\' class=\'list-group-item\' ondblclick=\'ViewPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >" +
+                "<h4 class=\'list-group-item-heading\'>" +
+                "<table width=\'100%\'>" +
+                "<td name=\'TaskTitle\' style=\'width:200px;\'><input type=\'checkbox\'> " + data.Title + "</td>" +
+                "<td style=\'width:200px;text-align:right\' >" + "Due: " + data.FinishDate +"</td>" +
+                "<td style=\'width:200px; text-align:center\' > To: " + data.To + "</td>" +
+                "<td style=\'width:150px; text-align:right\' > Priority: " + data.Priority + "</td>" +
+                "</table>" +
+                "</h4>" +
+                "</a>");
+        });
     	
     </script>';
 	

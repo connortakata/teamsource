@@ -16,3 +16,17 @@ function HideAlertPopUp() {
     aPopBody.innerText = "";
     aPopUp.style.display = "none";
 }
+function DisplayPopUp(PopId) {
+    $("#" + PopId).show()
+}
+function HidePopUp(PopId, ItemsInPopId) {
+    var aPopUp = document.getElementById(PopId);
+    aPopUp.style.display = "none";
+    var popItems = document.getElementsByName(ItemsInPopId);
+    ClearData(ItemsInPopId);
+}
+function ClearData(object) {
+    for (var i = 0; i < object.length; i++) {
+        object[i].value = "";
+    }
+}

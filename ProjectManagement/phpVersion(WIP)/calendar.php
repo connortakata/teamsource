@@ -11,10 +11,30 @@
 		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
 		<div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
             <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
-              <button type="button" class="btn btn-default btn-med" onclick="DisplayPopup()">
+              <button type="button" class="btn btn-default btn-med" onclick="DisplayPopUp(\'CalendarPopUp\')">
                 <span class="glyphicon glyphicon-plus"></span> Add Event
               </button>
         </div>
+        <div id="CalendarPopUp" class="PopupShadow" style="display:none; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
+        <div class="well" style="width:100%; height:100%;">
+            <div class="panel panel-primary" style="top:25px; height:95%;">
+                <div class="panel-heading">
+                    <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Calendar Title">
+                </div>
+                <div class="panel-body">
+                    <input name="CalendarItem" id="AssignDate" type="date" style="height:25px"/><br /><br />
+                    Description
+                    <div class="panel-info">
+			    	    <textarea name="CalendarItem" id="CalendarDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
+			        </div>
+                </div>
+                <div class="btn-group">
+                    <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" />
+                    <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'CalendarPopUp\', \'CalendarItem\');" />
+                </div>
+            </div>
+        </div>
+    </div>
 		<ul style="display:table; margin:0 auto;" class="pagination">';
         print   '<li><a href="#">&laquo;</a></li>';
         for($i = 1;$i<=12;$i++)
@@ -101,5 +121,13 @@
             }
             return $days; //Finish with the built calendar
         }
+print '
+<script>
+        $("#CalAdd").click(function () {
+            var controls = document.getElementsByName("CalendarItem");
+            validatePopUp(controls, "Calendar");
+        });
+    </script>
+';
 	    require "includes/footer.php";
 ?>

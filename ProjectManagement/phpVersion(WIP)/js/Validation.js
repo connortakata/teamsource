@@ -1,18 +1,31 @@
 ﻿$import_js('js/firebase.js');
-function validatePopUp(object)
+function validatePopUp(object, DataSet)
 {
 	for(var i = 0; i < object.length; i++)
 	{
 		if ($(object[i]).val() == "")
 		{
-			DisplayAlertPopUp("Validation Error","Task title and due date must be speificed when making a task.");
+		    var message;
+		    if (DataSet == "Task")
+		        message = "Task title and due date must be speificed when making a task.";
+		    if (DataSet == "Calendar")
+		        message = "This pop-up needs to have a set date and title";
+			DisplayAlertPopUp("Validation Error", message);
     		return 1;
 		}
 	}
-	var DateSuccess = DateValidation(object[2].value);
-	if (DateSuccess == 1)
-	    return 1;
-	pushValidatedTasks(object);
+	if (DataSet == "Task") {
+	    var DateSuccess = DateValidation(object[2].value);
+	    if (DateSuccess == 1)
+	        return 1;
+	    pushValidatedTasks(object);
+	}
+	if (DataSet == "Calendar") {
+	    var DateSuccess = DateValidation(object[1].value);
+	    if (DateSuccess == 1)
+	        return 1;
+	    //pushValidatedCalendar(object);
+	}
 	return 0;
 }
 function pushValidatedTasks(object)
