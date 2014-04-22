@@ -14,7 +14,7 @@
     $to = $_REQUEST['toWhom'];
     $by = $_REQUEST['byWhom']; 
     
-	mysqli_query($con, "INSERT INTO mytasks ( title, description, dueDate, priority, to, by) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by');");       
+	mysqli_query($con, "INSERT INTO mytasks ( title, description, dueDate, priority, toWhom, byWhom) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by');");       
     
     mysqli_close($con);    
 ?>

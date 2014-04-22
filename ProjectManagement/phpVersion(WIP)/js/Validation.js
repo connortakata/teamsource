@@ -17,8 +17,30 @@ function validatePopUp(object)
 }
 function pushValidatedTasks(object)
 {
-	var fb = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
-	fb.push({Title: object[0].value, Priority: object[4].value, To: object[3].value, By: object[1].value, FinishDate: object[2].value, Description: object[5].value});
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+    xmlhttp.onreadystatechange=function()
+	  {
+	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	        {
+	        	var ServerResponse = xmlhttp.responseText;
+	        	if ( ServerResponse != "")
+	        	{
+                	DisplayAlertPopUp ("Server Error", ServerResponse);
+                }
+	        }
+	  }
+	xmlhttp.open("POST","addToTasks.php",false);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
+					"&priority=" + object[4].value + "&description=" + object[5].value );
 }
 function DateValidation(Day) {
     var Today = new Date();

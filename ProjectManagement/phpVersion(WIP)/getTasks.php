@@ -14,14 +14,13 @@
 			echo "<a href='#' class='list-group-item'>";
        		echo	"<h4 class='list-group-item-heading'>"; 
 		    echo	"<table width='100%'>";
-		    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'>" . $row['title'] . "</td>";
-		    echo	    "<td style='width:200px;text-align:right' onclick='EditPopup(" . '"'  $row['dueDate'] . '"' . ")' >" . "Due: " . $row['dueDate'] ."</td>";
-		    echo		"<td style='width:200px; text-align:center' onclick='EditPopup(" . '"' . $row[''] . '"' . ")' >To: " . $row['to'] . "</td>";
-		    echo		"<td style='width:150px; text-align:right' onclick='EditPopup(" . '"' . $row['id'] . '"' . ")' >Priority: " . $row['priority'] . "</td>";
+		    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " . $row['title'] . "</td>";
+		    echo	    "<td style='width:200px;text-align:right' onclick='EditPopup(" .  $row['id'] . ")' > Due: " . $row['dueDate'] ."</td>";
+		    echo		"<td style='width:200px; text-align:center' onclick='EditPopup(" . $row['id'] . ")' >To: " . $row['toWhom'] . "</td>";
+		    echo		"<td style='width:150px; text-align:right' onclick='EditPopup(" . $row['id']  . ")' >Priority: " . $row['priority'] . "</td>";
 		    echo	"</table>";
 		    echo	"</h4>";
 		    echo "</a>";	
 	}
-	
 	mysqli_close($con);
 ?>

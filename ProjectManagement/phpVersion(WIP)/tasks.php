@@ -174,13 +174,34 @@
     	$(\'#btnComplete\').click(function(){
     	
     		var validateSuccess = validatePopUp(document.getElementsByName("popItem"));
-    		//myDataRefTasks.push({Title: TaskTitle, Priority: TaskPri, To: IssuedTo, By: IssuedBy, FinishDate: FinishBy, Description: TaskDes});
-    		if (validateSuccess == 0)
+       		if (validateSuccess == 0)
     		{
     			HidePopup();
     			clearTaskData();
+    			RefreshTasks();
     		}
     	});
+    	
+    	function RefreshTasks(){
+    		var xmlhttp;
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+		    xmlhttp.onreadystatechange=function()
+			  {
+			      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			        {
+			        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
+			        }
+			  }
+			  xmlhttp.open("GET","getTasks.php",false);
+			  xmlhttp.send();
+    	}
     	
     	/*myDataRefUsers.on(\'child_added\', function(snapshot){
     		var data = snapshot.val();
