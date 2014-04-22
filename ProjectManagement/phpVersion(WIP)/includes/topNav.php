@@ -12,7 +12,7 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="index.php">Dashboard</a></li>
-				<li><a href="Settings.php">Settings</a></li>
+				<li <?php if($_SERVER['PHP_SELF']=="/Settings.php") print 'class="active"';?>><a href="Settings.php">Settings</a></li>
 				<li><a href="#">Account</a></li>
 				<li><a href="#">Sign Out</a></li>
 			</ul>
