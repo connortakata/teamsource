@@ -93,7 +93,7 @@
                 $month = date('n');
             if($year == NULL)
                 $year =  date('Y');
-            $firstDay = date('w', strtotime(date("F", mktime(0, 0, 0, $month, 10))))+1; //Get first day of the week of the month
+            $firstDay = date('w', strtotime(date("F", mktime(0, 0, 0, $month, 10)))); //Get first day of the week of the month
             $numDaysCurrMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); //Get number of days in current month
             $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $month-1, $year); //Number of days in last month
             $days = array();
