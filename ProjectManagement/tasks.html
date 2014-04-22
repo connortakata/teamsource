@@ -217,7 +217,7 @@
     		$('#TaskDes').val("");
     		$('#FinishBy').val("");
     	}
-    	function EditPopup(task){
+    	function ViewPopup(task){
     		var myDataRef = new Firebase('https://burning-fire-7708.firebaseio.com/tasks/' + task + '/');
     		myDataRef.on('value', function(snapshot){
     			var title = snapshot.val().Title;
@@ -269,13 +269,13 @@
        	myDataRefTasks.on('child_added', function(snapshot){
        	    var data = snapshot.val();
        		document.getElementById("TaskList").innerHTML += (
-       		"<a href='#' class='list-group-item' onclick='EditPopup(" + '"' + snapshot.name() + '"' + ")' >" +
+       		"<a href='#' class='list-group-item' onclick='ViewPopup(" + '"' + snapshot.name() + '"' + ")' >" +
        			"<h4 class='list-group-item-heading'>" +
 		    	"<table width='100%'>" +
 		    		"<td name='TaskTitle' style='width:200px;'><input type='checkbox'> " + data.Title + "</td>" +
 		    	    "<td style='width:200px;text-align:right' >" + "Due: " + data.FinishDate +"</td>" +
-		    		"<td style='width:200px; text-align:center' >To: " + data.To + "</td>" +
-		    		"<td style='width:150px; text-align:right' >Priority: " + data.Priority + "</td>" +
+		    		"<td style='width:200px; text-align:center' > To: " + data.To + "</td>" +
+		    		"<td style='width:150px; text-align:right' > Priority: " + data.Priority + "</td>" +
 		    	"</table>" +
 		    	"</h4>" +
 		    "</a>");
