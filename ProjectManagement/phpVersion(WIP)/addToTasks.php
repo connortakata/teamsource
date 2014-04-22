@@ -11,8 +11,8 @@
     $description = $_REQUEST['description'];
     $dueDate = $_REQUEST['dueDate'];
     $priority = $_REQUEST['priority'];
-    $to = $_REQUEST['to'];
-    $by = $_REQUEST['by']; 
+    $to = $_REQUEST['toWhom'];
+    $by = $_REQUEST['byWhom']; 
     
 	mysqli_query($con, "INSERT INTO mytasks ( title, description, dueDate, priority, to, by) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by');");       
     

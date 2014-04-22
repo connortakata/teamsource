@@ -27,9 +27,37 @@
 				  </div>
 				  <div class="panel-body">
 			
-					Task Issued By: <select name="popItem" id="IssuedBy"></select><br><br>
+					Task Issued By: <select name="popItem" id="IssuedBy">';
+					$con = mysqli_connect("localhost", "root", "", "chat");
+
+				    if (mysqli_connect_errno())
+			        {
+			            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			        }    
+    				mysqli_select_db($con, "chat");
+					$sql = "SELECT * FROM users;";
+					$result = mysqli_query($con, $sql);
+	
+			    	while($row = mysqli_fetch_array($result))
+					{
+						echo'<option>' . $row['name'] . '</option>'; 
+					}
+					
+					print'</select><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
-					Issued To: <select name="popItem" id="IssuedTo"></select><br><br>
+					Issued To: <select name="popItem" id="IssuedTo">';
+					
+					mysqli_select_db($con, "chat");
+					$sql = "SELECT * FROM users;";
+					$result = mysqli_query($con, $sql);
+					
+					while($row = mysqli_fetch_array($result))
+					{
+						echo'<option>' . $row['name'] . '</option>'; 
+					}
+
+					
+					print'</select><br><br>
 					Priority: <select name="popItem" id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
 					Task Description: <br>
 					<div class="panel-info">
@@ -45,30 +73,6 @@
 			</div>
 		</div>
 		<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
-			<div class="well" style="width:100%; height:auto;">
-				<div class="panel panel-primary" style="height:auto">
-				  <div class="panel-heading">
-					<input id="selTaskTitle" type="text" class="form-control" disabled="disabled" placeholder="Task Title">			    
-				  </div>
-				  <div class="panel-body">
-			
-					Task Issued By: <label id="selIssuedBy"></label><br><br>
-					Finish By: <input id="selFinishBy" disabled="disabled" type="date" style="height:25px"/><br><br>
-					Issued To: <label id="selIssuedTo"></label><br><br>
-					Priority: <label id="selPriority"></label><br><br>
-					Task Description: <br>
-					<div class="panel-info">
-						<label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;"  ></label>
-					</div>
-					<div class="btn-group">
-					  <button id="btnSelComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>
-					  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
-					  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>
-					</div>
-			
-				  </div>
-				</div>
-			</div>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
@@ -84,35 +88,28 @@
           </button>
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
-		  	<div id="TaskList" class="list-group">
-		    <!--<a href="#" class="list-group-item">
-		    	<h4 class="list-group-item-heading">
-		    	<table width="100%">
-		    		<td><input type="checkbox">  Task 1</td>
-		    		<td style="text-align:center;">Due Date: 03/16/2014</td>
-		    		<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-down"></span></td>
-		    	</table>
-		    	</h4>
-		    </a>
-		    <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">
-				<table width="100%">
-					<td><input type="checkbox">  Task 2</td>
-					<td style="text-align:center;">Due Date: 03/16/2014</td>
-					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-arrow-up"></span></td>
-				</table>
-				</h4>
-		    </a>
-		    <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">
-				<table width="100%">
-					<td><input type="checkbox">  Task 3</td>
-					<td style="text-align:center;">Due Date: 03/16/2014</td>
-					<td style="text-align:right;">Priority: <span class="glyphicon glyphicon-exclamation-sign"></span></td>
-				</table>
-				</h4>
-		    </a>-->
-		  	</div>
+		  	<div id="TaskList" class="list-group">';
+		  	
+   				$sql = "SELECT * FROM mytasks;";
+				$result = mysqli_query($con, $sql);
+
+		    	while($row = mysqli_fetch_array($result))
+				{
+						echo "<a href='#' class='list-group-item'>";
+			       		echo	"<h4 class='list-group-item-heading'>"; 
+					    echo	"<table width='100%'>";
+					    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " . $row['title'] . "</td>";
+					    echo	    "<td style='width:200px;text-align:right' onclick='EditPopup(" .  $row['id'] . ")' > Due: " . $row['dueDate'] ."</td>";
+					    echo		"<td style='width:200px; text-align:center' onclick='EditPopup(" . $row['id'] . ")' >To: " . $row['toWhom'] . "</td>";
+					    echo		"<td style='width:150px; text-align:right' onclick='EditPopup(" . $row['id']  . ")' >Priority: " . $row['priority'] . "</td>";
+					    echo	"</table>";
+					    echo	"</h4>";
+					    echo "</a>";	
+				}
+			mysqli_close($con); 
+				
+		print	' 	
+			</div>
 		  </div>
 
           </div>
@@ -143,24 +140,28 @@
     		$(\'#FinishBy\').val("");
     	}
     	function EditPopup(task){
-    		var myDataRef = new Firebase(\'https://burning-fire-7708.firebaseio.com/tasks/\' + task + \'/\');
-    		myDataRef.on(\'value\', function(snapshot){
-    			var title = snapshot.val().Title;
-    			var TaskPri = snapshot.val().Priority;
-    			var IssuedTo = snapshot.val().To;
-    			var IssuedBy = snapshot.val().By;
-    			var FinishBy = snapshot.val().FinishDate;
-    			var TaskDes = snapshot.val().Description;
-    			$(\'#selTaskTitle\').val(title);
-    			$(\'#selTaskTitle\').attr(\'disable\', \'disable\');
-    			$(\'#selTaskDes\').text(TaskDes);
-    			$(\'#selIssuedTo\').text(IssuedTo);
-    			$(\'#selIssuedBy\').text(IssuedBy);
-    			$(\'#selFinishBy\').val(FinishBy);
-    			$(\'#selFinishBy\').attr(\'disable\', \'disable\');
-    			$(\'#selPriority\').text(TaskPri);
-    		});
-    		DisplaySelectedPopup();
+			var xmlhttp;
+        	if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+            xmlhttp.onreadystatechange=function()
+			  {
+			      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			        {
+			            var test = document.getElementById("SelectedPopup");
+                        test.innerHTML=xmlhttp.responseText;
+                        DisplaySelectedPopup();
+			        }
+			  }
+			xmlhttp.open("POST","getTaskPopUp.php",false);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("id=" + task);
+    		
     	}
     </script>
     <script>
@@ -169,9 +170,6 @@
     	which will only work for our chat for our group.
     	This will be in place till we have a database in place.
     */
-
-    	var myDataRefUsers = new Firebase(\'https://burning-fire-7708.firebaseio.com/users\');
-    	var myDataRefTasks = new Firebase(\'https://burning-fire-7708.firebaseio.com/tasks\');
     	
     	$(\'#btnComplete\').click(function(){
     	
@@ -184,7 +182,7 @@
     		}
     	});
     	
-    	myDataRefUsers.on(\'child_added\', function(snapshot){
+    	/*myDataRefUsers.on(\'child_added\', function(snapshot){
     		var data = snapshot.val();
     		data += " ";
     		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
@@ -204,7 +202,7 @@
 		    	"</table>" +
 		    	"</h4>" +
 		    "</a>");
-       	});
+       	});*/
     	
     </script>';
 	
