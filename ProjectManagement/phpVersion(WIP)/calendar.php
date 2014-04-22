@@ -9,6 +9,12 @@
         </div>
 		<link href="css/tables.css" rel="stylesheet">
 		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
+		<div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
+            <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
+              <button type="button" class="btn btn-default btn-med" onclick="DisplayPopup()">
+                <span class="glyphicon glyphicon-plus"></span> Add Event
+              </button>
+        </div>
 		<ul style="display:table; margin:0 auto;" class="pagination">';
         print   '<li><a href="#">&laquo;</a></li>';
         for($i = 1;$i<=12;$i++)
@@ -26,15 +32,15 @@
 		print '</ul>';
 
 		print '<table style="margin: 0px auto;" class="calender">
-			<tr class="date">
-				<td class="days" width="11.43%">Sun</td>
-				<td class="days" width="11.43%">Mon</td>
-				<td class="days" width="11.43%">Tue</td>
-				<td class="days" width="11.43%">Wed</td>
-				<td class="days" width="11.43%">Thu</td>
-				<td class="days" width="11.43%">Fri</td>
-				<td class="days" width="11.43%">Sat</td>
-			</tr>';
+               <tr class="date">
+                    <td class="days" width="11.43%">Sun</td>
+                    <td class="days" width="11.43%">Mon</td>
+                    <td class="days" width="11.43%">Tue</td>
+                    <td class="days" width="11.43%">Wed</td>
+                    <td class="days" width="11.43%">Thu</td>
+                    <td class="days" width="11.43%">Fri</td>
+                    <td class="days" width="11.43%">Sat</td>
+               </tr>';
         $day = 0;
         $days = buildCalArray();
         for( $i=0; $i<count($days)/7; $i++)
