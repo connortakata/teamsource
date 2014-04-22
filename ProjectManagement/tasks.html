@@ -263,6 +263,17 @@
     		});
     		DisplaySelectedPopup();
     	}
+
+      $(document).mouseup(function (e)
+      {
+        var container = $(".PopupShadow");
+
+        if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+          {
+          container.hide();
+          }
+      });
     </script>
     <script>
     /* 	this a prototype of how the javascript functions are going to work 
