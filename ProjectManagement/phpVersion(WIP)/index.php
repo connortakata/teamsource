@@ -76,6 +76,8 @@
       		var user = "Joe"
       		var date = new Date(); 
       		var myMessage = document.getElementById("GrpChatTxtInput").value;
+      		if(validateMessage(myMessage) != 0)
+      			return;
       		if (window.XMLHttpRequest)
 			  {// code for IE7+, Firefox, Chrome, Opera, Safari
 			  xmlhttp=new XMLHttpRequest();

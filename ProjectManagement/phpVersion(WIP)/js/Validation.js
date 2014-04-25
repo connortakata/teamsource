@@ -64,3 +64,9 @@ function DateValidation(Day) {
     }
     return 0;
 }
+function validateMessage(message) {
+	if (message == "")
+		return -1;
+	else 
+		return 0;
+}

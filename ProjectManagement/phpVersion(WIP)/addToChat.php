@@ -12,6 +12,5 @@
     $timestamp = $_REQUEST['TimeStamp']; 
     
 	mysqli_query($con, "INSERT INTO mychat ( Message, UserName, TimpStamp) VALUES ('$message', '$user', '$timestamp' );");       
-    
     mysqli_close($con);    
 ?>
