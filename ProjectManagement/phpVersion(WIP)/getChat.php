@@ -1,11 +1,11 @@
 <?php
-	$con = mysqli_connect("localhost", "root", "", "chat");
+	$con = mysqli_connect("localhost", "root", "", "root");
 
     if (mysqli_connect_errno())
         {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }    
-	mysqli_select_db($con, "chat");
+	mysqli_select_db($con, "root");
 	$sql = "SELECT * FROM mychat;";
 	$result = mysqli_query($con, $sql);
 	

@@ -23,7 +23,7 @@ if (true)//restrict file types here
         {
             move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/" . $_FILES["file"]["name"]);
             echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
-            $con=mysqli_connect("localhost","ODBC","","test");
+            $con=mysqli_connect("localhost","root","","root");
             // Check connection
 
             if (mysqli_connect_errno())
@@ -35,7 +35,7 @@ if (true)//restrict file types here
             $size = ($_FILES["file"]["size"] / 1024) . "kB";
             list($left, $right) = explode('.', $size, 2);
             $sql = "INSERT INTO files (filename, added, size)
-VALUES ('$filename', '$date', '$size')";
+VALUES ('$filename', '$date', '$size');";
             mysqli_query($con,$sql);
 
             mysqli_close($con);

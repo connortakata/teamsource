@@ -121,13 +121,6 @@
             }
             return $days; //Finish with the built calendar
         }
-print '
-<script>
-        $("#CalAdd").click(function () {
-            var controls = document.getElementsByName("CalendarItem");
-            validatePopUp(controls, "Calendar");
-        });
-    </script>
-';
+        print '<script src="js/calendar.js"></script>';
 	    require "includes/footer.php";
 ?>

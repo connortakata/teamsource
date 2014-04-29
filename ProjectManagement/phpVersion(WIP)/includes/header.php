@@ -8,15 +8,15 @@
 		<meta name="author" content="">
 		<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 		
-		<script src="js/angular.min.js"></script>
-		<script src="js/backbone-min.js"></script>
-		<script src="js/jquery.min.js"></script>
+		<script src="js/header/angular.min.js"></script>
+		<script src="js/header/backbone-min.js"></script>
+		<script src="js/header/jquery.min.js"></script>
         <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core-min.js"></script>
         <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-utf16-min.js"></script>
         <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
-		<script src="js/firebase.js"></script>
-		<script src="js/Validation.js"></script>
-    	<script src="js/AlertPopUp.js"></script>
+		<script src="js/header/firebase.js"></script>
+		<script src="js/header/Validation.js"></script>
+    	<script src="js/header/AlertPopUp.js"></script>
 		<title>Dashboard Template for Bootstrap</title>
 
 		<!-- Bootstrap core CSS -->
@@ -30,8 +30,8 @@
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-		  <script src="js/html5shiv.js"></script>
-		  <script src="js/respond.min.js"></script>
+		  <script src="js/header/html5shiv.js"></script>
+		  <script src="js/header/respond.min.js"></script>
 		<![endif]-->
 	</head>
 

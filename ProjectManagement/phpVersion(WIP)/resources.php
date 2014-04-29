@@ -38,7 +38,7 @@
 					<td style="text-align:right">Action</td>
 				</tr>';
 
-                $con=mysqli_connect("localhost","ODBC","","test");
+                $con=mysqli_connect("localhost","root","","root");
                 $sql = "SELECT * FROM files";
                 $result = mysqli_query($con,$sql);
                 while($row = mysqli_fetch_array($result)){
