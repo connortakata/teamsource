@@ -4,22 +4,7 @@
 	require "includes/sidebar.php";
 
 	print '
-			<div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
-			<div class="well" style="width:100%; height:100%;">
-				<div class="panel panel-primary" style="height:100%;">
-					<div class="panel-heading">
-						<label id="AlertPopUpTitle"></label>
-					</div>
-					<div id="AlertPopUpBody" class="panel-body">
-
-					</div>
-					<div class="btn-group">
-						<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
-					</div>
-				</div>
-			</div>
-		</div>   
-		<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
+			<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
 			<div class="well" style="width:100%; height:auto;">
 				<div class="panel panel-primary" style="height:auto">
 				  <div class="panel-heading">
@@ -28,6 +13,7 @@
 				  <div class="panel-body">
 			
 					Task Issued By: <select name="popItem" id="IssuedBy">';
+					$myUsers = array();
 					$con = mysqli_connect("localhost", "root", "", "chat");
 
 				    if (mysqli_connect_errno())
@@ -40,6 +26,7 @@
 	
 			    	while($row = mysqli_fetch_array($result))
 					{
+						$myUsers[] = $row['name'];
 						echo'<option>' . $row['name'] . '</option>'; 
 					}
 					
@@ -72,7 +59,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:20%; width:600px; height:auto;">
+		<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
@@ -139,30 +126,6 @@
     		$(\'#TaskDes\').val("");
     		$(\'#FinishBy\').val("");
     	}
-    	function EditPopup(task){
-			var xmlhttp;
-        	if (window.XMLHttpRequest)
-			  {// code for IE7+, Firefox, Chrome, Opera, Safari
-			  xmlhttp=new XMLHttpRequest();
-			  }
-			else
-			  {// code for IE6, IE5
-			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			  }
-            xmlhttp.onreadystatechange=function()
-			  {
-			      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			        {
-			            var test = document.getElementById("SelectedPopup");
-                        test.innerHTML=xmlhttp.responseText;
-                        DisplaySelectedPopup();
-			        }
-			  }
-			xmlhttp.open("POST","getTaskPopUp.php",false);
-			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			xmlhttp.send("id=" + task);
-    		
-    	}
     </script>
     <script>
     /* 	this a prototype of how the javascript functions are going to work 
@@ -181,50 +144,7 @@
     			RefreshTasks();
     		}
     	});
-    	
-    	function RefreshTasks(){
-    		var xmlhttp;
-			if (window.XMLHttpRequest)
-			  {// code for IE7+, Firefox, Chrome, Opera, Safari
-			  xmlhttp=new XMLHttpRequest();
-			  }
-			else
-			  {// code for IE6, IE5
-			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			  }
-		    xmlhttp.onreadystatechange=function()
-			  {
-			      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			        {
-			        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
-			        }
-			  }
-			  xmlhttp.open("GET","getTasks.php",false);
-			  xmlhttp.send();
-    	}
-    	
-    	/*myDataRefUsers.on(\'child_added\', function(snapshot){
-    		var data = snapshot.val();
-    		data += " ";
-    		document.getElementById("IssuedTo").innerHTML += ("<option>" + data + "</option>");
-    		document.getElementById("IssuedBy").innerHTML += ("<option>" + data + "</option>");
-       	});
-       	
-       	myDataRefTasks.on(\'child_added\', function(snapshot){
-       	    var data = snapshot.val();
-       		document.getElementById("TaskList").innerHTML += (
-       		"<a href=\'#\' class=\'list-group-item\'>" +
-       			"<h4 class=\'list-group-item-heading\'>" +
-		    	"<table width=\'100%\'>" +
-		    		"<td name=\'TaskTitle\' style=\'width:200px;\' size=\'15\';><input type=\'checkbox\'> " + data.Title + "</td>" +
-		    	    "<td style=\'width:200px;text-align:right\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >" + "Due: " + data.FinishDate +"</td>" +
-		    		"<td style=\'width:200px; text-align:center\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >To: " + data.To + "</td>" +
-		    		"<td style=\'width:150px; text-align:right\' onclick=\'EditPopup(" + \'"\' + snapshot.name() + \'"\' + ")\' >Priority: " + data.Priority + "</td>" +
-		    	"</table>" +
-		    	"</h4>" +
-		    "</a>");
-       	});*/
-    	
+    	    	    	
     </script>';
 	
 	require "includes/footer.php";

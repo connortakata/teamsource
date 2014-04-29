@@ -17,6 +17,7 @@
 		<script src="js/firebase.js"></script>
 		<script src="js/Validation.js"></script>
     	<script src="js/AlertPopUp.js"></script>
+    	<script src="js/AJAX_lib.js"></script>
 		<title>Dashboard Template for Bootstrap</title>
 
 		<!-- Bootstrap core CSS -->
@@ -36,3 +37,18 @@
 	</head>
 
 	<body>
+		<div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+			<div class="well" style="width:100%; height:100%;">
+				<div class="panel panel-primary" style="height:100%;">
+					<div class="panel-heading">
+						<label id="AlertPopUpTitle"></label>
+					</div>
+					<div id="AlertPopUpBody" class="panel-body">
+	
+					</div>
+					<div class="btn-group">
+						<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+					</div>
+				</div>
+			</div>
+		</div>   
