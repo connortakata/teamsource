@@ -77,7 +77,7 @@
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">';
 		  	
-   				$sql = "SELECT * FROM mytasks;";
+   				$sql = "SELECT * FROM tasks WHERE finished = 0;";
 				$result = mysqli_query($con, $sql);
 
 		    	while($row = mysqli_fetch_array($result))
@@ -141,7 +141,7 @@
     		{
     			HidePopup();
     			clearTaskData();
-    			RefreshTasks();
+    			RefreshTasks(0);
     		}
     	});
     	    	    	

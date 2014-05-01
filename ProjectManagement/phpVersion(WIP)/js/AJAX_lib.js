@@ -86,7 +86,7 @@ function EditPopup(task){
 	
 }
 
-function RefreshTasks(){
+function RefreshTasks(getItemSubset){
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	  {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -104,8 +104,9 @@ function RefreshTasks(){
 	        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
 	        }
 	  }
-	  xmlhttp.open("GET","getTasks.php",false);
-	  xmlhttp.send();
+	  xmlhttp.open("POST","getTasks.php",false);
+	  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	  xmlhttp.send("finished=" + getItemSubset);
 }
 
 function UpdateTask(object, id){
@@ -153,5 +154,24 @@ function EditTask(id){
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + id);
 
+}
+
+function isFinishTask(id, SetTo){
+	var xmlhttp;
+	if(window.XMLHttpRequest){
+		xmlhttp = new XMLHttpRequest();
+	}
+	else{
+		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange = function() {
+		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+		
+		}
+	}
+	xmlhttp.open("POST", "SetTaskToFinish.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
 }
 

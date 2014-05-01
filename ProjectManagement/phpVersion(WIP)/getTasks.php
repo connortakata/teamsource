@@ -5,8 +5,9 @@
         {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }    
+    $finished = $_REQUEST['finished'];    
 	mysqli_select_db($con, "chat");
-	$sql = "SELECT * FROM mytasks;";
+	$sql = "SELECT * FROM tasks WHERE finished = 0;";
 	$result = mysqli_query($con, $sql);
 		
 	while($row = mysqli_fetch_array($result))

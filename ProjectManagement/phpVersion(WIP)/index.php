@@ -28,9 +28,9 @@
 						while($row = mysqli_fetch_array($result))
 						{
 							echo "<tr>";
-							echo "<td style='width:50px;'><b>" . $row['UserName'] . ": " . "</b></td>";
-							echo "<td style='width:200px;'>" . $row['Message'] . "</td>";
-							echo "<td style='width:150px;'>" . $row['TimpStamp'] . "</td>";
+							echo "<td style='width:15%; text-align:right;'><b>" . $row['UserName'] . ": " . "</b></td>";
+							echo "<td style='width:60%;'>" . $row['Message'] . "</td>";
+							echo "<td style='width:25%;'>" . $row['TimpStamp'] . "</td>";
 							echo "</tr>";
 						}
 						

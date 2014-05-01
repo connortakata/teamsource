@@ -40,7 +40,7 @@ function pushValidatedTasks(object)
 	xmlhttp.open("POST","addToTasks.php",false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
-					"&priority=" + object[4].value + "&description=" + object[5].value );
+					"&priority=" + object[4].value + "&description=" + object[5].value + "&finished= 0");
 }
 function DateValidation(Day) {
     var Today = new Date();

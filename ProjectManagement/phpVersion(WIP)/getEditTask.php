@@ -9,7 +9,7 @@
 	
 	mysqli_select_db($con, "chat");
 	$query = "SELECT * FROM users;";
-	$sql = "SELECT * FROM mytasks WHERE id =" . $id . ";";
+	$sql = "SELECT * FROM tasks WHERE id =" . $id . ";";
 	$userResult = mysqli_query($con, $query);
 	$result = mysqli_query($con, $sql);
 	$users = array();

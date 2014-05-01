@@ -7,7 +7,7 @@
         }
 	$id = $_REQUEST['id'];
 	mysqli_select_db($con, "chat");
-	$sql = "SELECT * FROM mytasks WHERE id =" . $id . ";";
+	$sql = "SELECT * FROM tasks WHERE id =" . $id . ";";
 	
 	$result = mysqli_query($con, $sql);
 		
@@ -28,7 +28,7 @@
 		echo '				<label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;">' . $row['description'] . '</label>';
 		echo '			</div>';
 		echo '			<div class="btn-group">';
-		echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-ok"></span> Complete</button>';
+		echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" onclick="isFinishTask(' . $id . ', 1); location.reload();"><span class="glyphicon glyphicon-ok"></span> Finish</button>';
 		echo '			  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="EditTask(' . $id . ')"><span class="glyphicon glyphicon-wrench"></span> Edit</button>';
 		echo '			  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>';
 		echo '			</div>';
