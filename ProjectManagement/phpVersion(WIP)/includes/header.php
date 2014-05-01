@@ -18,7 +18,15 @@
 		<script src="js/Validation.js"></script>
     	<script src="js/AlertPopUp.js"></script>
     	<script src="js/AJAX_lib.js"></script>
-		<title>Dashboard Template for Bootstrap</title>
+		<title>
+            <?php
+            if($_SERVER['PHP_SELF']=="/index.php") print 'Team Source Dashboard';
+            else if($_SERVER['PHP_SELF']=="/calendar.php") print 'Team Source Calendar';
+            else if($_SERVER['PHP_SELF']=="/resources.php") print 'Team Source Resources';
+            else if($_SERVER['PHP_SELF']=="/tasks.php") print 'Team Source Tasks';
+            else print 'Team Source';
+            ?>
+        </title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
