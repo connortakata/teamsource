@@ -19,8 +19,8 @@
 					        {
 					            echo "Failed to connect to MySQL: " . mysqli_connect_error();
 					        }    
-						mysqli_select_db($con, "chat");
-						$sql = "SELECT * FROM mychat;";
+						//mysqli_select_db($con, "teamsource");
+						$sql = "SELECT * FROM message;";
 						$result = mysqli_query($con, $sql);
 						
 						echo "<table>";
@@ -28,26 +28,26 @@
 						while($row = mysqli_fetch_array($result))
 						{
 							echo "<tr>";
-							echo "<td style='width:15%; text-align:right;'><b>" . $row['UserName'] . ": " . "</b></td>";
-							echo "<td style='width:60%;'>" . $row['Message'] . "</td>";
-							echo "<td style='width:25%;'>" . $row['TimpStamp'] . "</td>";
+							echo "<td style='width:15%; text-align:right;'><b>" . $row['MESSAGE_USER_ID'] . ": " . "</b></td>";
+							echo "<td style='width:60%;'>" . $row['MESSAGE_TEXT'] . "</td>";
+							echo "<td style='width:25%;'>" . $row['MESSAGE_TIME'] . "</td>";
 							echo "</tr>";
 						}
 						
 						echo "</table>";
 						mysqli_close($con);
                
-	print	'			</div>
-					</div>
+	print	'	</div>
+			</div>
 
-					<div class="talk">
-						<input id="GrpChatTxtInput" type="text" style="width:75%" placeholder="Type Your Message Here...">
-						<button id="GrpChatbutton" style="margin-left: 3%;" onclick="submitToChat(); getChat();" align="right" type="button" class="btn btn-submit">Submit</button>
-					</div>
+			<div class="talk">
+				<input id="GrpChatTxtInput" type="text" style="width:75%" placeholder="Type Your Message Here...">
+				<button id="GrpChatbutton" style="margin-left: 3%;" onclick="submitToChat(); getChat();" align="right" type="button" class="btn btn-submit">Submit</button>
+			</div>
 
 			</div>
 			<div style="display:table; width:40%; height: 200px;" class ="well">
-				<div class="panel panel-default" style="float:middle;">
+				<div class="panel panel-default" style="float:center;">
 					<div class="panel-heading"><b>Team Roster:</b></div>
 					<div class="panel-body" style="height: 150px;">
 						<p><b>Drew Howard</b> - Client</p>
