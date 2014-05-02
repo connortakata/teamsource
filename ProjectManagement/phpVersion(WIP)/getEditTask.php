@@ -1,5 +1,5 @@
 <?php
-	$con = mysqli_connect("localhost", "root", "", "chat");
+	$con = mysqli_connect("localhost", "root", "", "teamsource");
 
     if (mysqli_connect_errno())
         {

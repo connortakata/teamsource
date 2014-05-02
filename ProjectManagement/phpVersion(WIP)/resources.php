@@ -38,7 +38,7 @@ print '
 					<td style="text-align:right">Action</td>
 				</tr>';
 
-$con=mysqli_connect("localhost","root","","root");
+$con=mysqli_connect("localhost","root","","teamsource");
 $sql = "SELECT * FROM files";
 $result = mysqli_query($con,$sql);
 while($row = mysqli_fetch_array($result)){
