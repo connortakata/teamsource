@@ -1,6 +1,3 @@
-﻿<?php
-
-	print '
 		<!DOCTYPE html>
 		<html lang="en">
 		  <head>
@@ -83,6 +80,50 @@
 				</div>
 			</div>
 			<!--<div class="LeftPanelColor"></div>-->
+			<?php
+    
+    $con = mysqli_connect("localhost", "root", "", "teamsource");
+
+    if (mysqli_connect_errno())
+        {
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        }    
+
+    if (isset($_POST["txtUsername"]) && isset($_POST["txtFirstName"]) && isset($_POST["txtLastName"])
+    	&& isset($_POST["txtPassword"]) && isset($_POST["txtEmail"])) 
+	{
+ 		$username = $_POST["txtUsername"];
+ 		$firstname = $_POST["txtFirstName"];
+ 		$lastname = $_POST["txtLastName"];
+ 		$password = $_POST["txtPassword"];
+ 		$email = $_POST["txtEmail"];
+ 		$title = "default";
+
+ 		mysqli_query($con, "INSERT INTO User (username, user_firstname, user_lastname, user_title, user_password, user_email) VALUES ('$username', '$firstname', '$lastname', '$title', '$password', '$email');");       
+    	echo "Row added";
+    	mysqli_close($con);  
+	} 
+	else 
+	{
+  		$username = null;
+  		$firstname = null;
+  		$lastname = null;
+  		$password = null;
+  		$email = null;
+  		$title = null;
+  
+	}
+    
+    //$username = $_POST['txtUsername'];
+    /*$firstname = $_POST['txtFirstName'];
+    $lastname = $_POST['txtLastName'];
+    $password = $_POST['txtPassword'];
+    $email = $_POST['txtEmail'];*/
+    
+	  
+?>
+
+			<form name="createuser" method="post"> 
 			<div class="RightPanel">
 				<div class="container-fluid">
 					<div class="panel-body">
@@ -93,35 +134,47 @@
 							Its a free Project Management Tool
 						</h4>
 						<table style="margin-left:25%">
-							<tr style="height:30px" ></tr>
-							<tr>
-								<td>	
-									<input type="text" style="width:100%" class=" form-control" id="txtUsernameSign" placeholder="Username">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
-							<tr>
-								<td>
-									<input type="password" class=" form-control" id="txtUserPassword" placeholder="Password">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
-
-							<tr>
-								<td>
-									<input type="password" class=" form-control" id="txtUserPasswordConfirm" placeholder="Password">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
-							<tr>
-								<td >
-									<input style="margin-left:30%" type="button" value="Sign-Up">
-								</td>
-							</tr>
-						</table>
+    					<tr style="height:30px" ></tr>
+    					<tr>
+                           	<td>
+                              	  <input type="text" style="width:100%" class=" form-control" id="txtUsername" name="txtUsername" placeholder="Username">
+                            </td>
+                        	</tr>
+                            <tr class="rowSpaces"></tr>
+                            <tr>
+                                <td>
+                                    <input type="text" data-inline="true" style="width:100%" class=" form-control" id="txtFirstName" name="txtFirstName" placeholder="FirstName">
+                                    <input type="text" data-inline="true" style="width:100%" class=" form-control" id="txtLastName" name="txtLastName" placeholder="LastName">
+                                </td>
+                            </tr>
+                            <tr class="rowSpaces"></tr>
+                            <tr>
+                                <td>
+                                    <input type="password" class=" form-control" id="txtPassword" name="txtPassword" placeholder="Password">
+                                </td>
+                            </tr>
+                            <tr class="rowSpaces"></tr>
+                            <tr>
+                                <td>
+                                    <input type="password" class=" form-control" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Password">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="password" class=" form-control" id="txtEmail" name="txtEmail" placeholder="Email Address">
+                            </td>
+                        </tr>
+	    			<tr class="rowSpaces"></tr>
+	    			<tr>
+	    				<td >
+	    					<input style="margin-left:30%" type="submit" value="Sign-Up" onclick="createuser.action='Splash.php';">
+	    				</td>
+	    			</tr>
+	    		</table>
 					</div>
 				</div>
 			</div>
+			</form>
 			<div class="BottomPanel">
 				This Project was created by Connor, Drew, Daniel, and Joe. All CS majors from Seattle Pacific University
 			</div>
@@ -134,5 +187,5 @@
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
 		  </body>
-		</html>';
+		</html>
 ?>
