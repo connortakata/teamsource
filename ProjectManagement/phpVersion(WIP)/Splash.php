@@ -99,8 +99,7 @@
  		$email = $_POST["txtEmail"];
  		$title = "default";
 
- 		mysqli_query($con, "INSERT INTO User (username, user_firstname, user_lastname, user_title, user_password, user_email) VALUES ('$username', '$firstname', '$lastname', '$title', '$password', '$email');");       
-    	echo "Row added";
+ 		mysqli_query($con, "INSERT INTO User (username, user_firstname, user_lastname, user_title, user_password, user_email) VALUES ('$username', '$firstname', '$lastname', '$title', '$password', '$email');"); 
     	mysqli_close($con);  
 	} 
 	else 
