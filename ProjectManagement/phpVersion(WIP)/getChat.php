@@ -15,8 +15,15 @@
 	{
 		echo "<tr>";
         echo "<td style='width:15%; text-align:left;'><b>" . $row['MESSAGE_USER_ID'] . ": " . "</b></td>";
-        echo "<td style='width:60%;'>" . $row['MESSAGE_TEXT'] . "</td>";
-        echo "<td style='width:20%;'>" . $row['MESSAGE_TIME'] . "</td>";
+        echo "<td style='width:75%;'>" . $row['MESSAGE_TEXT'] . "</td>";
+    	if($row['MESSAGE_DATE'] == date('Y-m-d'))
+    	{
+   	 		echo "<td style='width:15%;'>" . $row['MESSAGE_TIME'] . "</td>";
+    	}
+    	else 
+    	{
+    		echo "<td style='width:15%;'>" . $row['MESSAGE_DATE'] . "</td>";
+    	}
         echo "</tr>";
 	}
 	
