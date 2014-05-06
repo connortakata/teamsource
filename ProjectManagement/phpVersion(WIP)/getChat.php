@@ -14,17 +14,18 @@
 	while($row = mysqli_fetch_array($result))
 	{
 		echo "<tr>";
-        echo "<td style='width:15%; text-align:left;'><b>" . $row['MESSAGE_USER_ID'] . ": " . "</b></td>";
-        echo "<td style='width:75%;'>" . $row['MESSAGE_TEXT'] . "</td>";
-    	if($row['MESSAGE_DATE'] == date('Y-m-d'))
+        echo "<td style='width:50px; text-align:left;'>" . $row['MESSAGE_USER_ID'] . ": " . "</td>";
+        echo "<td width='10px'/>";
+        echo "<td style='width:200px;'>" . $row['MESSAGE_TEXT'] . "</td>";
+        if($row['MESSAGE_DATE'] == date('Y-m-d'))
     	{
-   	 		echo "<td style='width:15%;'>" . $row['MESSAGE_TIME'] . "</td>";
+   	 		echo "<td style='width:60px;'>  " . $row['MESSAGE_TIME'] . "</td>";
     	}
     	else 
     	{
-    		echo "<td style='width:15%;'>" . $row['MESSAGE_DATE'] . "</td>";
+    		echo "<td style='width:60px;'><font size=1>" . $row['MESSAGE_DATE'] . "</font></td>";
     	}
-        echo "</tr>";
+    	echo "</tr>";
 	}
 	
 	echo "</table>";

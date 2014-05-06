@@ -20,27 +20,25 @@
 			        {
 			            echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			        }    
-    				mysqli_select_db($con, "chat");
-					$sql = "SELECT * FROM users;";
+   					$sql = "SELECT * FROM user;";
 					$result = mysqli_query($con, $sql);
 	
 			    	while($row = mysqli_fetch_array($result))
 					{
-						$myUsers[] = $row['name'];
-						echo'<option>' . $row['name'] . '</option>'; 
+						$myUsers[] = $row['USERNAME'];
+						echo'<option>' . $row['USERNAME'] . '</option>'; 
 					}
 					
 					print'</select><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
 					
-					mysqli_select_db($con, "chat");
-					$sql = "SELECT * FROM users;";
+					$sql = "SELECT * FROM user;";
 					$result = mysqli_query($con, $sql);
 					
 					while($row = mysqli_fetch_array($result))
 					{
-						echo'<option>' . $row['name'] . '</option>'; 
+						echo'<option>' . $row['USERNAME'] . '</option>'; 
 					}
 
 					
@@ -77,7 +75,7 @@
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">';
 		  	
-   				$sql = "SELECT * FROM tasks WHERE finished = 0;";
+   				$sql = "SELECT * FROM task;";
 				$result = mysqli_query($con, $sql);
 
 		    	while($row = mysqli_fetch_array($result))
@@ -85,10 +83,10 @@
 						echo "<a href='#' class='list-group-item'>";
 			       		echo	"<h4 class='list-group-item-heading'>"; 
 					    echo	"<table width='100%'>";
-					    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " . $row['title'] . "</td>";
-					    echo	    "<td style='width:200px;text-align:right' onclick='EditPopup(" .  $row['id'] . ")' > Due: " . $row['dueDate'] ."</td>";
-					    echo		"<td style='width:200px; text-align:center' onclick='EditPopup(" . $row['id'] . ")' >To: " . $row['toWhom'] . "</td>";
-					    echo		"<td style='width:150px; text-align:right' onclick='EditPopup(" . $row['id']  . ")' >Priority: " . $row['priority'] . "</td>";
+					    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " . $row['TASK_TITLE'] . "</td>";
+					    echo	    "<td style='width:200px;text-align:right' onclick='EditPopup(" .  $row['ID'] . ")' > Due: " . $row['TASK_DUE_DATE'] ."</td>";
+					    echo		"<td style='width:200px; text-align:center' onclick='EditPopup(" . $row['ID'] . ")' >To: " . $row['TASK_ASSIGNED_TO'] . "</td>";
+					    echo		"<td style='width:150px; text-align:right' onclick='EditPopup(" . $row['ID']  . ")' >Priority: " . $row['TASK_PRIORITY'] . "</td>";
 					    echo	"</table>";
 					    echo	"</h4>";
 					    echo "</a>";	
