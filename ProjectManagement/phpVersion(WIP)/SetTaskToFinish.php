@@ -1,5 +1,5 @@
 <?php
-	$con = mysqli_connect("localhost", "root", "", "chat");
+	$con = mysqli_connect("localhost", "root", "", "teamsource");
 
     if (mysqli_connect_errno())
         {
@@ -9,7 +9,7 @@
     $id = $_REQUEST['id'];
     $finished = $_REQUEST['finished']
 	
-	mysqli_query($con, "UPDATE tasks SET finished = $finished WHERE id = $id;");       
+	mysqli_query($con, "UPDATE task SET TASK_FINISHED = $finished WHERE ID = $id;");       
     mysqli_close($con); 
 
 ?>
