@@ -1,31 +1,72 @@
-﻿.LeftPanel{
+﻿body {
+    
+    overflow: auto;
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(31%,rgba(43,136,217,1)), color-stop(72%,rgba(125,185,232,1)));
+    background: -moz-linear-gradient(-45deg, rgba(43,136,217,1) 31%, rgba(125,185,232,1) 72%); 
+    background: -ms-linear-gradient(-45deg, rgba(43,136,217,1) 31%,rgba(125,185,232,1) 72%);
+}
+
+
+.LeftPanel{
 	position:absolute;
 	top:50px;
-	left:10%;
-	width:50%;
-	height:700px;
-	background-color:#DFF5FF
+	left:7%;
+	width:45%;
+	height:500px;
+	background-color:#292524;
+    border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 20px;
+	font-family: 'maven';
+    color: white;
+
+
+
+	-moz-box-shadow:    inset 0 0 10px #000000;
+   	-webkit-box-shadow: inset 0 0 10px #000000;
+   	box-shadow:         inset 0 0 10px #000000;
 }
 .RightPanel{
 	position:absolute;
 	top:50px;
-	left:60%;
-	width:30%;
-	height:700px;
-	background-color:#DFF5FF
+	right:7%;
+	width:40%;
+	height:500px;
+	background-color:#292524;
+    border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 20px;
+    font-family: 'maven';
+    color: white;
+
+	-moz-box-shadow:    inset 0 0 10px #000000;
+   	-webkit-box-shadow: inset 0 0 10px #000000;
+   	box-shadow:         inset 0 0 10px #000000;
 }
+
+@font-face {
+    font-family: 'maven';
+    src: url('fonts/MavenProLight-300.otf');
+}
+
 .LeftPanelColor{
 	position:absolute;
 	top:50px;
 	left:50%;
 	width:10%;
 	height:100%;
-	background-color:#DFF5FF
+	background-color:#DFF5FF;
+	margin-right: 5px;
 }
 .BottomPanel{
 	position:absolute;
 	top:750px;
-	left:20%
+    width: 100%;
+	margin: 0 auto;
+    color: white;
+    border: black;
+    text-align: center;
+    margin-top: 10px;
 }
 .TextboxSize{
 	width:100%;
@@ -41,6 +82,127 @@
 	margin-bottom:8px;
 	position:absolute;
 	top:750px;
-	left:20%
+	left:20%;
 
+}
+.panel-body{
+	padding:15px
+}
+
+.input {
+
+	display:block;width:100%;
+	height:34px;
+	padding:6px 12px;
+	font-size:14px;
+	line-height:1.42857143;
+	color:#555;
+	background-color:#fff;
+	background-image:none;
+	border:1px solid #ccc;
+	border-radius:4px;
+	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}
+}
+
+
+.right-container {
+	
+}
+
+.a-btn{
+    background: linear-gradient(top, #80a9da 0%,#6f97c5 100%);
+    padding-left: 20px;
+    padding-right: 80px;
+    height: 38px;
+    display: inline-block;
+    position: relative;
+    border: 1px solid #5d81ab;
+    box-shadow: 
+        0px 1px 1px #A39598 inset, 
+        1px 1px 1px #A39598, 
+        0px 0px 0px 1px #A39598;
+    border-radius: 20px;
+    float: center;
+    clear: both;
+    margin: 10px 0px;
+    overflow: hidden;
+    transition: all 0.3s linear;
+}
+.a-btn-text{
+    padding-top: 5px;
+    display: block;
+    font-size: 18px;
+    white-space: nowrap;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+    color: white;
+    transition: all 0.2s linear;
+}
+.a-btn-slide-text{
+    position:absolute;
+    height: 100%;
+    top: 0px;
+    right: 52px;
+    width: 0px;
+    background: #63707e;
+    text-shadow: 0px -1px 1px #363f49;
+    color: #fff;
+    font-size: 18px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 10px;
+    overflow: hidden;
+    line-height: 38px;
+    box-shadow: 
+        -1px 0px 1px rgba(255,255,255,0.4), 
+        1px 1px 2px rgba(0,0,0,0.2) inset;
+    transition: width 0.3s linear;
+
+}
+.a-btn-icon-right{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    width: 52px;
+    border-left: 1px solid #5d81ab;
+    box-shadow: 1px 0px 1px rgba(255,255,255,0.4) inset;
+}
+.a-btn-icon-right span{
+    width: 38px;
+    height: 38px;
+    opacity: 0.7;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -20px 0px 0px -20px;
+    background: transparent url(arrow_right.png) no-repeat 50% 55%;
+    transition: all 0.3s linear;
+}
+
+.a-btn:hover{
+    padding-right: 180px;
+    box-shadow: 0px 1px 1px rgba(255,255,255,0.8) inset, 1px 1px 3px rgba(0,0,0,0.2);
+    color: white;
+}
+.a-btn:hover .a-btn-text{
+    text-shadow: 0px 1px 1px #5d81ab;
+    color: white;
+}
+.a-btn:hover .a-btn-slide-text{
+    width: 100px;
+}
+.a-btn:hover .a-btn-icon-right span{
+    opacity: 1;
+}
+
+.a-btn:active {
+    position: relative;
+    top: 1px;
+    background: #5d81ab;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+    border-color: #80a9da;
 }
