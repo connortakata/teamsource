@@ -43,7 +43,7 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right">
-						<input id="btnLogIn" type="button" class="btn btn-default btn-sm" value="Log-in">
+                        <input id="btnLogIn" type="button" onclick="LogIn()" class="btn btn-default btn-sm" value="Log-in">
 					</form>
 					<form class="navbar-form navbar-right">
 						<input id="txtPasswordLog" type="text" class="form-control" placeholder="Password">
@@ -103,7 +103,7 @@
 
  		mysqli_query($con, "INSERT INTO User (username, user_firstname, user_lastname, user_title, user_password, user_email) VALUES ('$username', '$firstname', '$lastname', '$title', '$password', '$email');"); 
     	mysqli_close($con);  
-	} 
+	}
 	else 
 	{
   		$username = null;
@@ -174,16 +174,19 @@
 	    			<tr class="rowSpaces"></tr>
 	    			<tr>
 	    				<td align= "right" width="100%">
-	    					<a href="/index.php" class="a-btn">
+	    					<a onclick="CreateUser()" href="#" class="a-btn">
    						 		<span class="a-btn-text">Register now</span> 
     							<span class="a-btn-slide-text">It's Free</span>
     							<span class="a-btn-icon-right"><span></span></span>
 							</a>
 	    				</td>
 	    			</tr>
-	    		</table>
-					
-				</div>
+
+
+                    </table>
+                    <p align="center" id="loginError"></p>
+
+                </div>
 			</div>
 			</form>
 			<div class="BottomPanel" aligh="center">
@@ -196,5 +199,6 @@
 			<script src="jquery.min.js"></script>
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
+			<script src="js/AJAX_lib.js"></script>
 		  </body>
 		</html>

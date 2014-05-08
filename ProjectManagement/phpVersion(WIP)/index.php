@@ -22,13 +22,16 @@
 						mysqli_select_db($con, "teamsource");
 						$sql = "SELECT * FROM message;";
 						$result = mysqli_query($con, $sql);
-						
+
 						echo "<table>";
-						
+
 						while($row = mysqli_fetch_array($result))
 						{
 							echo "<tr>";
-					        echo "<td style='width:50px; text-align:right;'>" . $row['MESSAGE_USER_ID'] . ": " . "</td>";
+                            $id = $row['MESSAGE_USER_ID'];
+                            $userArray =  mysqli_fetch_array(mysqli_query($con, "SELECT USER_FIRSTNAME, USER_LASTNAME FROM USER WHERE ID='$id'"));
+					        echo "<td style='width:50px; text-align:right;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
+                            echo ": </td>";
 					        echo "<td style='width:10px'/>";
 					        echo "<td style='width:300px;'>" . $row['MESSAGE_TEXT'] . "</td>";
 					        echo "<td style='width:10px'/>";

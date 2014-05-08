@@ -175,3 +175,60 @@ function isFinishTask(id, SetTo){
 	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
 }
 
+function LogIn(){
+    var xmlhttp;
+    var user = document.getElementById("txtUsernameLog").value;
+    var pass = document.getElementById("txtPasswordLog").value;
+
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }
+    else{
+        xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+        }
+    }
+    xmlhttp.open("POST", "login.php", false);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("user=" + user + "&pass=" + pass);
+    window.location = "index.php";
+}
+
+function CreateUser(){
+
+    var xmlhttp;
+    var firstName = document.getElementById("txtFirstName").value;
+    var lastName = document.getElementById("txtLastName").value;
+    var email = document.getElementById("txtEmail").value;
+    var pass = document.getElementById("txtPassword").value;
+    var passConfirm = document.getElementById("txtPasswordConfirm").value;
+
+    if( (firstName!='') && (lastName!='') && (email!='') && (pass!='') && (pass==passConfirm) ){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+
+
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "login.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass);
+    }
+    else
+    {
+        document.getElementById("loginError").innerHTML = "Error: Your passwords did not match or you left a field empty.";
+    }
+    window.location = "index.php";
+}
+
