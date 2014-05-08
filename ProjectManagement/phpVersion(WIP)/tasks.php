@@ -25,8 +25,8 @@
 	
 			    	while($row = mysqli_fetch_array($result))
 					{
-						$myUsers[] = $row['USERNAME'];
-						echo'<option>' . $row['USERNAME'] . '</option>'; 
+						$myUsers[] = $row['USER_FIRSTNAME'];
+						echo'<option>' . $row['USER_FIRSTNAME'] . '</option>'; 
 					}
 					
 					print'</select><br><br>
@@ -38,7 +38,7 @@
 					
 					while($row = mysqli_fetch_array($result))
 					{
-						echo'<option>' . $row['USERNAME'] . '</option>'; 
+						echo'<option>' . $row['USER_FIRSTNAME'] . '</option>'; 
 					}
 
 					
