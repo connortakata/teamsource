@@ -1,8 +1,11 @@
 <?php
 if(isset($_POST["user"]) && isset($_POST["pass"]))
 {
-
-    setcookie("user", $_POST["user"], time()+3600);
+    $con = mysqli_connect("localhost", "root", "", "teamsource");
+    $sql = "SELECT ID FROM USER WHERE USER_EMAIL='$email';";
+    $result = mysqli_query($con, $sql);
+    $id = mysqli_fetch_array($result)[0];
+    setcookie("id", $id, time()+3600);
 }
 else if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["email"])
     && isset($_POST["pass"]))

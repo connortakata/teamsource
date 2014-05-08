@@ -26,10 +26,11 @@ if (true)//restrict file types here
             }
             $filename = $_FILES["file"]["name"];
             $date = date('M d, Y');
-            $size = ($_FILES["file"]["size"] / 1024) . "kB";
+            $time = date('h:i:s');
+            $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
             list($left, $right) = explode('.', $size, 2);
-            $sql = "INSERT INTO files (filename, added, size)
-VALUES ('$filename', '$date', '$size');";
+            $sql = "INSERT INTO files (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE)
+VALUES ('$filename', '$date', '$time', '$size');";
             mysqli_query($con,$sql);
 
             mysqli_close($con);

@@ -231,4 +231,3 @@ function CreateUser(){
     }
     window.location = "index.php";
 }
-

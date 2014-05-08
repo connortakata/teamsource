@@ -33,28 +33,25 @@ print '
 				<tr>
 					<td>File Name</td>
 					<td style="text-align:right">Added</td>
-					<td style="text-align:right">Modified</td>
 					<td style="text-align:right">Size</td>
 					<td style="text-align:right">Action</td>
 				</tr>';
 
 $con=mysqli_connect("localhost","root","","teamsource");
-$sql = "SELECT * FROM files";
+$sql = "SELECT * FROM file";
 $result = mysqli_query($con,$sql);
 while($row = mysqli_fetch_array($result)){
     print '<tr>';
-    print '<td>' . $row['filename'] . '</td>';
-    print '<td style="text-align:right">' . $row['added'] . '</td>';
-    print '<td style="text-align:right">' . $row['added'] . '</td>';
-    print '<td style="text-align:right">' . $row['size'] . '</td>';
-    print '<td style="text-align:right"><a href="upload/' . $row['filename'] . '">Download</a></td>';
+    print '<td>' . $row['FILE_NAME'] . '</td>';
+    print '<td style="text-align:right">' . $row['FILE_DATE'] . '</td>';
+    print '<td style="text-align:right">' . $row['FILE_SIZE'] . '</td>';
+    print '<td style="text-align:right"><a href="upload/' . $row['FILE_NAME'] . '">Download</a></td>';
     print '</tr>';
 }
 print '
                 <tr>
 					<td>file1.txt</td>
 					<td style="text-align:right">Mar 13, 2014</td>
-					<td style="text-align:right">12:28pm</td>
 					<td style="text-align:right">121kb</td>
 					<td style="text-align:right">
 						<button id="btnDownload" type="button" class="btn btn-default" onclick="btnDownloadClick()">Download</button>

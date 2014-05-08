@@ -17,14 +17,14 @@ print '
                         <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Calendar Title">
                     </div>
                     <div class="panel-body">
-                        <input name="CalendarItem" id="AssignDate" type="date" style="height:25px"/><br /><br />
+                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/><br /><br />
                         Description
                         <div class="panel-info">
                             <textarea name="CalendarItem" id="CalendarDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
                         </div>
                     </div>
                     <div class="btn-group">
-                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" />
+                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" onclick="AddEvent();HidePopUp(\'CalendarPopUp\', \'CalendarItem\')" />
                         <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'CalendarPopUp\', \'CalendarItem\');" />
                     </div>
                 </div>
@@ -79,9 +79,24 @@ for( $i=0; $i<count($days)/7; $i++)
     }
     print '</tr>';
     print '<tr class="dayDetail">';
+
+    $con = mysqli_connect("localhost", "root", "", "teamsource");
+    $sql = "SELECT EVENT_TITLE,EVENT_DESCRIPTION,EVENT_DATE FROM EVENT";
+    $result = mysqli_query($con, $sql);
+    $events = array();
+    while($row = mysqli_fetch_array($result))
+    {
+        print "";
+    }
+    mysqli_close($con);
+
     for( $j=0; $j<7; $j++)//Printing the details of each day
     {
-        print '<td class="days" width="11.43%"></td>';
+        print '<td class="days" width="11.43%">';
+
+
+
+        print '</td>';
     }
     print '</tr>';
 }
@@ -141,6 +156,32 @@ print '<script>
             object[i].value = "";
         }
     }
+    function AddEvent(){
+
+    var xmlhttp;
+    var title = document.getElementById("CalendarTitle").value;
+    var date = document.getElementById("CalendarDate").value;
+    var description = document.getElementById("CalendarDesc").value;
+
+    if( (title!=\'\') && (date!=\'\') && (description!=\'\')){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+
+
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "addEvent.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("title=" + title + "&date=" + date + "&description=" + description);
+    }
+}
     </script>';
 require "includes/footer.php";
 ?>
