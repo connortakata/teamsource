@@ -14,7 +14,7 @@
 	$users = array();
 	while($userRow = mysqli_fetch_array($userResult))
 	{
-		$users[] = $userRow['USERNAME'];
+		$users[] = $userRow['USER_FIRSTNAME'];
 	}
 		
 	while($row = mysqli_fetch_array($result))
