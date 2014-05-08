@@ -49,7 +49,7 @@
 						<input id="txtPasswordLog" type="text" class="form-control" placeholder="Password">
 					</form>
 					<form class="navbar-form navbar-right">
-					  <input id="txtUsernameLog" type="text" class="form-control" placeholder="Username">
+					  <input id="txtUsernameLog" type="text" class="form-control" placeholder="Email">
 					</form>          	
 				</div>
 			  </div>

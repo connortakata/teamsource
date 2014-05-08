@@ -11,9 +11,28 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div style="padding-top:8px;padding-left:8px" class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <?php
+                            $con = mysqli_connect("localhost", "root", "", "teamsource");
+                            $id = $_COOKIE["id"];
+                            $sql = "SELECT USER_FIRSTNAME FROM USER WHERE ID='$id';";
+                            $result = mysqli_query($con, $sql);
+                            print mysqli_fetch_array($result)[0];
+                            mysqli_close($con);
+                            ?>
+                            's Teams <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Team 1</a></li>
+                            <li><a href="#">Team 2</a></li>
+                        </ul>
+                    </div>
+
+                </li>
 				<li><a href="index.php">Dashboard</a></li>
 				<li><a href="Settings.php">Settings</a></li>
-				<li><a href="#">Account</a></li>
 				<li><a href="#">Sign Out</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">

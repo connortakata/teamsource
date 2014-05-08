@@ -177,7 +177,7 @@ function isFinishTask(id, SetTo){
 
 function LogIn(){
     var xmlhttp;
-    var user = document.getElementById("txtUsernameLog").value;
+    var email = document.getElementById("txtUsernameLog").value;
     var pass = document.getElementById("txtPasswordLog").value;
 
     if(window.XMLHttpRequest){
@@ -194,7 +194,7 @@ function LogIn(){
     }
     xmlhttp.open("POST", "login.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("user=" + user + "&pass=" + pass);
+    xmlhttp.send("email=" + email + "&pass=" + pass);
     window.location = "index.php";
 }
 
@@ -221,7 +221,7 @@ function CreateUser(){
 
             }
         }
-        xmlhttp.open("POST", "login.php", false);
+        xmlhttp.open("POST", "addUser.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass);
     }

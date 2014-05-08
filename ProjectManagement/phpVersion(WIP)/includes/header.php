@@ -1,3 +1,7 @@
+<?php
+if(!isset($_COOKIE["id"]))
+    header("Location:Splash.php");
+?>
 <!DOCTYPE html>
 <html ng-app lang="en">
 	<head>

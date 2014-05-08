@@ -14,10 +14,12 @@ print '
             <div class="well" style="width:100%; height:100%;">
                 <div class="panel panel-primary" style="top:25px; height:95%;">
                     <div class="panel-heading">
-                        <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Calendar Title">
+                        <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title">
                     </div>
                     <div class="panel-body">
-                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/><br /><br />
+                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/>
+                        <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/>
+                        <br /><br />
                         Description
                         <div class="panel-info">
                             <textarea name="CalendarItem" id="CalendarDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
@@ -54,7 +56,7 @@ print '</ul>';
 
 print '<table style="margin: 0px auto;" class="calender">
                <tr class="date">
-                    <td class="days" width="11.43%">Sun</td>
+                    <td id="testBox" class="days" width="11.43%">Sun</td>
                     <td class="days" width="11.43%">Mon</td>
                     <td class="days" width="11.43%">Tue</td>
                     <td class="days" width="11.43%">Wed</td>
@@ -158,30 +160,31 @@ print '<script>
     }
     function AddEvent(){
 
-    var xmlhttp;
-    var title = document.getElementById("CalendarTitle").value;
-    var date = document.getElementById("CalendarDate").value;
-    var description = document.getElementById("CalendarDesc").value;
+        var xmlhttp;
+        var title = document.getElementById("CalendarTitle").value;
+        var date = document.getElementById("CalendarDate").value;
+        var time = document.getElementById("CalendarTime").value;
+        var description = document.getElementById("CalendarDes").value;
 
-    if( (title!=\'\') && (date!=\'\') && (description!=\'\')){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-
-
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
+        document.getElementById("testBox").value=title;
+        if( (title!=\'\') && (date!=\'\')){
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest();
             }
+            else{
+                xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+            }
+
+            xmlhttp.onreadystatechange = function() {
+                if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+                }
+            }
+            xmlhttp.open("POST", "addEvent.php", false);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("title=" + title + "&date=" + date + "&time" + time + "&description=" + description);
         }
-        xmlhttp.open("POST", "addEvent.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("title=" + title + "&date=" + date + "&description=" + description);
     }
-}
     </script>';
 require "includes/footer.php";
 ?>
