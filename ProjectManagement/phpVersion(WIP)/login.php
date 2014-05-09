@@ -10,6 +10,6 @@ if(isset($_POST["email"]) && isset($_POST["pass"]))
     if($_POST["pass"]==$id["USER_PASSWORD"])
     {
         setcookie("id", $id["ID"], time()+3600);
-        header("Location: ./");
+        //header("Location: ./");
     }
 }

@@ -19,14 +19,12 @@
 		        }
 		  }
 	var my = document.getElementById("ChatBox");
-	xmlhttp.open("GET","getChat.php",false);
+	xmlhttp.open("GET","../AJAXapps/index/getChat.php",false);
 	xmlhttp.send();
 }
 
 function submitToChat() {
 	var xmlhttp;
-	var user = "Joe"
-	var date = new Date(); 
 	var myMessage = document.getElementById("GrpChatTxtInput").value;
 	if(validateMessage(myMessage) != 0)
 	{
@@ -53,9 +51,9 @@ function submitToChat() {
             }
 	    }
 	  }
-	xmlhttp.open("POST","addToChat.php",false);
+	xmlhttp.open("POST","../AJAXapps/index/addToChat.php",false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("user=" + user +  "&message=" + myMessage + "&TimeStamp=" + date.toLocaleString());
+	xmlhttp.send("message=" + myMessage);
     document.getElementById("GrpChatTxtInput").value = "";
 	
 }
@@ -80,7 +78,7 @@ function EditPopup(task){
                 DisplaySelectedPopup();
 	        }
 	  }
-	xmlhttp.open("POST","getTaskPopUp.php",false);
+	xmlhttp.open("POST","../AJAXapps/tasks/getTaskPopUp.php",false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + task);
 	
@@ -104,7 +102,7 @@ function RefreshTasks(getItemSubset){
 	        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
 	        }
 	  }
-	  xmlhttp.open("POST","getTasks.php",false);
+	  xmlhttp.open("POST","../AJAXapps/tasks/getTasks.php",false);
 	  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	  xmlhttp.send("finished=" + getItemSubset);
 }
@@ -128,7 +126,7 @@ function UpdateTask(object, id){
 		}
 	}
 	
-	xmlhttp.open("POST", "updateTask.php", false);
+	xmlhttp.open("POST", "../AJAXapps/tasks/updateTask.php", false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + id + "&title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
 					"&priority=" + object[4].value + "&description=" + object[5].value );
@@ -150,7 +148,7 @@ function EditTask(id){
 		}
 	}
 	
-	xmlhttp.open("POST", "getEditTask.php", false);
+	xmlhttp.open("POST", "../AJAXapps/tasks/getEditTask.php", false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + id);
 
@@ -170,7 +168,7 @@ function isFinishTask(id, SetTo){
 		
 		}
 	}
-	xmlhttp.open("POST", "SetTaskToFinish.php", false);
+	xmlhttp.open("POST", "../AJAXapps/tasks/SetTaskToFinish.php", false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
 }
@@ -229,5 +227,5 @@ function CreateUser(){
     {
         document.getElementById("loginError").innerHTML = "Error: Your passwords did not match or you left a field empty.";
     }
-    window.location = "index.php";
+    //window.location = "index.php";
 }

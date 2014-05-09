@@ -17,8 +17,25 @@ print '
                         <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title">
                     </div>
                     <div class="panel-body">
-                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/>
-                        <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/>
+                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/> at:
+                        <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/> at:
+                        <select id="CalendarTimeHour">
+                            <option value="01:">01</option>
+                            <option value="02:">02</option>
+                            <option value="03:">03</option>
+                            <option value="04:">04</option>
+                            <option value="05:">05</option>
+                            <option value="06:">06</option>
+                            <option value="07:">07</option>
+                            <option value="08:">08</option>
+                            <option value="09:">09</option>
+                            <option value="10:">10</option>
+                            <option value="11:">11</option>
+                            <option value="12:">12</option>
+                        </select>
+                        <select id="CalendarTimeMinute">
+
+                        </select>
                         <br /><br />
                         Description
                         <div class="panel-info">
@@ -56,7 +73,7 @@ print '</ul>';
 
 print '<table style="margin: 0px auto;" class="calender">
                <tr class="date">
-                    <td id="testBox" class="days" width="11.43%">Sun</td>
+                    <td class="days" width="11.43%">Sun</td>
                     <td class="days" width="11.43%">Mon</td>
                     <td class="days" width="11.43%">Tue</td>
                     <td class="days" width="11.43%">Wed</td>
@@ -83,7 +100,7 @@ for( $i=0; $i<count($days)/7; $i++)
     print '<tr class="dayDetail">';
 
     $con = mysqli_connect("localhost", "root", "", "teamsource");
-    $sql = "SELECT EVENT_TITLE,EVENT_DESCRIPTION,EVENT_DATE FROM EVENT";
+    $sql = "SELECT EVENT_TITLE,EVENT_DESCRIPTION,EVENT_DATETIME FROM EVENT";
     $result = mysqli_query($con, $sql);
     $events = array();
     while($row = mysqli_fetch_array($result))
@@ -111,7 +128,7 @@ function buildCalArray($month = NULL, $year=NULL)
         $month = date('n');
     if($year == NULL)
         $year =  date('Y');
-    $firstDay = date('w', strtotime(date("F", mktime(0, 0, 0, $month, 10)))); //Get first day of the week of the month
+    $firstDay = date('w', strtotime(date("F", mktime(0, 0, 0, $month, 10))))-1; //Get first day of the week of the month
     $numDaysCurrMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); //Get number of days in current month
     $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $month-1, $year); //Number of days in last month
     $days = array();
@@ -140,6 +157,11 @@ function buildCalArray($month = NULL, $year=NULL)
     return $days; //Finish with the built calendar
 }
 print '<script>
+    var selects="";
+    for (var i = 0; i < 60; i++) {
+    selects += "<option value="+i+">"+i+"</option>";
+}
+document.getElementById("CalendarTimeMinute").innerHTML=selects;
     $("#CalAdd").click(function () {
             var controls = document.getElementsByName("CalendarItem");
             validatePopUp(controls, "Calendar");
@@ -163,10 +185,11 @@ print '<script>
         var xmlhttp;
         var title = document.getElementById("CalendarTitle").value;
         var date = document.getElementById("CalendarDate").value;
-        var time = document.getElementById("CalendarTime").value;
+        var theTime = document.getElementById("CalendarTime").value;
+        var timeHour = document.getElementsByName("CalendarTimeHour").value
+        var timeMinute = document.getElementsByName("CalendarTimeMinute").value
         var description = document.getElementById("CalendarDes").value;
 
-        document.getElementById("testBox").value=title;
         if( (title!=\'\') && (date!=\'\')){
             if(window.XMLHttpRequest){
                 xmlhttp = new XMLHttpRequest();
@@ -180,9 +203,10 @@ print '<script>
 
                 }
             }
-            xmlhttp.open("POST", "addEvent.php", false);
+            xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("title=" + title + "&date=" + date + "&time" + time + "&description=" + description);
+            //xmlhttp.send("title=" + title + "&date=" + date + "&theTime" + theTime + "&timeHour=" + timeHour + "&timeMinute" + timeMinute + "&description=" + description);
+            xmlhttp.send("title=" + title + "&date=" + date + "&theTime" + theTime + "&description=" + description);
         }
     }
     </script>';
