@@ -35,9 +35,6 @@
 				<li><a href="Settings.php">Settings</a></li>
 				<li><a href="#">Sign Out</a></li>
 			</ul>
-			<form class="navbar-form navbar-right">
-				<input type="text" class="form-control" placeholder="Search...">
-			</form>
 		</div>
 	</div>
 </div>
