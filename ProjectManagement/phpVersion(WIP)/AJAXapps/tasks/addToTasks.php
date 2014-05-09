@@ -14,8 +14,10 @@
     $to = $_REQUEST['toWhom'];
     $by = $_REQUEST['byWhom']; 
     $finished = $_REQUEST['finished'];
-    
-	mysqli_query($con, "INSERT INTO task ( TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by', $finished);");       
+    $stmt= mysqli->prepare("INSERT INTO task ( TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?);");
+    $stmt->bind_param('ssbsssi', $title, $description, $dueDate, $priority, $to, $by, $finished);
+    $stmt->execute();
+	//mysqli_query($con, "INSERT INTO task (TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by', $finished);");       
     
     mysqli_close($con);    
 ?>

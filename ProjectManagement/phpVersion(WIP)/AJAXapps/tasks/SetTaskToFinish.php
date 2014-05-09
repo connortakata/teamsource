@@ -9,7 +9,7 @@
     $id = $_REQUEST['id'];
     $finished = $_REQUEST['finished'];
 	
-	mysqli_query($con, "UPDATE task SET TASK_FINISHED = $finished WHERE ID = $id;");       
+	mysqli_query($con, "UPDATE task SET TASK_IS_FINISHED = $finished WHERE ID = $id;");       
     mysqli_close($con); 
 
 ?>

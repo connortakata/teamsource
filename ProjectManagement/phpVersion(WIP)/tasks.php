@@ -12,7 +12,7 @@
 				  </div>
 				  <div class="panel-body">
 			
-					Task Issued By: <label name="popItem" id="IssuedBy">';
+					Task Issued By: <Label><input type="hidden" name="popItem" id="IssuedBy" value="';
 					$con = mysqli_connect("localhost", "root", "", "teamsource");
 
 				    if (mysqli_connect_errno())
@@ -23,7 +23,7 @@
 					$User = mysqli_query($con, $Current_User_SQL); 
 					while($row = mysqli_fetch_array($User))
 					{
-						echo $row['USER_FIRSTNAME'];
+						echo $row['USER_FIRSTNAME'] . '"/>'. $row['USER_FIRSTNAME'];
 					}					
 					print '</label><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>

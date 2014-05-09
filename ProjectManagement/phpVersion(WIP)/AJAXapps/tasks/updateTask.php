@@ -14,6 +14,6 @@
     $to = $_REQUEST['toWhom'];
     $by = $_REQUEST['byWhom']; 
     
-	mysqli_query($con, "UPDATE task SET TASK_TITLE = '$title' , TASK_DESCRIPTION = '$description', TASK_DUE_DATE = '$dueDate', TASK_PRIORITY = '$priority', TASK_ASSIGNED_TO = '$to', TASK_ISSUED_BY = '$by' WHERE ID = $id;");       
+	mysqli_query($con, "UPDATE task SET TASK_TITLE = 'addSlashes($title)' , TASK_DESCRIPTION = 'addSlashes($description)', TASK_DUE_DATE = '$dueDate', TASK_PRIORITY = '$priority', TASK_ASSIGNED_TO = '$to', TASK_ISSUED_BY = '$by' WHERE ID = $id;");       
     mysqli_close($con); 
 ?>
