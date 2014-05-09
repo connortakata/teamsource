@@ -12,24 +12,20 @@
 				  </div>
 				  <div class="panel-body">
 			
-					Task Issued By: <select name="popItem" id="IssuedBy">';
-					$myUsers = array();
+					Task Issued By: <label name="popItem" id="IssuedBy">';
 					$con = mysqli_connect("localhost", "root", "", "teamsource");
 
 				    if (mysqli_connect_errno())
 			        {
 			            echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			        }    
-   					$sql = "SELECT * FROM user;";
-					$result = mysqli_query($con, $sql);
-	
-			    	while($row = mysqli_fetch_array($result))
+   					$Current_User_SQL = "SELECT USER_FIRSTNAME FROM user WHERE ID = '$id'";
+					$User = mysqli_query($con, $Current_User_SQL); 
+					while($row = mysqli_fetch_array($User))
 					{
-						$myUsers[] = $row['USER_FIRSTNAME'];
-						echo'<option>' . $row['USER_FIRSTNAME'] . '</option>'; 
-					}
-					
-					print'</select><br><br>
+						echo $row['USER_FIRSTNAME'];
+					}					
+					print '</label><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
 					
