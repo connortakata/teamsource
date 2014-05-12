@@ -5,7 +5,7 @@ function validatePopUp(object)
 	{
 		if ($(object[i]).val() == "")
 		{
-			DisplayAlertPopUp("Validation Error","Task title and due date must be speificed when making a task.");
+			DisplayAlertPopUp("Validation Error","Task title and due date must be specified when making a task.");
     		return 1;
 		}
 	}

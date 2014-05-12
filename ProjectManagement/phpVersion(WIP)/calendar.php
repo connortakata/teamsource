@@ -14,28 +14,11 @@ print '
             <div class="well" style="width:100%; height:100%;">
                 <div class="panel panel-primary" style="top:25px; height:95%;">
                     <div class="panel-heading">
-                        <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title">
+                        <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title"/>
                     </div>
                     <div class="panel-body">
                         <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/> at:
-                        <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/> at:
-                        <select id="CalendarTimeHour">
-                            <option value="01:">01</option>
-                            <option value="02:">02</option>
-                            <option value="03:">03</option>
-                            <option value="04:">04</option>
-                            <option value="05:">05</option>
-                            <option value="06:">06</option>
-                            <option value="07:">07</option>
-                            <option value="08:">08</option>
-                            <option value="09:">09</option>
-                            <option value="10:">10</option>
-                            <option value="11:">11</option>
-                            <option value="12:">12</option>
-                        </select>
-                        <select id="CalendarTimeMinute">
-
-                        </select>
+                        <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/>
                         <br /><br />
                         Description
                         <div class="panel-info">
@@ -157,11 +140,8 @@ function buildCalArray($month = NULL, $year=NULL)
     return $days; //Finish with the built calendar
 }
 print '<script>
-    var selects="";
-    for (var i = 0; i < 60; i++) {
-    selects += "<option value="+i+">"+i+"</option>";
-}
-document.getElementById("CalendarTimeMinute").innerHTML=selects;
+document.getElementById("CalendarMinute").innerHTML=selects;
+
     $("#CalAdd").click(function () {
             var controls = document.getElementsByName("CalendarItem");
             validatePopUp(controls, "Calendar");
@@ -183,12 +163,15 @@ document.getElementById("CalendarTimeMinute").innerHTML=selects;
     function AddEvent(){
 
         var xmlhttp;
-        var title = document.getElementById("CalendarTitle").value;
-        var date = document.getElementById("CalendarDate").value;
-        var theTime = document.getElementById("CalendarTime").value;
-        var timeHour = document.getElementsByName("CalendarTimeHour").value
-        var timeMinute = document.getElementsByName("CalendarTimeMinute").value
+        var title       = document.getElementById("CalendarTitle").value;
+        var date        = document.getElementById("CalendarDate").value;
+        //var timeHour    = document.getElementById("CalendarTimeHour").value;
+        //var timeMinute  = document.getElementById("CalendarMinute").value;
+        //var timeOfDay   = document.getElementById("CalendarAMPM").value;
         var description = document.getElementById("CalendarDes").value;
+        var theTime = document.getElementById("CalendarTime").value;
+
+        theTime = theTime.replace(":","")
 
         if( (title!=\'\') && (date!=\'\')){
             if(window.XMLHttpRequest){
@@ -205,8 +188,8 @@ document.getElementById("CalendarTimeMinute").innerHTML=selects;
             }
             xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            //xmlhttp.send("title=" + title + "&date=" + date + "&theTime" + theTime + "&timeHour=" + timeHour + "&timeMinute" + timeMinute + "&description=" + description);
-            xmlhttp.send("title=" + title + "&date=" + date + "&theTime" + theTime + "&description=" + description);
+            //xmlhttp.send("title=" + title + "&date=" + date  + "&timeHour=" + timeHour + "&timeMinute" + timeMinute + "&timeOfDay" + timeOfDay + "&description=" + description);
+            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
         }
     }
     </script>';
