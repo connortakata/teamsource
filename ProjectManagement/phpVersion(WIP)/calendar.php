@@ -38,8 +38,8 @@ print '
                 <span class="glyphicon glyphicon-plus"></span> Add Event
             </button>
         </div>
-		<ul style="display:table; margin:0 auto;" class="pagination">';
-print   '<li><a href="#">&laquo;</a></li>';
+		<ul style="display:table; margin:0 auto;" class="pagination">
+        <li><a href="#">&laquo;</a></li>';
 for($i = 1;$i<=12;$i++)
 {
     if($i==date('m'))
@@ -53,7 +53,6 @@ for($i = 1;$i<=12;$i++)
 }
 print '<li><a href="#">&raquo;</a></li>';
 print '</ul>';
-
 print '<table style="margin: 0px auto;" class="calender">
                <tr class="date">
                     <td class="days" width="11.43%">Sun</td>
@@ -64,41 +63,62 @@ print '<table style="margin: 0px auto;" class="calender">
                     <td class="days" width="11.43%">Fri</td>
                     <td class="days" width="11.43%">Sat</td>
                </tr>';
-$day = 0;
+
+$dayNum = 0;
+$dayDetail = 0;
 $days = buildCalArray();
+if(!isset($_POST["month"]))
+    $month=date("n");
+else
+    $month=$_POST["month"];
+if(!isset($_POST["year"]))
+    $year=date("Y");
+else
+    $year=$_POST["year"];
+if($month<10)
+    $monthYear = $year."-0".$month;
+else
+    $monthYear = $year."-".$month;
+$dayEvents = array(array());
+$i=0;
+$con = mysqli_connect('localhost','root','','teamsource');
+$sql = "SELECT EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%'";
+$result = mysqli_query($con,$sql);
+while($row = mysqli_fetch_array($result))
+{
+    $date=substr($row["EVENT_DATETIME"],5,5);
+    $title=substr($row["EVENT_TITLE"],0,15);
+    if($date[0]=='0')
+        $date=str_replace('0','',$date);
+    $date=str_replace('-','/',$date);
+    $dayEvents[$date]["title"]=$title;
+    $i++;
+}
 for( $i=0; $i<count($days)/7; $i++)
 {
     print '<tr class="date">';
     for( $j=0; $j<7; $j++)//Printing the day numbers
     {
         print '<td class="days" width="11.43%"';
-        if(($i==0&&$days[$day]>20)||($days[$day]<7&&$i==(count($days)/7)-1))
+        if(($days[$dayNum][0]<$month)||($days[$dayNum][0]>$month))
             print 'style="color:grey"';
         print '>';
-        print $days[$day];
+        print substr($days[$dayNum],strpos($days[$dayNum],'/')+1);
         print '</td>';
-        $day++;
+        $dayNum++;
     }
     print '</tr>';
     print '<tr class="dayDetail">';
 
-    $con = mysqli_connect("localhost", "root", "", "teamsource");
-    $sql = "SELECT EVENT_TITLE,EVENT_DESCRIPTION,EVENT_DATETIME FROM EVENT";
-    $result = mysqli_query($con, $sql);
-    $events = array();
-    while($row = mysqli_fetch_array($result))
-    {
-        print "";
-    }
-    mysqli_close($con);
+
 
     for( $j=0; $j<7; $j++)//Printing the details of each day
     {
         print '<td class="days" width="11.43%">';
-
-
-
+        if(isset($dayEvents[$days[$dayDetail]]))
+            print $dayEvents[$days[$dayDetail]]["title"];
         print '</td>';
+        $dayDetail++;
     }
     print '</tr>';
 }
@@ -111,7 +131,7 @@ function buildCalArray($month = NULL, $year=NULL)
         $month = date('n');
     if($year == NULL)
         $year =  date('Y');
-    $firstDay = date('w', strtotime(date("F", mktime(0, 0, 0, $month, 10))))-1; //Get first day of the week of the month
+    $firstDay=date('w',strtotime($month."/1/".$year));
     $numDaysCurrMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); //Get number of days in current month
     $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $month-1, $year); //Number of days in last month
     $days = array();
@@ -119,7 +139,7 @@ function buildCalArray($month = NULL, $year=NULL)
     {
         while($firstDay>-1)
         {
-            array_push($days, $numDaysPrevMonth-$firstDay+1);
+            array_push($days, ($month-1)."/".($numDaysPrevMonth-$firstDay+1));
             $firstDay--; //Inserts the last days of the last month into the calendar
             if($firstDay<1)
                 break;
@@ -128,13 +148,13 @@ function buildCalArray($month = NULL, $year=NULL)
     $day = 1;
     while($day<=$numDaysCurrMonth)
     {
-        array_push($days, $day); //Inserts the days of the current month into the calendar
+        array_push($days, $month."/".$day); //Inserts the days of the current month into the calendar
         $day++;
     }
     $day = 1;
     while(count($days)<35)
     {
-        array_push($days, $day); //Inserts the first days of the next month into the calendar
+        array_push($days, ($month+1)."/".$day); //Inserts the first days of the next month into the calendar
         $day++;
     }
     return $days; //Finish with the built calendar
