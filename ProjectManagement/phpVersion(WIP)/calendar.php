@@ -221,7 +221,11 @@ function printCalendar()
             $prevMonthYear = $year."-".($month-1);
     }
     $con = mysqli_connect('localhost','root','','teamsource');//Find all events of the current month and adjacent months
-    $sql = "SELECT ID, EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%' OR '$prevMonthYear%' OR '$nextMonthYear%' ORDER BY EVENT_DATETIME ASC";
+    $sql = "SELECT ID, EVENT_TITLE, EVENT_DATETIME FROM EVENT
+    WHERE EVENT_DATETIME LIKE ('$monthYear%')
+    OR EVENT_DATETIME LIKE ('$prevMonthYear%')
+    OR EVENT_DATETIME LIKE ('$nextMonthYear%')
+    ORDER BY EVENT_DATETIME ASC";
     $result = mysqli_query($con,$sql);
     $dayEvents = array(array(array()));
     $i=0;
