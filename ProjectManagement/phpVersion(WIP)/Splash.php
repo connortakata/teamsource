@@ -46,7 +46,7 @@
                         <input id="btnLogIn" type="button" onclick="LogIn()" class="btn btn-default btn-sm" value="Log-in">
 					</form>
 					<form class="navbar-form navbar-right">
-						<input id="txtPasswordLog" type="text" class="form-control" placeholder="Password">
+						<input id="txtPasswordLog" type="password" class="form-control" placeholder="Password">
 					</form>
 					<form class="navbar-form navbar-right">
 					  <input id="txtUsernameLog" type="text" class="form-control" placeholder="Email">
