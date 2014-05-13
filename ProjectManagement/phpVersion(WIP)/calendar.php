@@ -32,14 +32,35 @@ print '
                 </div>
             </div>
         </div>
+        <div id="EventPopUp" class="PopupShadow" style="display:none; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
+            <div class="well" style="width:100%; height:100%;">
+                <div class="panel panel-primary" style="top:25px; height:95%;">
+                    <div class="panel-heading">
+                        <input name="EventItem" id="CalendarTitle" type="text" class="form-control"/>
+                    </div>
+                    <div class="panel-body">
+                        <input name="EventItem" id="CalendarDate" type="date" style="height:25px"/> at:
+                        <input name="EventItem" id="CalendarTime" type="time" style="height:25px"/>
+                        <br /><br />
+                        Description
+                        <div class="panel-info">
+                            <textarea name="EventItem" id="CalendarDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <input type="button" id="CalAdd" value="Update" style="margin-left:150px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\')" />
+                        <input type="button" value="Delete" style="margin-left:10px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\');" />
+                        <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\');" />
+                    </div>
+                </div>
+            </div>
+        </div>
         	<div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
             <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
             <button type="button" class="btn btn-default btn-med" onclick="DisplayPopUp(\'CalendarPopUp\')">
                 <span class="glyphicon glyphicon-plus"></span> Add Event
             </button>
-        </div>
-		<ul style="display:table; margin:0 auto;" class="pagination">
-        <li><a href="#">&laquo;</a></li>';
+        </div>';
 
     printCalendar();
 
@@ -97,9 +118,21 @@ print '
     </script>';
 function printCalendar()
 {
+    if(!isset($_GET["month"]))//check for $_POST data to see if another month or year was selected
+        $month=date("n");
+    else
+        $month=$_GET["month"];
+    if(!isset($_GET["year"]))
+        $year=date("Y");
+    else
+        $year=$_GET["year"];
+
+    print '<ul style="display:table; margin:0 auto;" class="pagination">
+           <li><a href="#">&laquo;</a></li>';
+
     for($i = 1;$i<=12;$i++)
     {   //print out the month selectors, highlight the current month
-        if($i==date('m'))
+        if($i==$month)
         {
             print '<li class="active"><a href="#">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
         }
@@ -123,15 +156,15 @@ function printCalendar()
 
     $dayNum = 0;
     $dayDetail = 0;
-    $days = buildCalArray();
-    if(!isset($_POST["month"]))//check for $_POST data to see if another month or year was selected
-        $month=date("n");
+    if(isset($_GET["month"])&&isset($_GET["year"]))
+        $days = buildCalArray($_GET["month"], $_GET["year"]);
+    elseif(isset($_GET["month"]))
+        $days = buildCalArray($_GET["month"]);
+    elseif(isset($_GET["year"]))
+        $days = buildCalArray(NULL,$_GET["year"]);
     else
-        $month=$_POST["month"];
-    if(!isset($_POST["year"]))
-        $year=date("Y");
-    else
-        $year=$_POST["year"];
+        $days = buildCalArray();
+
     if($month<10)//Due to leading zeros in mysql, we need to deal with special cases (transitions from 09->10, 12->01, etc)
     {
         $monthYear = $year."-0".$month;
@@ -194,11 +227,11 @@ function printCalendar()
                 {
                     if(strlen($dayEvents[$days[$dayDetail]][$k])>15)
                     {
-                        print '<a href="#" onclick="" title="'.$dayEvents[$days[$dayDetail]][$k].'">';
+                        print '<a href="#" onclick="DisplayPopUp(\'EventPopUp\')" title="'.$dayEvents[$days[$dayDetail]][$k].'">';
                         print substr($dayEvents[$days[$dayDetail]][$k],0,12)."...";
                     }
                     else
-                        print '<a href="#" onclick="">'.$dayEvents[$days[$dayDetail]][$k].'</a>';
+                        print '<a href="#" onclick="DisplayPopUp(\'EventPopUp\')">'.$dayEvents[$days[$dayDetail]][$k].'</a>';
 
                     print '</a>';
                     print "<br>";
