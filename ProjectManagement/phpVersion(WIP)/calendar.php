@@ -88,9 +88,6 @@ print '
         var xmlhttp;
         var title       = document.getElementById("CalendarTitle").value;
         var date        = document.getElementById("CalendarDate").value;
-        //var timeHour    = document.getElementById("CalendarTimeHour").value;
-        //var timeMinute  = document.getElementById("CalendarMinute").value;
-        //var timeOfDay   = document.getElementById("CalendarAMPM").value;
         var description = document.getElementById("CalendarDes").value;
         var theTime = document.getElementById("CalendarTime").value;
 
@@ -118,30 +115,40 @@ print '
     </script>';
 function printCalendar()
 {
-    if(!isset($_GET["month"]))//check for $_POST data to see if another month or year was selected
+    if(!isset($_GET["month"])||$_GET["month"]<1||$_GET["month"]>12)//check for $_POST data to see if another month or year was selected
         $month=date("n");
     else
         $month=$_GET["month"];
-    if(!isset($_GET["year"]))
+    if(!isset($_GET["year"])||$_GET["year"]<1||$_GET["year"]>2040)
         $year=date("Y");
     else
         $year=$_GET["year"];
 
-    print '<ul style="display:table; margin:0 auto;" class="pagination">
-           <li><a href="#">&laquo;</a></li>';
+    print '<ul style="display:table; margin:0 auto;" class="pagination">';
+    print '<li><a href="calendar.php?month='.($month).'&year='.($year-1).'">&laquo;</a></li>';
+    print '<li><a href="calendar.php?month='.($month).'&year='.$year.'">'.$year.'</a></li>';
+    print '<li><a href="calendar.php?month='.($month).'&year='.($year+1).'">&raquo;</a></li></ul>';
+    print '<ul style="display:table; margin:0 auto;" class="pagination">';
+    if($month==1)
+        print '<li><a href="calendar.php?month=12&year='.($year-1).'">&laquo;</a></li>';
+    else
+        print '<li><a href="calendar.php?month='.($month-1).'&year='.$year.'">&laquo;</a></li>';
 
     for($i = 1;$i<=12;$i++)
     {   //print out the month selectors, highlight the current month
         if($i==$month)
         {
-            print '<li class="active"><a href="#">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
+            print '<li class="active"><a href="calendar.php?month='.$i.'">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
         }
         else
         {
-            print '<li><a href="#">' . date("M", mktime(0, 0, 0, $i, 10)) . '</a></li>';
+            print '<li><a href="calendar.php?month='.$i.'">' . date("M", mktime(0, 0, 0, $i, 10)) . '</a></li>';
         }
     }
-    print '<li><a href="#">&raquo;</a></li>';
+    if($month==12)
+        print '<li><a href="calendar.php?month=1&year='.($year+1).'">&raquo;</a></li>';
+    else
+        print '<li><a href="calendar.php?month='.($month+1).'&year='.$year.'">&raquo;</a></li>';
     print '</ul>'; //Start calendar table, print out the Top row with days of the week
     print '<table style="margin: 0px auto;" class="calender">
                    <tr class="date">
@@ -156,11 +163,11 @@ function printCalendar()
 
     $dayNum = 0;
     $dayDetail = 0;
-    if(isset($_GET["month"])&&isset($_GET["year"]))
+    if(isset($_GET["month"])&&isset($_GET["year"])&&$_GET["month"]>0&&$_GET["month"]<13&&$_GET["year"]>0&&$_GET["year"]<2040)
         $days = buildCalArray($_GET["month"], $_GET["year"]);
-    elseif(isset($_GET["month"]))
+    elseif(isset($_GET["month"])&&$_GET["month"]>0&&$_GET["month"]<13)
         $days = buildCalArray($_GET["month"]);
-    elseif(isset($_GET["year"]))
+    elseif(isset($_GET["year"])&&$_GET["year"]>0&&$_GET["year"]<2040)
         $days = buildCalArray(NULL,$_GET["year"]);
     else
         $days = buildCalArray();
@@ -182,10 +189,12 @@ function printCalendar()
         $monthYear = $year."-".$month;
         if($month==12)//If current month is December, next month is January of next year
             $nextMonthYear = ($year+1)."-01";
+        else
+            $nextMonthYear = $year."-".($month+1);
         if($month==10)//If current month is October, previous month was September ('09' as opposed to '9')
             $prevMonthYear = $year."-09";
         else
-            $nextMonthYear = $year."-".($month+1);
+            $prevMonthYear = $year."-".($month-1);
     }
     $con = mysqli_connect('localhost','root','','teamsource');//Find all events of the current month and adjacent months
     $sql = "SELECT EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%' OR '$prevMonthYear%' OR '$nextMonthYear%' ORDER BY EVENT_DATETIME ASC";
@@ -252,7 +261,11 @@ function buildCalArray($month = NULL, $year=NULL)
         $year =  date('Y');
     $firstDay=date('w',strtotime($month."/1/".$year));
     $numDaysCurrMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); //Get number of days in current month
-    $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $month-1, $year); //Number of days in last month
+    if($month==1)
+        $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, 12, $year); //Number of days in last month
+    else
+        $numDaysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $month-1, $year); //Number of days in last month
+
     $days = array();
     if($firstDay!=0)
     {
@@ -271,7 +284,7 @@ function buildCalArray($month = NULL, $year=NULL)
         $day++;
     }
     $day = 1;
-    while(count($days)<35)
+    while(count($days)<42)
     {
         array_push($days, ($month+1)."/".$day); //Inserts the first days of the next month into the calendar
         $day++;
