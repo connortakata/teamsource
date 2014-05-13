@@ -233,7 +233,12 @@ function printCalendar()
     {
         $date=substr($row["EVENT_DATETIME"],5,5);
         if($date[0]=='0')
-            $date = substr($date,1);//shifts off the leading zero
+            $date = substr($date,1);//shifts off the leading zero for month
+        if($date[2]=='0')
+        {
+            $day = substr($date,3);//shifts off the leading zero for day
+            $date=substr($date,0,2).$day;
+        }
         $date=str_replace('-','/',$date);
         if(!isset($dayEvents[$date]))
             $i=0;
