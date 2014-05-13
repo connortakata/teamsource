@@ -55,7 +55,7 @@ print '
                 </div>
             </div>
         </div>
-        	<div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
+        <div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:5px">
             <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
             <button type="button" class="btn btn-default btn-med" onclick="DisplayPopUp(\'CalendarPopUp\')">
                 <span class="glyphicon glyphicon-plus"></span> Add Event
@@ -111,7 +111,31 @@ print '
             //xmlhttp.send("title=" + title + "&date=" + date  + "&timeHour=" + timeHour + "&timeMinute" + timeMinute + "&timeOfDay" + timeOfDay + "&description=" + description);
             xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
         }
-    }
+    function EditEvent(event){
+
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                  var test = document.getElementById("SelectedPopup");
+                  test.innerHTML=xmlhttp.responseText;
+                  DisplaySelectedPopup();
+            }
+        }
+            xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send("id=" + event);
+    }}
     </script>';
 function printCalendar()
 {
@@ -197,20 +221,20 @@ function printCalendar()
             $prevMonthYear = $year."-".($month-1);
     }
     $con = mysqli_connect('localhost','root','','teamsource');//Find all events of the current month and adjacent months
-    $sql = "SELECT EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%' OR '$prevMonthYear%' OR '$nextMonthYear%' ORDER BY EVENT_DATETIME ASC";
+    $sql = "SELECT ID, EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%' OR '$prevMonthYear%' OR '$nextMonthYear%' ORDER BY EVENT_DATETIME ASC";
     $result = mysqli_query($con,$sql);
-    $dayEvents = array(array());
+    $dayEvents = array(array(array()));
     $i=0;
     while($row = mysqli_fetch_array($result))//Generate an array of dates that can be referred to by a format like $dayEvents[5/31]
     {
         $date=substr($row["EVENT_DATETIME"],5,5);
-        $title=$row["EVENT_TITLE"];
         if($date[0]=='0')
             $date = substr($date,1);//shifts off the leading zero
         $date=str_replace('-','/',$date);
         if(!isset($dayEvents[$date]))
             $i=0;
-        $dayEvents[$date][$i]=$title;
+        $dayEvents[$date][$i]["title"]=$row["EVENT_TITLE"];
+        $dayEvents[$date][$i]["ID"]=$row["ID"];
         $i++;
     }
     for( $i=0; $i<count($days)/7; $i++)
@@ -234,13 +258,13 @@ function printCalendar()
             if(isset($dayEvents[$days[$dayDetail]]))
                 for($k=0;$k<count($dayEvents[$days[$dayDetail]]);$k++)
                 {
-                    if(strlen($dayEvents[$days[$dayDetail]][$k])>15)
+                    if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
                     {
-                        print '<a href="#" onclick="DisplayPopUp(\'EventPopUp\')" title="'.$dayEvents[$days[$dayDetail]][$k].'">';
-                        print substr($dayEvents[$days[$dayDetail]][$k],0,12)."...";
+                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].')" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                        print substr($dayEvents[$days[$dayDetail]][$k]["title"],0,12)."...";
                     }
                     else
-                        print '<a href="#" onclick="DisplayPopUp(\'EventPopUp\')">'.$dayEvents[$days[$dayDetail]][$k].'</a>';
+                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].')">'.$dayEvents[$days[$dayDetail]][$k]["title"];
 
                     print '</a>';
                     print "<br>";
