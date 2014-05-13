@@ -144,7 +144,7 @@ function printCalendar()
         else//Otherwise, previous month is just month-1
             $prevMonthYear = $year."-0".($month-1);
     }
-    else//For months October->December
+    else//For months October through December
     {
         $monthYear = $year."-".$month;
         if($month==12)//If current month is December, next month is January of next year
@@ -158,12 +158,11 @@ function printCalendar()
     $sql = "SELECT EVENT_TITLE, EVENT_DATETIME FROM EVENT WHERE EVENT_DATETIME LIKE '$monthYear%' OR '$prevMonthYear%' OR '$nextMonthYear%' ORDER BY EVENT_DATETIME ASC";
     $result = mysqli_query($con,$sql);
     $dayEvents = array(array());
-    $date=array();
     $i=0;
     while($row = mysqli_fetch_array($result))//Generate an array of dates that can be referred to by a format like $dayEvents[5/31]
     {
         $date=substr($row["EVENT_DATETIME"],5,5);
-        $title=substr($row["EVENT_TITLE"],0,15);
+        $title=$row["EVENT_TITLE"];
         if($date[0]=='0')
             $date = substr($date,1);//shifts off the leading zero
         $date=str_replace('-','/',$date);
@@ -186,13 +185,24 @@ function printCalendar()
             $dayNum++;
         }
         print '</tr>';
-        print '<tr class="dayDetail">';
+        print '<tr class="dayDetail" style="vertical-align: top">';
         for( $j=0; $j<7; $j++)//Printing the details of each day
         {
             print '<td class="days" width="11.43%">';
             if(isset($dayEvents[$days[$dayDetail]]))
-                for($i=0;$i<count($dayEvents[$days[$dayDetail]]);$i++)
-                    print $dayEvents[$days[$dayDetail]][$i];
+                for($k=0;$k<count($dayEvents[$days[$dayDetail]]);$k++)
+                {
+                    if(strlen($dayEvents[$days[$dayDetail]][$k])>15)
+                    {
+                        print '<a href="#" onclick="" title="'.$dayEvents[$days[$dayDetail]][$k].'">';
+                        print substr($dayEvents[$days[$dayDetail]][$k],0,12)."...";
+                    }
+                    else
+                        print '<a href="#" onclick="">'.$dayEvents[$days[$dayDetail]][$k].'</a>';
+
+                    print '</a>';
+                    print "<br>";
+                }
             print '</td>';
             $dayDetail++;
         }
