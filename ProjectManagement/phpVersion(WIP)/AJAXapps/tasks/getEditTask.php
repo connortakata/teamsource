@@ -25,7 +25,7 @@
 		echo '			<input name="EditTaskItem" id="selTaskTitle" type="text" value="'. $row['TASK_TITLE'] .'" class="form-control" placeholder="Task Title">';			    
 		echo '		  </div>';
 		echo '		  <div class="panel-body">';	
-		echo '			<Label><input type="hidden" name="EditTaskItem" id="selIssuedBy" value="';
+		echo '			Issued by:<Label><input type="hidden" name="EditTaskItem" id="selIssuedBy" value="';
 						echo  $row['TASK_ISSUED_BY'] . '"/>' . $row['TASK_ISSUED_BY'];
 						echo '	</Label><br><br>';
 		echo '			Finish By: <input name="EditTaskItem" type="date" style="height:25px" value="' . $row['TASK_DUE_DATE'] . '"/><br><br>';

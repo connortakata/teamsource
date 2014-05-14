@@ -71,7 +71,7 @@
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">';
 		  	
-   				$sql = "SELECT * FROM task;";
+   				$sql = "SELECT * FROM task where TASK_IS_FINISHED = 0;";
 				$result = mysqli_query($con, $sql);
 
 		    	while($row = mysqli_fetch_array($result))
