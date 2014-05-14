@@ -254,7 +254,7 @@ function AddEvent(edit){
         theTime     = document.getElementById("CalendarTime").value;
     }
 
-    theTime = theTime.replace(":","")
+    theTime = theTime.replace(":","");
 
     if( (title!='') && (date!=''))
     {
