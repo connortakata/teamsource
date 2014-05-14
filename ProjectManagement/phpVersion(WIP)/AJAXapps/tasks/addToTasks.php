@@ -1,13 +1,13 @@
 <?php 
-    if(isset($_COOKIE['id'])
+    if(isset($_COOKIE['id']))
     {
-	    $con = mysqli_connect("localhost", "root", "", "teamsource");
+        $mysqli = new mysqli("localhost", "root", "", "teamsource");
 	
 	    if (mysqli_connect_errno())
 	        {
 	            echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	        }    
-	    $stmt= $con->prepare("INSERT INTO task ( TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?);");
+	    $stmt= $mysqli->prepare("INSERT INTO task ( TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?);");
 	    $stmt->bind_param('ssssssi', $title, $description, $dueDate, $priority, $to, $by, $finished);
 	    
 	    $title = $_REQUEST['title'];
@@ -20,7 +20,6 @@
 	    $stmt->execute();
 	  	//$stmt->close();
 		//mysqli_query($con, "INSERT INTO task (TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by', $finished);");       
-	    
-	    mysqli_close($con);    
+
+        $mysqli->close();
 	}
-?>

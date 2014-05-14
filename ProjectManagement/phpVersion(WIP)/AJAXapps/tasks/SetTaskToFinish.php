@@ -1,8 +1,8 @@
 <?php
-	if(isset($_COOKIE['id'])
+	if(isset($_COOKIE['id']))
 	{
-		$con = mysqli_connect("localhost", "root", "", "teamsource");
-		$stmt =$con->prepare("UPDATE task SET TASK_IS_FINISHED = ? WHERE ID = ?");
+        $mysqli = new mysqli("localhost", "root", "", "teamsource");
+		$stmt =$mysqli->prepare("UPDATE task SET TASK_IS_FINISHED = ? WHERE ID = ?");
 		$stmt->bind_param("si", $finished, $fid);
 	    if (mysqli_connect_errno())
 	        {
@@ -14,7 +14,5 @@
 		
 		//mysqli_query($con, "UPDATE task SET TASK_IS_FINISHED = $finished WHERE ID = $id;"); 
 		$stmt->execute();      
-	    mysqli_close($con); 
+	    $mysqli->close();
 	}
-
-?>

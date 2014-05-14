@@ -16,24 +16,17 @@ if (true)//restrict file types here
         }
         else
         {
-            move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/" . $_FILES["file"]["name"]);
-            $con=mysqli_connect("localhost","root","","teamsource");
-            // Check connection
-
-            if (mysqli_connect_errno())
-            {
-                echo "Failed to connect to MySQL: " . mysqli_connect_error();
-            }
+            move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
+            $mysqli = new mysqli("localhost", "root", "", "teamsource");
+            $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param('ssss', $filename, $date, $time, $size);
             $filename = $_FILES["file"]["name"];
-            $date = date('M d, Y');
-            $time = date('h:i:s');
+            $date = date('Y-m-d');
+            $time = date('H:i:s');
             $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
             list($left, $right) = explode('.', $size, 2);
-            $sql = "INSERT INTO files (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE)
-VALUES ('$filename', '$date', '$time', '$size');";
-            mysqli_query($con,$sql);
-
-            mysqli_close($con);
+            $stmt->execute();
+            $mysqli->close();
         }
     }
 }
@@ -42,5 +35,5 @@ else
     echo "Invalid file";
 }
 
-header( 'Location: ../resources.php' )
+header( 'Location: ../../resources.php' )
 ?>

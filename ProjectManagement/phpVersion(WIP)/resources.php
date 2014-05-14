@@ -16,7 +16,7 @@ print '
 					<td style="width:50%">Files for team &lsaquo;team&rsaquo;</td>
 					<td style="width:50%;">
 						<!--<button id="btnUpload" type="button" class="btn btn-default">Upload</button>-->
-						<form action="includes/upload_file.php" method="post" enctype="multipart/form-data">
+						<form action="../AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
                         <label for="file">Upload:</label>
                         <input type="file" name="file" id="file">
                         <button type="submit" class="btn btn-sm" name="submit">Submit</button>

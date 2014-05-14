@@ -106,11 +106,11 @@ function printCalendar()
     {   //print out the month selectors, highlight the current month
         if($i==$month)
         {
-            print '<li class="active"><a href="calendar.php?month='.$i.'">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
+            print '<li class="active"><a href="calendar.php?month='.$i.'&year='.$year.'">'. date("M", mktime(0, 0, 0, $i, 10)) .'<span class="sr-only">(current)</span></a></li>';
         }
         else
         {
-            print '<li><a href="calendar.php?month='.$i.'">' . date("M", mktime(0, 0, 0, $i, 10)) . '</a></li>';
+            print '<li><a href="calendar.php?month='.$i.'&year='.$year.'">' . date("M", mktime(0, 0, 0, $i, 10)) . '</a></li>';
         }
     }
     if($month==12)
