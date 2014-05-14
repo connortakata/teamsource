@@ -1,5 +1,6 @@
 <?php
-
+if(isset($_COOKIE['id']))
+{
     $mysqli = new mysqli("localhost", "root", "", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)
         $stmt= $mysqli->prepare("UPDATE EVENT SET EVENT_CALENDAR_ID='?', EVENT_TITLE='?', EVENT_DATETIME='?', EVENT_DESCRIPTION='?' WHERE ID=;");
@@ -17,3 +18,4 @@
     $date = $date." ".$theTime.":00";
     $stmt->execute();
     $mysqli->close();
+}
