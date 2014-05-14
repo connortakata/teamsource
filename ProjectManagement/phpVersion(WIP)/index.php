@@ -54,7 +54,7 @@
 			</div>
 
 			<div class="talk">
-				<input id="GrpChatTxtInput" type="text" style="width:75%" placeholder="Type Your Message Here...">
+				<input id="GrpChatTxtInput" type="text" style="width:75%" placeholder="Type Your Message Here..." onkeydown="if (event.keyCode == 13) document.getElementById(\'GrpChatbutton\').click()">
 				<button id="GrpChatbutton" style="margin-left: 3%;" onclick="submitToChat(); getChat();" align="right" type="button" class="btn btn-submit">Submit</button>
 			</div>
 
