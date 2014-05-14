@@ -237,19 +237,21 @@ function AddEvent(edit){
     var date;
     var description;
     var theTime;
+    var id;
     if(edit==true)
     {
         title       = document.getElementById("CalendarEditTitle").value;
         date        = document.getElementById("CalendarEditDate").value;
         description = document.getElementById("CalendarEditDes").value;
-        theTime = document.getElementById("CalendarEditTime").value;
+        theTime     = document.getElementById("CalendarEditTime").value;
+        id          = document.getElementById("CalendarEditId").value;
     }
     else
     {
         title       = document.getElementById("CalendarTitle").value;
         date        = document.getElementById("CalendarDate").value;
         description = document.getElementById("CalendarDes").value;
-        theTime = document.getElementById("CalendarTime").value;
+        theTime     = document.getElementById("CalendarTime").value;
     }
 
     theTime = theTime.replace(":","")
@@ -271,7 +273,7 @@ function AddEvent(edit){
         xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         if(edit==true)
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit);
+            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit + "&id=" + id);
         else
             xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
     }

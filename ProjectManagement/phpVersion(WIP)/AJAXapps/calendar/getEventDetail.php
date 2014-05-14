@@ -20,6 +20,7 @@ while($row = mysqli_fetch_array($result))
                    <div class="panel-heading">
                         <input name="EventItem" id="CalendarEditTitle" value="'.$row["EVENT_TITLE"].'" type="text" disabled="disabled" class="form-control"/>
                     </div>
+                    <input id="CalendarEditId" style="display: none;" value="'.$ID.'"></input>
                     <div class="panel-body">
                         <input name="EventItem" disabled="disabled" value="'.substr($row["EVENT_DATETIME"],0,10).'" id="CalendarEditDate" type="date" style="height:25px"/> at:
                         <input name="EventItem" disabled="disabled" value="'.substr($row["EVENT_DATETIME"],11).'"id="CalendarEditTime" type="time" style="height:25px"/>
