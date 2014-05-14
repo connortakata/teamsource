@@ -5,7 +5,7 @@ if (mysqli_connect_errno())
 {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-$ID=$_REQUEST["ID"];
+$ID=$_POST["id"];
 mysqli_select_db($con, "teamsource");
 $sql = "SELECT * FROM EVENT WHERE ID='$ID';";
 
@@ -13,27 +13,29 @@ $result = mysqli_query($con, $sql);
 
 while($row = mysqli_fetch_array($result))
 {
-    echo '<div id="EventPopUp" class="PopupShadow" style="display:none; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
-            <div class="well" style="width:100%; height:100%;">
-                <div class="panel panel-primary" style="top:25px; height:95%;">
-                    <div class="panel-heading">
-                        <input name="EventItem" id="CalendarTitle" type="text" class="form-control" value="'.$row["EVENT_TITLE"].'"/>
+    echo '
+    <div class="well" style="width:100%; height:auto;">
+    	<div class="panel panel-primary" style="height:auto">
+    	  <div class="panel panel-primary" style="top:25px; height:95%;">
+                   <div class="panel-heading">
+                        <input name="EventItem" id="CalendarEditTitle" value="'.$row["EVENT_TITLE"].'" type="text" disabled="disabled" class="form-control"/>
                     </div>
                     <div class="panel-body">
-                        <input name="EventItem" id="CalendarDate" type="date" value="'.substr($row["EVENT_DATETIME"],0,10).'" style="height:25px"/> at:
-                        <input name="EventItem" id="CalendarTime" type="time" value="'.substr($row["EVENT_TITLE"],11,5).'"style="height:25px"/>
+                        <input name="EventItem" disabled="disabled" value="'.substr($row["EVENT_DATETIME"],0,10).'" id="CalendarEditDate" type="date" style="height:25px"/> at:
+                        <input name="EventItem" disabled="disabled" value="'.substr($row["EVENT_DATETIME"],11).'"id="CalendarEditTime" type="time" style="height:25px"/>
                         <br /><br />
                         Description
                         <div class="panel-info">
-                            <textarea name="EventItem" id="CalendarDes" rows="5" value="'.$row["EVENT_DESCRIPTION"].'"class="form-control" style="height:50%; width:100%; resize:none;"  ></textarea>
+                            <textarea disabled="disabled" name="EventItem" id="CalendarEditDes" rows="5" class="form-control" style="height:50%; width:100%; resize:none;"  >'.$row["EVENT_DESCRIPTION"].'</textarea>
                         </div>
                     </div>
                     <div class="btn-group">
-                        <input type="button" id="CalAdd" value="Update" style="margin-left:150px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\')" />
-                        <input type="button" value="Delete" style="margin-left:10px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\');" />
-                        <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'EventPopUp\', \'EventItem\');" />
+                        <button id="btnSelEdit" type="button" class="btn btn-default" onclick="EditSelectedPopup();"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
+                        <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup();"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                        <button id="btnSelClose" type="button" class="btn btn-default" onclick="HideSelectedPopup();"> Close</button>
                     </div>
                 </div>
-            </div>
-        </div>';
+    	  </div>
+    	</div>
+   ';
 }

@@ -229,3 +229,74 @@ function CreateUser(){
     }
     //window.location = "index.php";
 }
+
+function AddEvent(edit){
+
+    var xmlhttp;
+    var title;
+    var date;
+    var description;
+    var theTime;
+    if(edit==true)
+    {
+        title       = document.getElementById("CalendarEditTitle").value;
+        date        = document.getElementById("CalendarEditDate").value;
+        description = document.getElementById("CalendarEditDes").value;
+        theTime = document.getElementById("CalendarEditTime").value;
+    }
+    else
+    {
+        title       = document.getElementById("CalendarTitle").value;
+        date        = document.getElementById("CalendarDate").value;
+        description = document.getElementById("CalendarDes").value;
+        theTime = document.getElementById("CalendarTime").value;
+    }
+
+    theTime = theTime.replace(":","")
+
+    if( (title!='') && (date!=''))
+    {
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        if(edit==true)
+            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit);
+        else
+            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
+    }
+}
+
+function EditEvent(id){
+
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+            var test = document.getElementById("SelectedPopup");
+            test.innerHTML=xmlhttp.responseText;
+            DisplaySelectedPopup();
+        }
+    }
+    xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("id=" + id);
+}

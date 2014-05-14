@@ -1,7 +1,10 @@
 <?php
 
     $mysqli = new mysqli("localhost", "root", "", "teamsource");
-    $stmt= $mysqli->prepare("INSERT INTO EVENT (EVENT_CALENDAR_ID, EVENT_TITLE, EVENT_DATETIME, EVENT_DESCRIPTION) VALUES (?,?,?,?);");
+    if(isset($_POST["id"])&&$_POST["id"]==true)
+        $stmt= $mysqli->prepare("UPDATE EVENT SET EVENT_CALENDAR_ID='?', EVENT_TITLE='?', EVENT_DATETIME='?', EVENT_DESCRIPTION='?' WHERE ID=;");
+    else
+        $stmt= $mysqli->prepare("INSERT INTO EVENT (EVENT_CALENDAR_ID, EVENT_TITLE, EVENT_DATETIME, EVENT_DESCRIPTION) VALUES (?,?,?,?);");
     $stmt->bind_param('isss', $calID, $title, $date, $description);
 
     $calID=0;

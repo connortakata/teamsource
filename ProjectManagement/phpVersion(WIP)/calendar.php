@@ -4,6 +4,8 @@ require "includes/topNav.php";
 require "includes/sidebar.php";
 
 print '
+        <div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
+		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Calendar</h1>
         </div>
@@ -64,7 +66,9 @@ print '
 
     printCalendar();
 
-    print '<script>
+    print '
+    <script src="js/AJAX_lib.js"></script>
+    <script>
     $("#CalAdd").click(function () {
             var controls = document.getElementsByName("CalendarItem");
             validatePopUp(controls, "Calendar");
@@ -83,59 +87,22 @@ print '
             object[i].value = "";
         }
     }
-    function AddEvent(){
-
-        var xmlhttp;
-        var title       = document.getElementById("CalendarTitle").value;
-        var date        = document.getElementById("CalendarDate").value;
-        var description = document.getElementById("CalendarDes").value;
-        var theTime = document.getElementById("CalendarTime").value;
-
-        theTime = theTime.replace(":","")
-
-        if( (title!=\'\') && (date!=\'\')){
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest();
-            }
-            else{
-                xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-            }
-
-            xmlhttp.onreadystatechange = function() {
-                if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-                }
-            }
-            xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            //xmlhttp.send("title=" + title + "&date=" + date  + "&timeHour=" + timeHour + "&timeMinute" + timeMinute + "&timeOfDay" + timeOfDay + "&description=" + description);
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
-        }
-    function EditEvent(event){
-
-        var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-          xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// code for IE6, IE5
-          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        xmlhttp.onreadystatechange=function()
-        {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-            {
-                  var test = document.getElementById("SelectedPopup");
-                  test.innerHTML=xmlhttp.responseText;
-                  DisplaySelectedPopup();
-            }
-        }
-            xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
-            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            xmlhttp.send("id=" + event);
-    }}
+    function DisplaySelectedPopup(){
+    		$(\'#SelectedPopup\').show();
+    		var pop = document.getElementById("SelectedPopup");
+    		pop.style.zIndex = 10;
+    }
+    function HideSelectedPopup(){
+    		$(\'#SelectedPopup\').hide();
+    }
+    function EditSelectedPopup(){
+    		document.getElementById("CalendarEditTitle").disabled="";
+    		document.getElementById("CalendarEditTime").disabled="";
+    		document.getElementById("CalendarEditDate").disabled="";
+    		document.getElementById("CalendarEditDes").disabled="";
+    		document.getElementById("btnSelEdit").innerHTML="<span class=\\"glyphicon glyphicon-ok\\"></span> Submit";
+    		//document.getElementById("btnSelEdit").onclick=AddEvent(true);HideSelectedPopup();
+    }
     </script>';
 function printCalendar()
 {
@@ -269,12 +236,11 @@ function printCalendar()
                 {
                     if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
                     {
-                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].')" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
                         print substr($dayEvents[$days[$dayDetail]][$k]["title"],0,12)."...";
                     }
                     else
-                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].')">'.$dayEvents[$days[$dayDetail]][$k]["title"];
-
+                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
                     print '</a>';
                     print "<br>";
                 }
