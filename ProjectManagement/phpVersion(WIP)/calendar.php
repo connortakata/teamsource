@@ -78,7 +78,7 @@ print '
     		document.getElementById("CalendarEditDate").disabled="";
     		document.getElementById("CalendarEditDes").disabled="";
     		document.getElementById("btnSelEdit").innerHTML="<span class=\\"glyphicon glyphicon-ok\\"></span> Submit";
-    		document.getElementById("btnSelEdit").onclick=function(){ AddEvent(true); };
+    		document.getElementById("btnSelEdit").onclick=function(){ AddEvent(true); HideSelectedPopup();};
     }
     </script>';
 function printCalendar()
