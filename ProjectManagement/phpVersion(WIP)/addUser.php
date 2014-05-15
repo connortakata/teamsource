@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["email"])
     && isset($_POST["pass"]))
 {
@@ -16,6 +17,9 @@ if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["emai
     $sql = "SELECT ID FROM USER WHERE USER_EMAIL='$email';";
     $result = mysqli_query($con, $sql);
     $id = mysqli_fetch_array($result)[0];
-    setcookie("id", $id, time()+3600);
+    session_start();
+    $_SESSION["id"]=$id;
+    //setcookie("id", $id, time()+3600);
     mysqli_close($con);
+    header("Location: index.php");
 }

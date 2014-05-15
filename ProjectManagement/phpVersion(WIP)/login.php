@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_POST["email"]) && isset($_POST["pass"]))
 {
     $con = mysqli_connect("localhost", "root", "", "teamsource");
@@ -9,7 +10,9 @@ if(isset($_POST["email"]) && isset($_POST["pass"]))
     mysqli_close($con);
     if($_POST["pass"]==$id["USER_PASSWORD"])
     {
-        setcookie("id", $id["ID"], time()+3600);
-        //header("Location: ./");
+        session_start();
+        $_SESSION["id"]=$id["ID"];
+        //setcookie("id", $id["ID"], time()+3600);
+        header("Location: index.php");
     }
 }

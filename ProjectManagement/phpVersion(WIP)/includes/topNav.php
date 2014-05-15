@@ -16,7 +16,7 @@
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <?php
                             $con = mysqli_connect("localhost", "root", "", "teamsource");
-                            $id = $_COOKIE["id"];
+                            $id = $_SESSION["id"];
                             $sql = "SELECT USER_FIRSTNAME FROM USER WHERE ID='$id';";
                             $result = mysqli_query($con, $sql);
                             print mysqli_fetch_array($result)[0];

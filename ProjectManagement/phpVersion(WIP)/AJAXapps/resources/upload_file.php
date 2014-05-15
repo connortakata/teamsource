@@ -1,4 +1,5 @@
 <?php
+session_start();
 $allowedExts = array("gif", "jpeg", "jpg", "png");//array that defines allowed file types
 $temp = explode(".", $_FILES["file"]["name"]);
 $extension = end($temp);

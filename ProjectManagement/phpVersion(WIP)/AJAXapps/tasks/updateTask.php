@@ -1,5 +1,6 @@
 <?php
-	if(isset($_COOKIE['id']))
+session_start();
+	if(isset($_SERVER['id']))
 	{
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
 	    if (mysqli_connect_errno())

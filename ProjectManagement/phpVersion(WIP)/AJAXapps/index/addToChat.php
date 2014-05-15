@@ -1,5 +1,6 @@
-﻿<?php 
-    if (isset($_COOKIE['id']))
+﻿<?php
+session_start();
+    if (isset($_SESSION['id']))
     {
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
 		$stmt = $mysqli->prepare("INSERT INTO message ( MESSAGE_TEXT, MESSAGE_USER_ID, MESSAGE_TIME, MESSAGE_DATE, MESSAGE_MESSAGE_BOARD_ID) VALUES (?, ?, ?, ?, ? )");
@@ -10,7 +11,7 @@
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
         $boardID=20;
-	    $user = $_COOKIE['id'];
+	    $user = $_SESSION['id'];
 	    $message = $_REQUEST['message'];
 	    //$timestamp = $_REQUEST['TimeStamp'];
 	    $timestamp = date('H:i:s');
