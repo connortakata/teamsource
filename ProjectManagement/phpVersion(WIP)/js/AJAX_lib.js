@@ -165,7 +165,11 @@ function isFinishTask(id, SetTo){
 	
 	xmlhttp.onreadystatechange = function() {
 		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-		
+			var str = xmlhttp.responseText;
+            if(str != "")
+            {
+                DisplayAlertPopUp("Error", str);
+            }	
 		}
 	}
 	xmlhttp.open("POST", "../AJAXapps/tasks/SetTaskToFinish.php", false);

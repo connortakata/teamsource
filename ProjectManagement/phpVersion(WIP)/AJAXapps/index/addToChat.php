@@ -4,6 +4,7 @@
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
 		$stmt = $mysqli->prepare("INSERT INTO message ( MESSAGE_TEXT, MESSAGE_USER_ID, MESSAGE_TIME, MESSAGE_DATE, MESSAGE_MESSAGE_BOARD_ID) VALUES (?, ?, ?, ?, ? )");
 		$stmt->bind_param("sissi", $message, $user, $timestamp, $date, $boardID);
+
 	    if (mysqli_connect_errno())
         {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
