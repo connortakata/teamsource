@@ -3,14 +3,11 @@ require "../../includes/userAuth.php";
 if(isLoggedIn())
 {
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
-	
-	    if (mysqli_connect_errno())
-	        {
-	            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	        }    
-	    $stmt= $mysqli->prepare("INSERT INTO task ( TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?);");
-	    $stmt->bind_param('ssssssi', $title, $description, $dueDate, $priority, $to, $by, $finished);
-	    
+
+	    $stmt= $mysqli->prepare("INSERT INTO task ( TASK_TASK_MANAGER_ID, TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+	    $stmt->bind_param('issssssi', $managerId, $title, $description, $dueDate, $priority, $to, $by, $finished);
+
+        $managerId=0;
 	    $title = $_REQUEST['title'];
 	    $description = $_REQUEST['description'];
 	    $dueDate = $_REQUEST['dueDate'];

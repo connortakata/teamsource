@@ -250,7 +250,7 @@ function LogOut()
 
         }
     }
-    xmlhttp.open("POST", "logOut.php", false);
+    xmlhttp.open("POST", "logout.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send();
 }
