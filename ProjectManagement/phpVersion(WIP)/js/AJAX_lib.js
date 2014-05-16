@@ -208,6 +208,7 @@ function CreateUser(){
     var email = document.getElementById("txtEmail").value;
     var pass = document.getElementById("txtPassword").value;
     var passConfirm = document.getElementById("txtPasswordConfirm").value;
+    var form_token = document.getElementById("token").value;
 
     if( (firstName!='') && (lastName!='') && (email!='') && (pass!='') && (pass==passConfirm) ){
         if(window.XMLHttpRequest){
@@ -225,7 +226,7 @@ function CreateUser(){
         }
         xmlhttp.open("POST", "addUser.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass);
+        xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
     }
     else
     {

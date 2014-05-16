@@ -1,7 +1,9 @@
 <?php
-session_start();
-if(!isset($_SESSION["id"]))
-    header("Location:Splash.php");
+require "userAuth.php";
+if(isLoggedIn()==false)
+{
+    header("Location:index.php");
+}
 ?>
 <!DOCTYPE html>
 <html ng-app lang="en">

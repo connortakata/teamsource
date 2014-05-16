@@ -1,6 +1,6 @@
 <?php
-session_start();
-	if(isset($_SERVER['id']))
+require "../../includes/userAuth.php";
+	if(isLoggedIn())
 	{
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
 	    if (mysqli_connect_errno())
@@ -20,4 +20,5 @@ session_start();
 		//mysqli_query($con, "UPDATE task SET TASK_TITLE = '$title' , TASK_DESCRIPTION = 'addSlashes($description)', TASK_DUE_DATE = '$dueDate', TASK_PRIORITY = '$priority', TASK_ASSIGNED_TO = '$to', TASK_ISSUED_BY = '$by' WHERE ID = $id;");       
 	    $mysqli->close();
 	}
-?>
+else
+    header("Location:../../index.php");

@@ -1,5 +1,8 @@
 <?php
-session_start();
+require "../../includes/userAuth.php";
+
+if(isLoggedIn())
+{
 	$con = mysqli_connect("localhost", "root", "", "teamsource");
 
     if (mysqli_connect_errno())
@@ -34,4 +37,6 @@ session_start();
 	
 	echo "</table>";
 	mysqli_close($con);
-?>
+}
+else
+    header("Location:../../index.php");

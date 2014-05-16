@@ -1,6 +1,7 @@
 <?php
-session_start();
-if(isset($_SESSION['id']))
+require "../../includes/userAuth.php";
+
+if(isLoggedIn())
 {
     $mysqli = new mysqli("localhost", "root", "", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)
@@ -26,3 +27,5 @@ if(isset($_SESSION['id']))
     $mysqli->close();
     header("Location:calendar.php");
 }
+else
+    header("Location:../../index.php");

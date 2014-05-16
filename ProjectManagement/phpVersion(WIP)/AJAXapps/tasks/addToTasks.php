@@ -1,7 +1,7 @@
 <?php
-session_start();
-    if(isset($_SESSION['id']))
-    {
+require "../../includes/userAuth.php";
+if(isLoggedIn())
+{
         $mysqli = new mysqli("localhost", "root", "", "teamsource");
 	
 	    if (mysqli_connect_errno())
@@ -24,3 +24,5 @@ session_start();
 
         $mysqli->close();
 	}
+else
+    header("Location:../../index.php");
