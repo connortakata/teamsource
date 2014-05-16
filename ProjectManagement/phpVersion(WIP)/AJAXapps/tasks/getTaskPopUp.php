@@ -38,7 +38,7 @@ session_start();
 			echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" onclick="isFinishTask(' . $id . ', 0); location.reload();"><span class="glyphicon glyphicon-ok"></span> Set to Active</button>';
 		}
 		echo '			  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="EditTask(' . $id . ')"><span class="glyphicon glyphicon-wrench"></span> Edit</button>';
-		echo '			  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>';
+		echo '			  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Close</button>';
 		echo '			</div>';
 		echo '	  </div>';
 		echo '	</div>';

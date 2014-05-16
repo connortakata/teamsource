@@ -64,9 +64,9 @@
                 <span class="glyphicon glyphicon-plus"></span> Add Task
               </button>
             <!--</a>-->
-          <button type="button" class="btn btn-default btn-med">
+          <!--<button type="button" class="btn btn-default btn-med">
             <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
-          </button>
+          </button>-->
           <select class="btn btn-default" onchange="SwitchDisplayedTasks(this)">
           	<option value="0">Active</option>
           	<option value="1">Finished</option>
