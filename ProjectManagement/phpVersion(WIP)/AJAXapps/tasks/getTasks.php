@@ -1,5 +1,5 @@
 ﻿<?php
-session_start();
+	session_start();
 	$con = mysqli_connect("localhost", "root", "", "teamsource");
 
     if (mysqli_connect_errno())
@@ -7,7 +7,7 @@ session_start();
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }    
     $finished = $_REQUEST['finished'];    
-	$sql = "SELECT * FROM task;";
+	$sql = "SELECT * FROM task WHERE TASK_IS_FINISHED = $finished ORDER BY TASK_DUE_DATE ASC;";
 	$result = mysqli_query($con, $sql);
 		
 	while($row = mysqli_fetch_array($result))

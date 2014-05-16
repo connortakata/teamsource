@@ -306,3 +306,8 @@ function EditEvent(id){
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("id=" + id);
 }
+
+function SwitchDisplayedTasks(object)
+{
+	 RefreshTasks(object.value);	
+}
