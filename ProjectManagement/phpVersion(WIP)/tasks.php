@@ -64,14 +64,18 @@
                 <span class="glyphicon glyphicon-plus"></span> Add Task
               </button>
             <!--</a>-->
-          <button type="button" class="btn btn-default btn-med">
+          <!--<button type="button" class="btn btn-default btn-med">
             <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
-          </button>
+          </button>-->
+          <select class="btn btn-default" onchange="SwitchDisplayedTasks(this)">
+          	<option value="0">Active</option>
+          	<option value="1">Finished</option>
+          </select>
         </div>
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">';
 		  	
-   				$sql = "SELECT * FROM task where TASK_IS_FINISHED = 0;";
+   				$sql = "SELECT * FROM task where TASK_IS_FINISHED = 0 ORDER BY TASK_DUE_DATE ASC;";
 				$result = mysqli_query($con, $sql);
 
 		    	while($row = mysqli_fetch_array($result))
@@ -135,7 +139,7 @@
     		{
     			HidePopup();
     			clearTaskData();
-    			RefreshTasks(0);
+    			location.reload();
     		}
     	});
     	    	    	
