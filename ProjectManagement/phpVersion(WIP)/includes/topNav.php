@@ -19,7 +19,10 @@
                             $id = $_SESSION["id"];
                             $sql = "SELECT USER_FIRSTNAME FROM USER WHERE ID='$id';";
                             $result = mysqli_query($con, $sql);
-                            print mysqli_fetch_array($result)[0];
+                            while($row = mysqli_fetch_array($result))
+                            {
+                                print $row["USER_FIRSTNAME"];
+                            }
                             mysqli_close($con);
                             ?>
                             's Teams <span class="caret"></span>
