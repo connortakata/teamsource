@@ -282,6 +282,8 @@ function AddEvent(edit){
     }
 
     theTime = theTime.replace(":","");
+    if(edit==true){
+        theTime = theTime.replace(":","");
 
     if( (title!='') && (date!=''))
     {
@@ -304,7 +306,7 @@ function AddEvent(edit){
         else
             xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
 
-    }
+    }}
 }
 
 function EditEvent(id){

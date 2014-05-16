@@ -22,10 +22,15 @@ if(isLoggedIn())
     $description=$_POST["description"];
 
     $theTime = substr_replace($theTime, ":", 2, 0);
-    $date = $date." ".$theTime.":00";
+    if($_POST["edit"])
+    {
+        $date = $date." ".$theTime;
+        $theTime = substr_replace($theTime, ":", 2, 0);
+    }
+    else
+        $date = $date." ".$theTime.":00";
     $stmt->execute();
     $mysqli->close();
-    header("Location:../../calendar.php");
 }
 else
     header("Location:../../index.php");
