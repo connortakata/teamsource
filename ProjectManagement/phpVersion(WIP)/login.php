@@ -62,6 +62,7 @@ else
         if($user_id == false)
         {
             $message = 'Login Failed';
+            header("Location:Splash.php");
         }
         /*** if we do have a result, all is well ***/
         else
@@ -78,6 +79,7 @@ else
     {
         /*** if we are here, something has gone wrong with the database ***/
         $message = 'We are unable to process your request. Please try again later"';
+        header("Location:Splash.php");
     }
 }
 /*if(isset($_POST["email"]) && isset($_POST["pass"]))

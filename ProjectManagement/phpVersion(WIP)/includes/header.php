@@ -2,7 +2,7 @@
 require "userAuth.php";
 if(isLoggedIn()==false)
 {
-    header("Location:index.php");
+    header("Location:Splash.php");
 }
 ?>
 <!DOCTYPE html>

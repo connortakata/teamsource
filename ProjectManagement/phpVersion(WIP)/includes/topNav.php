@@ -9,6 +9,7 @@
 			</button>
 			<a class="navbar-brand" href="index.php">Team Source</a>
 		</div>
+        <script src="../js/AJAX_lib.js"></script>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
                 <li>
@@ -36,7 +37,7 @@
                 </li>
 				<li><a href="index.php">Dashboard</a></li>
 				<li><a href="Settings.php">Settings</a></li>
-				<li><a href="#">Sign Out</a></li>
+				<li><a href="#" onclick="LogOut();">Sign Out</a></li>
 			</ul>
 		</div>
 	</div>
