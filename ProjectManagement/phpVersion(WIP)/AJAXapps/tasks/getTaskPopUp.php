@@ -29,7 +29,14 @@ session_start();
 		echo '				<label id="selTaskDes" rows="5" class="form-control" style="height:50%; width:100%;">' . $row['TASK_DESCRIPTION'] . '</label>';
 		echo '			</div>';
 		echo '			<div class="btn-group">';
-		echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" onclick="isFinishTask(' . $id . ', 1); location.reload();"><span class="glyphicon glyphicon-ok"></span> Finish</button>';
+		if ($row['TASK_IS_FINISHED'] == 0)
+		{
+			echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" onclick="isFinishTask(' . $id . ', 1); location.reload();"><span class="glyphicon glyphicon-ok"></span> Set to Finish</button>';
+		}
+		else
+		{
+			echo '			  <button id="btnSelComplete" type="button" class="btn btn-default" onclick="isFinishTask(' . $id . ', 0); location.reload();"><span class="glyphicon glyphicon-ok"></span> Set to Active</button>';
+		}
 		echo '			  <button id="btnSelEdit" type="button" class="btn btn-default" onclick="EditTask(' . $id . ')"><span class="glyphicon glyphicon-wrench"></span> Edit</button>';
 		echo '			  <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup()"><span class="glyphicon glyphicon-remove"></span> Delete</button>';
 		echo '			</div>';
