@@ -47,7 +47,7 @@ else
     $mysql_username = 'root';
 
     /*** mysql password ***/
-    $mysql_password = '';
+    $mysql_password = 'TeamSource1!';
 
     /*** database name ***/
     $mysql_dbname = 'teamsource';
@@ -97,7 +97,7 @@ else
 /*if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["email"])
     && isset($_POST["pass"]))
 {
-    $con = mysqli_connect("localhost", "root", "", "teamsource");
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 
     //$username = $_POST["txtUsername"];
     $firstname = $_POST["firstName"];

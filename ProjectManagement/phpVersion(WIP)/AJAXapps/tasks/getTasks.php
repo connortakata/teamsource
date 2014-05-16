@@ -3,7 +3,7 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn())
 {
-	$con = mysqli_connect("localhost", "root", "", "teamsource");
+	$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 
     if (mysqli_connect_errno())
         {

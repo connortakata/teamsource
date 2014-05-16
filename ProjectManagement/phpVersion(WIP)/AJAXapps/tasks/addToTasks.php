@@ -2,7 +2,7 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn())
 {
-        $mysqli = new mysqli("localhost", "root", "", "teamsource");
+        $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 
 	    $stmt= $mysqli->prepare("INSERT INTO task ( TASK_TASK_MANAGER_ID, TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 	    $stmt->bind_param('issssssi', $managerId, $title, $description, $dueDate, $priority, $to, $by, $finished);

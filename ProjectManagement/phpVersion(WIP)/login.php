@@ -33,7 +33,7 @@ else
     $mysql_username = 'root';
 
     /*** mysql password ***/
-    $mysql_password = '';
+    $mysql_password = 'TeamSource1!';
 
     /*** database name ***/
     $mysql_dbname = 'teamsource';
@@ -72,7 +72,7 @@ else
 
             /*** tell the user we are logged in ***/
             $message = 'You are now logged in';
-            header("Location:index.php");
+            //header("Location:index.php");
         }
     }
     catch(Exception $e)
@@ -84,7 +84,7 @@ else
 }
 /*if(isset($_POST["email"]) && isset($_POST["pass"]))
 {
-    $con = mysqli_connect("localhost", "root", "", "teamsource");
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
     $email = $_POST["email"];
     $sql = "SELECT ID,USER_PASSWORD FROM USER WHERE USER_EMAIL='$email';";
     $result = mysqli_query($con, $sql);

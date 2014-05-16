@@ -20,7 +20,7 @@ if(isLoggedIn())
             else
             {
                 move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
-                $mysqli = new mysqli("localhost", "root", "", "teamsource");
+                $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
                 $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE) VALUES (?, ?, ?, ?)");
                 $stmt->bind_param('ssss', $filename, $date, $time, $size);
                 $filename = $_FILES["file"]["name"];

@@ -227,6 +227,7 @@ function CreateUser(){
         xmlhttp.open("POST", "addUser.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
+        window.location = "index.php";
     }
     else
     {
@@ -253,6 +254,7 @@ function LogOut()
     xmlhttp.open("POST", "logout.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send();
+    window.location = "Splash.php";
 }
 
 function AddEvent(edit){
@@ -301,6 +303,7 @@ function AddEvent(edit){
             xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit + "&id=" + id);
         else
             xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
+
     }
 }
 

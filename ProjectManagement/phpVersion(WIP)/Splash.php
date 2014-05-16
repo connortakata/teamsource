@@ -54,13 +54,13 @@ $_SESSION['form_token'] = $form_token;
 				</div>
 				<div class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right">
-                        <input id="btnLogIn" type="button" onclick="LogIn()" class="btn btn-default btn-sm" value="Log-in">
+                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn()" class="btn btn-default btn-sm" value="Log-in">
 					</form>
 					<form class="navbar-form navbar-right">
-						<input id="txtPasswordLog" type="password" class="form-control" placeholder="Password">
+						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click()" type="password" class="form-control" placeholder="Password">
 					</form>
 					<form class="navbar-form navbar-right">
-					  <input id="txtUsernameLog" type="text" class="form-control" placeholder="Email">
+					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click()" type="text" class="form-control" placeholder="Email">
 					</form>          	
 				</div>
 			  </div>
@@ -93,48 +93,6 @@ $_SESSION['form_token'] = $form_token;
 				</div>
 			</div>
 			<!--<div class="LeftPanelColor"></div>-->
-			<?php
-    
-    $con = mysqli_connect("localhost", "root", "", "teamsource");
-
-    if (mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        }    
-
-    if (isset($_POST["txtUsername"]) && isset($_POST["txtFirstName"]) && isset($_POST["txtLastName"])
-    	&& isset($_POST["txtPassword"]) && isset($_POST["txtEmail"])) 
-	{
- 		$username = $_POST["txtUsername"];
- 		$firstname = $_POST["txtFirstName"];
- 		$lastname = $_POST["txtLastName"];
- 		$password = $_POST["txtPassword"];
- 		$email = $_POST["txtEmail"];
- 		$title = "default";
-
- 		mysqli_query($con, "INSERT INTO User (username, user_firstname, user_lastname, user_title, user_password, user_email) VALUES ('$username', '$firstname', '$lastname', '$title', '$password', '$email');"); 
-    	mysqli_close($con);  
-	}
-	else 
-	{
-  		$username = null;
-  		$firstname = null;
-  		$lastname = null;
-  		$password = null;
-  		$email = null;
-  		$title = null;
-  
-	}
-    
-    //$username = $_POST['txtUsername'];
-    /*$firstname = $_POST['txtFirstName'];
-    $lastname = $_POST['txtLastName'];
-    $password = $_POST['txtPassword'];
-    $email = $_POST['txtEmail'];*/
-    
-	  
-			?>
-
 			<form name="createuser" method="post"> 
 			<div class="RightPanel">
 				<div class="right-container">
@@ -154,10 +112,10 @@ $_SESSION['form_token'] = $form_token;
                         <table align="center" width="70%">
                             <tr>
                                 <td>
-                                    <input type="text" style="width:99%" class=" input" id="txtFirstName" name="txtFirstName" placeholder="First Name">
+                                    <input type="text" tabindex="4" style="width:99%" class=" input" id="txtFirstName" name="txtFirstName" placeholder="First Name">
                                 </td>
                                 <td>
-                  					<input type="text" style="width:99%" class=" input" id="txtLastName" name="txtLastName" placeholder="Last Name">
+                  					<input type="text" tabindex="5" style="width:99%" class=" input" id="txtLastName" name="txtLastName" placeholder="Last Name">
                                 </td>
                             </tr>
                         </table>
@@ -166,19 +124,19 @@ $_SESSION['form_token'] = $form_token;
                             <tr class="rowSpaces"></tr> 
     					    <tr>
                                 <td>
-                                    <input type="text" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
+                                    <input type="text" tabindex="6" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
                             	</td>
                         	</tr>
                             <tr class="rowSpaces"></tr>                        	
                             <tr>
                                 <td>
-                                    <input type="password" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
+                                    <input type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>
                             <tr>
                                 <td>
-                                    <input type="password" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
+                                    <input type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>
@@ -201,7 +159,7 @@ $_SESSION['form_token'] = $form_token;
                 </div>
 			</div>
 			</form>
-			<div class="BottomPanel" aligh="center">
+			<div class="BottomPanel" align="center">
 				This Project was created by Connor, Drew, Daniel, and Joe. All CS majors from Seattle Pacific University
 			<!--<div class="contentCurve"></div>-->
 	  </div>

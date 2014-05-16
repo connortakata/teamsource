@@ -3,7 +3,7 @@ require "../../includes/userAuth.php";
 
 if(isLoggedIn())
 {
-    $mysqli = new mysqli("localhost", "root", "", "teamsource");
+    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)
     {
         $stmt= $mysqli->prepare("UPDATE EVENT SET EVENT_TITLE=?, EVENT_DATETIME=?, EVENT_DESCRIPTION=? WHERE ID=?");
@@ -25,7 +25,7 @@ if(isLoggedIn())
     $date = $date." ".$theTime.":00";
     $stmt->execute();
     $mysqli->close();
-    header("Location:calendar.php");
+    header("Location:../../calendar.php");
 }
 else
     header("Location:../../index.php");

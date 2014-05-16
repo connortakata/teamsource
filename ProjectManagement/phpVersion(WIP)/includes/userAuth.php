@@ -21,7 +21,7 @@ function isLoggedIn(){
             $mysql_username = 'root';
 
             /*** mysql password ***/
-            $mysql_password = '';
+            $mysql_password = 'TeamSource1!';
 
             /*** database name ***/
             $mysql_dbname = 'teamsource';

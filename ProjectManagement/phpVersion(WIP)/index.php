@@ -13,7 +13,7 @@
 					<div class="panel-heading"><b>Group Chat:</b></div>
 						<div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
 						<!-- Chat goes here --> ';              
-              			$con = mysqli_connect("localhost", "root", "", "teamsource");
+              			$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 
 					    if (mysqli_connect_errno())
 					        {

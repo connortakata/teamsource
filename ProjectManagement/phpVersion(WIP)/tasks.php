@@ -13,7 +13,7 @@
 				  <div class="panel-body">
 			
 					Task Issued By: <Label><input type="hidden" name="popItem" id="IssuedBy" value="';
-					$con = mysqli_connect("localhost", "root", "", "teamsource");
+					$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 
 				    if (mysqli_connect_errno())
 			        {

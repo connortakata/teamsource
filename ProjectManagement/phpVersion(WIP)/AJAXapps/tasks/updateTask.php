@@ -2,7 +2,7 @@
 require "../../includes/userAuth.php";
 	if(isLoggedIn())
 	{
-        $mysqli = new mysqli("localhost", "root", "", "teamsource");
+        $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 	    if (mysqli_connect_errno())
 	        {
 	            echo "Failed to connect to MySQL: " . mysqli_connect_error();

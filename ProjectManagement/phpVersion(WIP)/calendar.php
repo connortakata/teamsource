@@ -164,7 +164,7 @@ function printCalendar()
         else
             $prevMonthYear = $year."-".($month-1);
     }
-    $con = mysqli_connect('localhost','root','','teamsource');//Find all events of the current month and adjacent months
+    $con = mysqli_connect('localhost','root','TeamSource1!','teamsource');//Find all events of the current month and adjacent months
     $sql = "SELECT ID, EVENT_TITLE, EVENT_DATETIME FROM EVENT
     WHERE EVENT_DATETIME LIKE ('$monthYear%')
     OR EVENT_DATETIME LIKE ('$prevMonthYear%')
