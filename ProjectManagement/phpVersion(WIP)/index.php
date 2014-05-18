@@ -7,7 +7,7 @@
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Dashboard</h1>
 
-			<div align="left" style="display:table; width:50%; height: 500px; margin-right: 25px;" class="well">
+			<div align="left" style="display:table; width:95%; height: 500px; margin-right: 25px;" class="well">
 				<div class="panel panel-default">
 				<!-- Default panel contents -->
 					<div class="panel-heading"><b>Group Chat:</b></div>
@@ -30,19 +30,19 @@
 							echo "<tr>";
                             $id = $row['MESSAGE_USER_ID'];
                             $userArray =  mysqli_fetch_array(mysqli_query($con, "SELECT USER_FIRSTNAME, USER_LASTNAME FROM USER WHERE ID='$id'"));
-					        echo "<td style='width:50px; text-align:right;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
+					        echo "<td style='width:20%; text-align:right;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
                             echo ": </td>";
-					        echo "<td style='width:10px'/>";
-					        echo "<td style='width:300px;'>" . $row['MESSAGE_TEXT'] . "</td>";
+					        echo "<td style='width:2%'/>";
+					        echo "<td style='width:80%;'>" . $row['MESSAGE_TEXT'] . "</td>";
 					        echo "<td style='width:10px'/>";
 					        
 					        if($row['MESSAGE_DATE'] == date('Y-m-d'))
 				        	{
-				       	 		echo "<td style='width:60px;'>  " . $row['MESSAGE_TIME'] . "</td>";
+				       	 		echo "<td style='width:20%; text-align:left;'>  " . $row['MESSAGE_TIME'] . "</td>";
 				        	}
 				        	else 
 				        	{
-				        		echo "<td style='width:60px; text-align:left'><font size=1>" . $row['MESSAGE_DATE'] . "</font></td>";
+				        		echo "<td style='width:20%; text-align:left'><font size=1>" . $row['MESSAGE_DATE'] . "</font></td>";
 				        	}
 				        	echo "</tr>";
 						}
@@ -59,20 +59,7 @@
 			</div>
 
 			</div>
-			<div style="display:table; width:40%; height: 200px;" class ="well">
-				<div class="panel panel-default" style="float:center;">
-					<div class="panel-heading"><b>Team Roster:</b></div>
-					<div class="panel-body" style="height: 150px;">
-						<p><b>Drew Howard</b> - Client</p>
-						<p><b>Connor Takata</b> - Team Manager / Satans Mistress</p>
-						<p><b>Daniel Franz</b> - Code Master</p>
-						<p><b>Joe Jazdzewski</b> - Code Master</p>
-		     
-					</div>
-				</div>
-			</div>
-		</div>
-
+			
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
