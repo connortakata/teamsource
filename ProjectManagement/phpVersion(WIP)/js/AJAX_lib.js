@@ -16,6 +16,7 @@
 		        {
 		            var test = document.getElementById("ChatBox");
 	                test.innerHTML=xmlhttp.responseText;
+	                test.scrollTop = test.scrollHeight;
 		        }
 		  }
 	var my = document.getElementById("ChatBox");

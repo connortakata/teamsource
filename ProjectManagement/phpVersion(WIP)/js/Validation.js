@@ -1,5 +1,4 @@
-﻿$import_js('js/firebase.js');
-function validatePopUp(object)
+﻿function validatePopUp(object)
 {
 	for(var i = 0; i < object.length; i++)
 	{
@@ -69,4 +68,17 @@ function validateMessage(message) {
 		return -1;
 	else 
 		return 0;
+}
+function validatePasswords(passwords)
+{
+	if (passwords[0].value.length < 6 || passwords[1].value.length < 6)
+	{
+		DisplayAlertPopUp("Validation Error", "Your password is to short")
+		return;
+	}
+	if(passwords[0].value != passwords[1].value)
+	{
+		DisplayAlertPopUp("Validation Error", "Your passwords are not the same");
+		return;
+	}
 }

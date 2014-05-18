@@ -11,7 +11,7 @@
 				<div class="panel panel-default">
 				<!-- Default panel contents -->
 					<div class="panel-heading"><b>Group Chat:</b></div>
-						<div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
+						<div id="ChatBox" class="panel-body" style="height: 400px; overflow-y: scroll; bottom:0;">      <!--CHANGE SCROLL to AUTO for non-prototype build-->
 						<!-- Chat goes here --> ';              
               			$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 
@@ -83,7 +83,10 @@
     	which will only work for our chat for our group.
     	This will be in place till we have a database in place.
     */
-
+	$(document).ready(function(){
+		var objDiv = document.getElementById("ChatBox");
+		objDiv.scrollTop = objDiv.scrollHeight;
+	});
     </script>';
 	require "includes/footer.php";
 ?>

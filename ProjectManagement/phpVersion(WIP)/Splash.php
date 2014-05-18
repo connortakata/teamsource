@@ -39,7 +39,21 @@ $_SESSION['form_token'] = $form_token;
 		  </head>
 
 		  <body>
-
+			<div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+				<div class="well" style="width:100%; height:100%;">
+					<div class="panel panel-primary" style="height:100%;">
+						<div class="panel-heading">
+							<label id="AlertPopUpTitle"></label>
+						</div>
+						<div id="AlertPopUpBody" class="panel-body">
+		
+						</div>
+						<div class="btn-group">
+							<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+						</div>
+					</div>
+				</div>
+			</div>   
 			<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			  <div class="container-fluid">
 				<div class="navbar-header">
@@ -130,13 +144,13 @@ $_SESSION['form_token'] = $form_token;
                             <tr class="rowSpaces"></tr>                        	
                             <tr>
                                 <td>
-                                    <input type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
+                                    <input name="password" type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>
                             <tr>
                                 <td>
-                                    <input type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
+                                    <input name="password" type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>
@@ -144,7 +158,7 @@ $_SESSION['form_token'] = $form_token;
 	    			<tr class="rowSpaces"></tr>
 	    			<tr>
 	    				<td align= "right" width="100%">
-	    					<a onclick="CreateUser()" href="#" class="a-btn">
+	    					<a onclick="validatePasswords(getElementsByName('password')); CreateUser();" href="#" class="a-btn">
    						 		<span class="a-btn-text">Register now</span> 
     							<span class="a-btn-slide-text">It's Free</span>
     							<span class="a-btn-icon-right"><span></span></span>
@@ -170,5 +184,7 @@ $_SESSION['form_token'] = $form_token;
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
 			<script src="js/AJAX_lib.js"></script>
+			<script src="js/Validation.js"></script>
+			<script src="js/AlertPopUp.js"></script>
 		  </body>
 		</html>
