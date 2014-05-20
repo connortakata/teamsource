@@ -29,13 +29,28 @@
                             's Teams <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Team 1</a></li>
-                            <li><a href="#">Team 2</a></li>
+                            <?php
+                            $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                            $id = $_SESSION["id"];
+                            $sql = "SELECT TEAM_NAME
+                                    FROM TEAM
+                                    LEFT JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
+                                    WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
+                                    ORDER BY TEAM_NAME ASC;";
+                            $result = mysqli_query($con, $sql);
+                            while($row = mysqli_fetch_array($result))
+                            {
+                                print '<li><a href="#">';
+                                print $row["TEAM_NAME"];
+                                print '</a></li>';
+                            }
+                            mysqli_close($con);
+                            ?>
                         </ul>
                     </div>
 
                 </li>
-				<li><a href="index.php">Dashboard</a></li>
+				<li><a href="team.php">Manage Teams</a></li>
 				<li><a href="Settings.php">Settings</a></li>
 				<li><a href="#" onclick="LogOut();">Sign Out</a></li>
 			</ul>

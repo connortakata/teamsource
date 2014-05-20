@@ -336,3 +336,31 @@ function SwitchDisplayedTasks(object)
 {
 	 RefreshTasks(object.value);	
 }
+
+
+
+
+function AddTeam()
+{
+    var xmlhttp;
+    var teamName = document.getElementById("CreateTeamName").value;
+
+    if (teamName!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+
+
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "addTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("teamName=" + teamName);
+    }
+}
