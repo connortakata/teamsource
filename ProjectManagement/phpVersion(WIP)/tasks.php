@@ -101,7 +101,16 @@
 
         </div>
 		<script>
-        	
+        
+        $(document).mouseup(function (e){
+        	var container = $(\'.PopupShadow\');
+        	if(!container.is(e.target)
+        		&& container.has(e.target).length === 0) 
+			{
+				container.hide();
+			}	
+        });
+
     	function DisplayPopup(){
     		$("#pop-up").show();
     		var pop = document.getElementById("pop-up");
