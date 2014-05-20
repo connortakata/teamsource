@@ -73,10 +73,15 @@ function validatePasswords(passwords)
 {
 	if (passwords[0].value.length < 6 || passwords[1].value.length < 6)
 	{
-		DisplayAlertPopUp("Validation Error", "Your password is to short")
+		DisplayAlertPopUp("Validation Error", "Your password is too short")
 		return;
 	}
-	if(passwords[0].value != passwords[1].value)
+    else if (passwords[0].value.length > 20 || passwords[1].value.length > 20)
+    {
+        DisplayAlertPopUp("Validation Error", "Your password is too short")
+        return;
+    }
+	else if(passwords[0].value != passwords[1].value)
 	{
 		DisplayAlertPopUp("Validation Error", "Your passwords are not the same");
 		return;

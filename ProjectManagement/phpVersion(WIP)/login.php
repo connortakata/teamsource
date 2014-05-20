@@ -11,7 +11,7 @@ if(!isset( $_POST['email'], $_POST['pass']))
     $message = 'Please enter a valid username and password';
 }
 
-elseif (strlen( $_POST['pass']) > 50 || strlen($_POST['pass']) < 8)
+elseif (strlen( $_POST['pass']) > 20 || strlen($_POST['pass']) < 6)
 {
     $message = 'Please enter a password of maximum length 16 characters and minimum 8.';
 }

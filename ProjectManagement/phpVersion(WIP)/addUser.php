@@ -16,9 +16,9 @@ elseif (strlen( $_POST['firstName']) == 0 || strlen($_POST['lastName']) == 0)
     $message = 'Please enter a valid full name.';
 }
 
-elseif (strlen( $_POST['pass']) > 50 || strlen($_POST['pass']) < 8)
+elseif (strlen( $_POST['pass']) > 20 || strlen($_POST['pass']) < 6)
 {
-    $message = 'Please enter a password of maximum length 16 characters and minimum 8.';
+    $message = 'Please enter a password of maximum length 20 characters and minimum 6.';
 }
 
 elseif (ctype_alnum($_POST['firstName']) != true || ctype_alnum($_POST['lastName']) != true)
