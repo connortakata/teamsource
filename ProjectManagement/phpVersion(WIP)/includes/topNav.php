@@ -9,7 +9,7 @@
 			</button>
 			<a class="navbar-brand" href="index.php">Team Source</a>
 		</div>
-        <script src="../js/AJAX_lib.js"></script>
+
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
                 <li>
@@ -28,30 +28,32 @@
                             ?>
                             's Teams <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <?php
-                            $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-                            $id = $_SESSION["id"];
-                            $sql = "SELECT TEAM_NAME, ID
-                                    FROM TEAM
-                                    INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
-                                    WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
-                                    ORDER BY TEAM_NAME ASC;";
-                            $result = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_array($result))
-                            {
-                                if($row["ID"]==$_SESSION["team"])
-                                    print '<li class="active">';
-                                else
-                                    print '<li>';
-                                print '<a href="#" onclick="SelectTeam('.$row["ID"].');">';
-                                print $row["TEAM_NAME"];
-                                print '</a></li>';
-                            }
-                            mysqli_close($con);
-                            ?>
-                        </ul>
-                    </div>
+                        <?php
+                        print '<ul class="dropdown-menu" role="menu">';
+
+                        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                        $id = $_SESSION["id"];
+                        $sql = "SELECT TEAM_NAME, ID
+                                FROM TEAM
+                                INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
+                                WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
+                                ORDER BY TEAM_NAME ASC;";
+                        $result = mysqli_query($con, $sql);
+                        while($row = mysqli_fetch_array($result))
+                        {
+                            if(isset($_SESSION["team"])&&($row["ID"]==$_SESSION["team"]))
+                                print '<li class="active">';
+                            else
+                                print '<li>';
+                            print '<a href="#" onclick="SelectTeam('.$row["ID"].');">';
+                            print $row["TEAM_NAME"];
+                            print '</a></li>';
+                        }
+                        mysqli_close($con);
+
+                        print '</ul>';
+
+                ?></div>
 
                 </li>
 				<li><a href="team.php">Manage Teams</a></li>

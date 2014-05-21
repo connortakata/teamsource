@@ -61,7 +61,10 @@ else
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /*** prepare the insert ***/
-        $stmt = $dbh->prepare("INSERT INTO USER (USER_EMAIL, USER_PASSWORD, USER_FIRSTNAME, USER_LASTNAME, USER_TITLE ) VALUES (:email, :password, :firstName, :lastName, :title )");
+        $stmt = $dbh->prepare("INSERT INTO USER
+        (USER_EMAIL, USER_PASSWORD, USER_FIRSTNAME, USER_LASTNAME, USER_TITLE )
+        VALUES (:email, :password, :firstName, :lastName, :title );
+        SELECT ID FROM USER WHERE USER_EMAIL=:email;");
 
         /*** bind the parameters ***/
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -72,13 +75,12 @@ else
 
         /*** execute the prepared statement ***/
         $stmt->execute();
-
+        $_SESSION["id"] = $stmt->fetchColumn(0);
         /*** unset the form token session variable ***/
         unset( $_SESSION['form_token'] );
 
         /*** if all is done, say thanks ***/
         $message = 'New user added';
-        header("Location:index.php");
     }
     catch(Exception $e)
     {

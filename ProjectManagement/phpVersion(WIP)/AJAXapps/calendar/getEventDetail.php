@@ -1,6 +1,6 @@
 <?php
 require "../../includes/userAuth.php";
-if(isLoggedIn())
+if(isLoggedIn()&&isInTeam())
 {
     $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 

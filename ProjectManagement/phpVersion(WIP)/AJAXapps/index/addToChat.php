@@ -1,7 +1,7 @@
 ﻿<?php
 require "../../includes/userAuth.php";
 
-if(isLoggedIn())
+if(isLoggedIn()&&isInTeam())
 {
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 		$stmt = $mysqli->prepare("INSERT INTO message ( MESSAGE_TEXT, MESSAGE_USER_ID, MESSAGE_TIME, MESSAGE_DATE, MESSAGE_MESSAGE_BOARD_ID) VALUES (?, ?, ?, ?, ? )");

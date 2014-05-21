@@ -68,13 +68,13 @@ $_SESSION['form_token'] = $form_token;
 				</div>
 				<div class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right">
-                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn()" class="btn btn-default btn-sm" value="Log-in">
+                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();" class="btn btn-default btn-sm" value="Log-in">
 					</form>
 					<form class="navbar-form navbar-right">
-						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click()" type="password" class="form-control" placeholder="Password">
+						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click();" type="password" class="form-control" placeholder="Password">
 					</form>
 					<form class="navbar-form navbar-right">
-					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click()" type="text" class="form-control" placeholder="Email">
+					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click();" type="text" class="form-control" placeholder="Email">
 					</form>          	
 				</div>
 			  </div>

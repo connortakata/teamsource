@@ -1,6 +1,6 @@
 <?php
 require "../../includes/userAuth.php";
-if(isLoggedIn())
+if(isLoggedIn()&&isInTeam())
 {
     $allowedExts = array("gif", "jpeg", "jpg", "png");//array that defines allowed file types
     $temp = explode(".", $_FILES["file"]["name"]);

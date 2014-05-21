@@ -195,10 +195,10 @@ function LogIn(){
 
         }
     }
-    xmlhttp.open("POST", "login.php", false);
+    xmlhttp.open("POST", "../AJAXapps/splash/login.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("email=" + email + "&pass=" + pass);
-    window.location = "index.php";
+    window.location = "../index.php";
 }
 
 function CreateUser(){
@@ -225,16 +225,15 @@ function CreateUser(){
 
             }
         }
-        xmlhttp.open("POST", "addUser.php", false);
+        xmlhttp.open("POST", "../AJAXapps/splash/addUser.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
-        window.location = "index.php";
     }
     else
     {
         document.getElementById("loginError").innerHTML = "Error: Your passwords did not match or you left a field empty.";
     }
-    //window.location = "index.php";
+    window.location = "../index.php";
 }
 
 function LogOut()
@@ -252,10 +251,10 @@ function LogOut()
 
         }
     }
-    xmlhttp.open("POST", "logout.php", false);
+    xmlhttp.open("POST", "../AJAXapps/splash/logout.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send();
-    window.location = "Splash.php";
+    window.location = "../Splash.php";
 }
 
 function AddEvent(edit){
@@ -359,7 +358,7 @@ function AddTeam()
 
             }
         }
-        xmlhttp.open("POST", "addTeam.php", false);
+        xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("teamName=" + teamName);
         location.reload();
@@ -382,7 +381,7 @@ function SelectTeam(id)
 
             }
         }
-        xmlhttp.open("POST", "selectTeam.php", false);
+        xmlhttp.open("POST", "../AJAXapps/team/selectTeam.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("id=" + id);
         location.reload();
