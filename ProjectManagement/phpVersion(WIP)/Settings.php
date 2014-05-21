@@ -12,10 +12,61 @@
 		  			<h3>General User Settings</h3>
 		  		</div>
 		  		<div class="panel-body">
-		  			<div class="panel panel-default">
-  						<div class="panel-heading">Panel heading without title</div>
- 						<div class="panel-body">Panel content</div>
-					</div>
+		  			<ul class="list-group">
+  						<li class="list-group-item" id="name">
+							<div>Name: Connor Takata
+							<button id="name-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
+							</div>
+  						</li>
+  						<li class="list-group-item" id="div-edit-name" style="text-align:center">
+  							<div style="text-align:right; display: inline-block">
+  								<div>First Name: <input type="text" placeholder="Connor"></input></div>
+  								<p></p>
+  								<div>Last Name: <input type="text" placeholder="Takata"></input></div>
+  								<p></p>
+  							</div>
+  							<div>
+  								<button id="change-name" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="cancel-name-change" type="button" class="btn btn-default btn-xs">Cancel</button>
+  							</div>
+  						</li>
+  						<li class="list-group-item" id="pass">
+							<div>Password: ***********
+							<button id="pass-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
+							</div>
+  						</li>
+  						<li class="list-group-item" id="div-edit-pass" style="text-align:center">
+  							<div style="text-align:right; display: inline-block">
+  								<div>Old Password: <input type="text" placeholder="*********"></input></div>
+  								<p></p>
+  								<div>New Password: <input type="text" ></input></div>
+  								<p></p>
+  								<div>Confirm Password: <input type="text" ></input></div>
+  								<p></p>
+  							</div>
+  							<div>
+  								<button id="change-pass" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="cancel-pass-change" type="button" class="btn btn-default btn-xs">Cancel</button>
+  							</div>
+  						</li>
+  						<li class="list-group-item" id="email">
+							<div>Email Address: takatac@spu.edu
+							<button id="email-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
+							</div>
+  						</li>
+  						<li class="list-group-item" id="div-edit-email" style="text-align:center">
+  							<div style="text-align:right; display: inline-block">
+  								<div>New Email: <input type="text" placeholder="takatac@spu.edu"></input></div>
+  								<p></p>
+  								<div>Confirm Email: <input type="text" ></input></div>
+  								<p></p>
+  							</div>
+  							<div>
+  								<button id="change-email" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="cancel-email-change" type="button" class="btn btn-default btn-xs">Cancel</button>
+  							</div>
+  						</li>
+					</ul>
 		  		</div>
 		  		<div class="panel-heading">
 		  			<h3>Your Teams</h3>
@@ -58,12 +109,46 @@
 		  	});
 
 		  	$("#name-edit").click(function() {
+		  		//$("#name").toggle(1);
 		  		$("#div-edit-name").toggle(100);
 		  	});
 		  	$("#pass-edit").click(function() {
+		  		//$("#pass").toggle(1);
 		  		$("#div-edit-pass").toggle(100);
 		  	});
 		  	$("#email-edit").click(function() {
+		  		//$("#email").toggle(1);
+		  		$("#div-edit-email").toggle(100);
+		  	});
+
+
+
+		  	$("#change-name").click(function() {
+		  		//$("#name").toggle(1);
+		  		$("#div-edit-name").toggle(100);
+		  	});
+		  	$("#cancel-name-change").click(function() {
+		  		//$("#name").toggle(1);
+		  		$("#div-edit-name").toggle(100);
+		  	});
+
+
+		  	$("#change-pass").click(function() {
+		  		//$("#pass").toggle(1);
+		  		$("#div-edit-pass").toggle(100);
+		  	});
+		  	$("#cancel-pass-change").click(function() {
+		  		//$("#pass").toggle(1);
+		  		$("#div-edit-pass").toggle(100);
+		  	});
+
+
+		  	$("#change-email").click(function() {
+		  		//$("#email").toggle(1);
+		  		$("#div-edit-email").toggle(100);
+		  	});
+		  	$("#cancel-email-change").click(function() {
+		  		//$("#email").toggle(1);
 		  		$("#div-edit-email").toggle(100);
 		  	});
 		  	</script>
