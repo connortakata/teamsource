@@ -14,7 +14,7 @@
 		  		<div class="panel-body">
 		  			<ul class="list-group">
   						<li class="list-group-item" id="name">
-							<div>Name: Connor Takata
+							<div><b>Name: Connor Takata</b>
 							<button id="name-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
 							</div>
   						</li>
@@ -31,7 +31,7 @@
   							</div>
   						</li>
   						<li class="list-group-item" id="pass">
-							<div>Password: ***********
+							<div><b>Password: ***********</b>
 							<button id="pass-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
 							</div>
   						</li>
@@ -50,7 +50,7 @@
   							</div>
   						</li>
   						<li class="list-group-item" id="email">
-							<div>Email Address: takatac@spu.edu
+							<div><b>Email Address: takatac@spu.edu</b>
 							<button id="email-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
 							</div>
   						</li>
