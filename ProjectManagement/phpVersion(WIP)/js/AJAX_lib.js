@@ -362,5 +362,29 @@ function AddTeam()
         xmlhttp.open("POST", "addTeam.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("teamName=" + teamName);
+        location.reload();
+    }
+}
+
+function SelectTeam(id)
+{
+    var xmlhttp;
+
+    if (id!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "selectTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + id);
+        location.reload();
     }
 }

@@ -32,15 +32,19 @@
                             <?php
                             $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
                             $id = $_SESSION["id"];
-                            $sql = "SELECT TEAM_NAME
+                            $sql = "SELECT TEAM_NAME, ID
                                     FROM TEAM
-                                    LEFT JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
+                                    INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
                                     WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
                                     ORDER BY TEAM_NAME ASC;";
                             $result = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($result))
                             {
-                                print '<li><a href="#">';
+                                if($row["ID"]==$_SESSION["team"])
+                                    print '<li class="active">';
+                                else
+                                    print '<li>';
+                                print '<a href="#" onclick="SelectTeam('.$row["ID"].');">';
                                 print $row["TEAM_NAME"];
                                 print '</a></li>';
                             }

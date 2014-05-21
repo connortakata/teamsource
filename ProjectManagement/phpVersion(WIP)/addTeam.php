@@ -16,12 +16,6 @@ elseif (strlen( $_POST['teamName']) > 30 || strlen($_POST['teamName']) < 4)
     $message = 'Please enter a Team Name of maximum length 30 characters and minimum 4.';
 }
 
-elseif (ctype_alnum($_POST['teamName']) != true )
-{
-    /*** if there is no match ***/
-    $message = "Team Names must be alpha numeric";
-}
-
 else
 {
     /*** if we are here the data is valid and we can insert it into database ***/
@@ -74,6 +68,7 @@ else
 
         /*** if all is done, say thanks ***/
         $message = 'New user added to team';
+        $_SESSION["team"]=$teamID;
     }
     catch(Exception $e)
     {

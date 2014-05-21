@@ -69,3 +69,35 @@ function isLoggedIn(){
         }
     }
 }
+
+function isInTeam()
+{
+    if(!isset($_SESSION['id']))
+    {
+        $message = 'You must be logged in to access this page';
+        return false;
+    }
+    else if(!isset($_SESSION['team']))
+    {
+        $message = 'No team selected';
+        return false;
+    }
+    else
+    {
+        $userID=$_SESSION["id"];
+        $teamID=$_SESSION["team"];
+        $con =  mysqli_connect("localhost", "root", "TeamSource1!","teamsource");
+        $sql="
+        SELECT COUNT(*) FROM TEAM_MEMBER_LIST
+        WHERE TEAM_MEMBER_LIST_USER_ID='$userID'
+        AND TEAM_MEMBER_LIST_TEAM_ID='$teamID';";
+        $result = mysqli_query($con,$sql);
+        $row = mysqli_fetch_row($result);
+        if($row[0]<1)
+        {
+            return false;
+        }
+        else
+            return true;
+    }
+}

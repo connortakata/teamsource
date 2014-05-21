@@ -1,8 +1,12 @@
 <?php
 require "userAuth.php";
-if(isLoggedIn()==false)
+if(isLoggedIn()!=true)
 {
     header("Location:Splash.php");
+}
+if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php")
+{
+    header("Location:team.php");
 }
 ?>
 <!DOCTYPE html>
