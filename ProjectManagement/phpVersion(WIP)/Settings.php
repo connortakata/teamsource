@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 	require "includes/header.php";
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
+?>
 
-	print '
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	          <h1 class="page-header">Account Settings</h1>
 			</div>
@@ -12,30 +12,10 @@
 		  			<h3>General User Settings</h3>
 		  		</div>
 		  		<div class="panel-body">
-		  			<table class="table">
-		  				<thead>
-		  					<tr>
-		  						<th>Name:</th>
-		  						<th>Connor Takata</th>
-		  						<th><button id="name-edit" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></th>
-		  					</tr>
-		  					<tr>
-		  						<th>Username:</th>
-		  						<th>Ctakata</th>
-		  						<th><button id="user-edit" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></th>
-		  					</tr>
-		  					<tr>
-		  						<th>Password:</th>
-		  						<th>***********</th>
-		  						<th><button id="pass-edit" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></th>
-		  					</tr>
-		  					<tr>
-		  						<th>Email:</th>
-		  						<th>takatac@spu.edu</th>
-		  						<th><button id="email-edit" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></th>
-		  					</tr>
-		  				</thead>
-		  			</table>
+		  			<div class="panel panel-default">
+  						<div class="panel-heading">Panel heading without title</div>
+ 						<div class="panel-body">Panel content</div>
+					</div>
 		  		</div>
 		  		<div class="panel-heading">
 		  			<h3>Your Teams</h3>
@@ -67,7 +47,27 @@
 		  					</tr>
 		  			</table>
 		  		</div>
-		  	</div>>';
-	
+		  	</div>
+
+		  	<script>
+
+		  	$(document).ready(function(){
+		  		$("#div-edit-name").hide();
+		  		$("#div-edit-pass").hide();
+		  		$("#div-edit-email").hide();
+		  	});
+
+		  	$("#name-edit").click(function() {
+		  		$("#div-edit-name").toggle(100);
+		  	});
+		  	$("#pass-edit").click(function() {
+		  		$("#div-edit-pass").toggle(100);
+		  	});
+		  	$("#email-edit").click(function() {
+		  		$("#div-edit-email").toggle(100);
+		  	});
+		  	</script>
+
+<?php
 	require "includes/footer.php";
 ?>
