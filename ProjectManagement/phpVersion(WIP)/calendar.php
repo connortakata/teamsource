@@ -169,7 +169,10 @@ function printCalendar()
     $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
     $sql = "SELECT ID FROM CALENDAR WHERE CALENDAR_TEAM_ID='$teamID'";
     $result = mysqli_query($con,$sql);
-    $calID = mysqli_fetch_array($result)["ID"];
+    while($row = mysqli_fetch_array($result))
+    {
+        $calID = $row[0];
+    }
     //Find all events of the current month and adjacent months
     $sql = "SELECT ID, EVENT_TITLE, EVENT_DATETIME FROM EVENT
     WHERE (EVENT_DATETIME LIKE ('$monthYear%')

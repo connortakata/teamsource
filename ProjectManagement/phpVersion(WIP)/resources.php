@@ -42,7 +42,10 @@ $teamID = $_SESSION["team"];
 $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
 $sql = "SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID='$teamID'";
 $result = mysqli_query($con,$sql);
-$fileID = mysqli_fetch_array($result)["ID"];
+while($row = mysqli_fetch_array($result))
+{
+    $fileID = $row[0];
+}
 $sql = "SELECT * FROM file WHERE FILE_FILE_MANAGER_ID = '$fileID'";
 $result = mysqli_query($con,$sql);
 while($row = mysqli_fetch_array($result)){

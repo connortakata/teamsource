@@ -5,7 +5,7 @@ if(!isset( $_SESSION["id"], $_POST["teamName"]))
 {
     $message = 'User id or Team Name not found';
 }
-
+/*
 elseif (strlen( strlen($_POST['teamName']) == 0))
 {
     $message = 'Please enter a valid Team Name.';
@@ -15,7 +15,7 @@ elseif (strlen( $_POST['teamName']) > 30 || strlen($_POST['teamName']) < 4)
 {
     $message = 'Please enter a Team Name of maximum length 30 characters and minimum 4.';
 }
-
+*/
 else
 {
     /*** if we are here the data is valid and we can insert it into database ***/
@@ -52,8 +52,14 @@ else
         $stmt->execute();
 
         //Now we add the manager to the user list for this team
+        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
         $sql = "SELECT ID FROM TEAM WHERE TEAM_NAME = '$teamName';";
-        $teamID=mysqli_fetch_array(mysqli_query(mysqli_connect("localhost","root","TeamSource1!","teamsource"), $sql))["ID"];
+        $result = mysqli_query($con,$sql);
+        while($row = mysqli_fetch_array($result))
+        {
+            $teamID = $row[0];
+        }
+        //$teamID=mysqli_fetch_array(mysqli_query(mysqli_connect("localhost","root","TeamSource1!","teamsource"), $sql))["ID"];
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
         $stmt= $mysqli->prepare("INSERT INTO TEAM_MEMBER_LIST (TEAM_MEMBER_LIST_TEAM_ID, TEAM_MEMBER_LIST_USER_ID) VALUES (?, ?);");
         $stmt->bind_param('ii', $teamID, $managerID);
@@ -86,14 +92,13 @@ else
     }
     catch(Exception $e)
     {
-        /*** check if the username already exists ***/
+        $_SESSION["error"]=$e->getCode();
         if( $e->getCode() == 23000)
         {
             $message = 'Team Name already exists';
         }
         else
         {
-            /*** if we are here, something has gone wrong with the database ***/
             $message = 'We are unable to process your request. Please try again later"';
         }
     }

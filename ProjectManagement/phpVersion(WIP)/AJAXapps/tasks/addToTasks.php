@@ -7,7 +7,10 @@ if(isLoggedIn()&&isInTeam())
     $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
     $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
     $result = mysqli_query($con,$sql);
-    $taskManID = mysqli_fetch_array($result)["ID"];
+    while($row = mysqli_fetch_array($result))
+    {
+        $taskManID = $row[0];
+    }
 
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 

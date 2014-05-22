@@ -8,7 +8,10 @@ if(isLoggedIn()&&isInTeam())
     $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
     $sql = "SELECT ID FROM CALENDAR WHERE CALENDAR_TEAM_ID='$teamID'";
     $result = mysqli_query($con,$sql);
-    $calID = mysqli_fetch_array($result)["ID"];
+    while($row = mysqli_fetch_array($result))
+    {
+        $calID = $row[0];
+    }
 
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)

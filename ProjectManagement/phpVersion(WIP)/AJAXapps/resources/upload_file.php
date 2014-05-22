@@ -24,7 +24,10 @@ if(isLoggedIn()&&isInTeam())
                 $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
                 $sql = "SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID='$teamID'";
                 $result = mysqli_query($con,$sql);
-                $fileID = mysqli_fetch_array($result)["ID"];
+                while($row = mysqli_fetch_array($result))
+                {
+                    $fileID = $row[0];
+                }
 
                 move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
                 $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");

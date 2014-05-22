@@ -8,7 +8,10 @@ if(isLoggedIn()&&isInTeam())
     $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
     $sql = "SELECT ID FROM MESSAGEBOARD WHERE MESSAGE_BOARD_TEAM_ID='$teamID'";
     $result = mysqli_query($con,$sql);
-    $boardID = mysqli_fetch_array($result)["ID"];
+    while($row = mysqli_fetch_array($result))
+    {
+        $boardID = $row[0];
+    }
 
     if (mysqli_connect_errno())
         {

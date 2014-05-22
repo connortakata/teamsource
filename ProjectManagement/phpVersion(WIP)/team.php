@@ -11,9 +11,16 @@ print'
         <div class="panel panel-primary">';
 $userID =  $_SESSION["id"];
 $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-$sql = "SELECT COUNT(*) FROM TEAM_MEMBER_LIST WHERE TEAM_MEMBER_LIST_USER_ID='$userID'";
+$sql = "SELECT COUNT(*) FROM TEAM_MEMBER_LIST WHERE TEAM_MEMBER_LIST_USER_ID='$userID';";
 $result = mysqli_query($con,$sql);
-$teamCount = mysqli_fetch_array($result)[0];
+while($row = mysqli_fetch_array($result))
+{
+    $teamCount = $row[0];
+}
+
+if(isset($_SESSION["error"]))
+    print $_SESSION["error"];
+
 if($teamCount<1)
 {
     //If user belongs to no teams or something weird happened
