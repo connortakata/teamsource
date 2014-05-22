@@ -26,28 +26,29 @@ else if($teamCount>0)
     //If user belongs to team(s)
     print'      <div class="panel-heading">Welcome Back!</div>
                     <div class="panel-body" style="height: 400px;">
-                        Please select a team to use or create a new team.</br>Teams:</br>
+                        Please select a team to use or create a new team.</br></br>Team(s):</br>
                         <ul class="nav nav-pills nav-stacked" style="width: 50%">';
-                        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-                        $id = $_SESSION["id"];
-                        $sql = "SELECT TEAM_NAME, ID
-                                FROM TEAM
-                                INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
-                                WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
-                                ORDER BY TEAM_NAME ASC;";
-                        $result = mysqli_query($con, $sql);
-                        while($row = mysqli_fetch_array($result))
-                        {
-                            if(isset($_SESSION["team"])&&($row["ID"]==$_SESSION["team"]))
-                                print '<li class="active">';
-                            else
-                                print '<li>';
-                            print '<a href="#" onclick="SelectTeam('.$row["ID"].');">';
-                            print $row["TEAM_NAME"];
-                            print '</a></li>';
-                        }
-                        mysqli_close($con);
-                        print '</ul>';
+
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    $id = $_SESSION["id"];
+    $sql = "SELECT TEAM_NAME, ID
+            FROM TEAM
+            INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
+            WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
+            ORDER BY TEAM_NAME ASC;";
+    $result = mysqli_query($con, $sql);
+    while($row = mysqli_fetch_array($result))
+    {
+        if(isset($_SESSION["team"])&&($row["ID"]==$_SESSION["team"]))
+            print '<li class="active">';
+        else
+            print '<li>';
+        print '<a href="#" onclick="SelectTeam('.$row["ID"].');">';
+        print $row["TEAM_NAME"];
+        print '</a></li>';
+    }
+    print '</ul>';
+    mysqli_close($con);
 }
 
 print'                  <div class="col-lg-6" style="padding-left: 0;">
