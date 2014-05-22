@@ -5,8 +5,8 @@ if(!isset( $_SESSION["id"], $_POST["teamName"]))
 {
     $message = 'User id or Team Name not found';
 }
-/*
-elseif (strlen( strlen($_POST['teamName']) == 0))
+
+elseif (strlen($_POST['teamName']) == 0)
 {
     $message = 'Please enter a valid Team Name.';
 }
@@ -15,7 +15,7 @@ elseif (strlen( $_POST['teamName']) > 30 || strlen($_POST['teamName']) < 4)
 {
     $message = 'Please enter a Team Name of maximum length 30 characters and minimum 4.';
 }
-*/
+
 else
 {
     /*** if we are here the data is valid and we can insert it into database ***/
