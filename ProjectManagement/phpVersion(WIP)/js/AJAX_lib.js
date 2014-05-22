@@ -59,6 +59,43 @@ function submitToChat() {
 	
 }
 
+function updateSettings() {
+    var xmlhttp;
+    var firstName = document.getElementById("txt-edit-fname").value;
+    var lastName = document.getElementById("txt-edit-lname").value;
+    if(validateMessage(myMessage) != 0)
+    {
+        DisplayAlertPopUp("Error", "no message entered");
+        return;
+    }
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var str = xmlhttp.responseText;
+            if(str != "")
+            {
+                DisplayAlertPopUp("Error", str);
+            }
+        }
+      }
+    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
+    document.getElementById("txt-edit-fname").value = "";
+    document.getElementById("txt-edit-lname").value = "";
+    
+}
+
 function EditPopup(task){
 	var xmlhttp;
 	if (window.XMLHttpRequest)

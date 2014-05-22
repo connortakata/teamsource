@@ -20,9 +20,9 @@
   						</li>
   						<li class="list-group-item" id="div-edit-name" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>First Name: <input type="text" placeholder="Connor"></input></div>
+  								<div>First Name: <input id="txt-edit-fname" type="text" placeholder="Connor"></input></div>
   								<p></p>
-  								<div>Last Name: <input type="text" placeholder="Takata"></input></div>
+  								<div>Last Name: <input id="txt-edit-lname" type="text" placeholder="Takata"></input></div>
   								<p></p>
   							</div>
   							<div>
