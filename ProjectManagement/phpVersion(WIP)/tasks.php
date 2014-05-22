@@ -33,8 +33,13 @@
 					print '</label><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
-					//TODO SELECT ONLY FROM OWN TEAM
-					$sql = "SELECT * FROM user;";
+
+                    //Assign task to someone on your team
+					$sql = "SELECT USER_FIRSTNAME
+                            FROM USER
+                            INNER JOIN TEAM_MEMBER_LIST
+                            ON USER.ID=TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID
+                            WHERE TEAM_MEMBER_LIST_TEAM_ID='$teamID'";
 					$result = mysqli_query($con, $sql);
 					
 					while($row = mysqli_fetch_array($result))

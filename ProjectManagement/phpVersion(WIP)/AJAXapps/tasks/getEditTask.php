@@ -9,10 +9,16 @@ if(isLoggedIn()&&isInTeam())
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
 	$id = $_REQUEST['id'];
-	
-	$query = "SELECT * FROM user;";
+    $teamID = $_SESSION["team"];
+    //Assign task to someone on your team
+    $sql = "SELECT USER_FIRSTNAME
+            FROM USER
+            INNER JOIN TEAM_MEMBER_LIST
+            ON USER.ID=TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID
+            WHERE TEAM_MEMBER_LIST_TEAM_ID='$teamID'";
+    $userResult = mysqli_query($con, $sql);
+
 	$sql = "SELECT * FROM task WHERE id =" . $id . ";";
-	$userResult = mysqli_query($con, $query);
 	$result = mysqli_query($con, $sql);
 	$users = array();
 	while($userRow = mysqli_fetch_array($userResult))
