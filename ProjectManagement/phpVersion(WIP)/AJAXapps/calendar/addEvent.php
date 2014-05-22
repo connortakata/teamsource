@@ -3,6 +3,13 @@ require "../../includes/userAuth.php";
 
 if(isLoggedIn()&&isInTeam())
 {
+    //Select the team's calendar to identify with
+    $teamID = $_SESSION["team"];
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    $sql = "SELECT ID FROM CALENDAR WHERE CALENDAR_TEAM_ID='$teamID'";
+    $result = mysqli_query($con,$sql);
+    $calID = mysqli_fetch_array($result)["ID"];
+
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)
     {
@@ -14,7 +21,6 @@ if(isLoggedIn()&&isInTeam())
     {
         $stmt= $mysqli->prepare("INSERT INTO EVENT (EVENT_CALENDAR_ID, EVENT_TITLE, EVENT_DATETIME, EVENT_DESCRIPTION) VALUES (?,?,?,?);");
         $stmt->bind_param('isss', $calID, $title, $date, $description);
-        $calID=0;
     }
     $title=$_POST["title"];
     $date=$_POST["date"];

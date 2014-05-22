@@ -3,14 +3,22 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn()&&isInTeam())
 {
-	$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    //Select the team's task manager to identify with
+    $teamID = $_SESSION["team"];
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
+    $result = mysqli_query($con,$sql);
+    $taskManID = mysqli_fetch_array($result)["ID"];
 
     if (mysqli_connect_errno())
         {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }    
     $finished = $_REQUEST['finished'];    
-	$sql = "SELECT * FROM task WHERE TASK_IS_FINISHED = $finished ORDER BY TASK_DUE_DATE ASC;";
+	$sql = "SELECT * FROM task
+	 WHERE TASK_IS_FINISHED = '$finished'
+	 AND TASK_TASK_MANAGER_ID = '$taskManID'
+	 ORDER BY TASK_DUE_DATE ASC;";
 	$result = mysqli_query($con, $sql);
 		
 	while($row = mysqli_fetch_array($result))

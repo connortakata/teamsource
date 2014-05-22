@@ -13,7 +13,12 @@
 				  <div class="panel-body">
 			
 					Task Issued By: <Label><input type="hidden" name="popItem" id="IssuedBy" value="';
-					$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                    //Select the team's task manager to identify with
+                    $teamID = $_SESSION["team"];
+                    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                    $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
+                    $result = mysqli_query($con,$sql);
+                    $taskManID = mysqli_fetch_array($result)["ID"];
 
 				    if (mysqli_connect_errno())
 			        {
@@ -28,7 +33,7 @@
 					print '</label><br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
-					
+					//TODO SELECT ONLY FROM OWN TEAM
 					$sql = "SELECT * FROM user;";
 					$result = mysqli_query($con, $sql);
 					
@@ -75,7 +80,10 @@
 		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
 		  	<div id="TaskList" class="list-group">';
 		  	
-   				$sql = "SELECT * FROM task where TASK_IS_FINISHED = 0 ORDER BY TASK_DUE_DATE ASC;";
+   				$sql = "SELECT * FROM task
+   				        where TASK_IS_FINISHED = 0
+   				        and TASK_TASK_MANAGER_ID = '$taskManID'
+   				        ORDER BY TASK_DUE_DATE ASC;";
 				$result = mysqli_query($con, $sql);
 
 		    	while($row = mysqli_fetch_array($result))

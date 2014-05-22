@@ -20,7 +20,10 @@
 					            echo "Failed to connect to MySQL: " . mysqli_connect_error();
 					        }    
 						mysqli_select_db($con, "teamsource");
-						$sql = "SELECT * FROM message;";
+                        $teamID = $_SESSION["team"];
+						$sql = "SELECT * FROM MESSAGE
+						WHERE MESSAGE_MESSAGE_BOARD_ID=
+						(SELECT ID FROM MESSAGEBOARD WHERE MESSAGE_BOARD_TEAM_ID='$teamID');";
 						$result = mysqli_query($con, $sql);
 
 						echo "<table>";

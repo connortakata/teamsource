@@ -19,16 +19,22 @@ if(isLoggedIn()&&isInTeam())
             }
             else
             {
+                //Select the team's file manager to identify with
+                $teamID = $_SESSION["team"];
+                $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                $sql = "SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID='$teamID'";
+                $result = mysqli_query($con,$sql);
+                $fileID = mysqli_fetch_array($result)["ID"];
+
                 move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
                 $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
                 $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE, FILE_FILE_MANAGER_ID) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('ssssi', $filename, $date, $time, $size, $managerId);
+                $stmt->bind_param('ssssi', $filename, $date, $time, $size, $fileID);
                 $filename = $_FILES["file"]["name"];
                 $date = date('Y-m-d');
                 $time = date('H:i:s');
                 $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
                 list($left, $right) = explode('.', $size, 2);
-                $managerId=0;
                 $stmt->execute();
                 $mysqli->close();
             }

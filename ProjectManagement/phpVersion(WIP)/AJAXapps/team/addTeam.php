@@ -54,20 +54,34 @@ else
         //Now we add the manager to the user list for this team
         $sql = "SELECT ID FROM TEAM WHERE TEAM_NAME = '$teamName';";
         $teamID=mysqli_fetch_array(mysqli_query(mysqli_connect("localhost","root","TeamSource1!","teamsource"), $sql))["ID"];
-        //$teamID = $stmt->fetchColumn();
-        /*** if all is done, say thanks ***/
-        $message = 'New team added';
-
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
         $stmt= $mysqli->prepare("INSERT INTO TEAM_MEMBER_LIST (TEAM_MEMBER_LIST_TEAM_ID, TEAM_MEMBER_LIST_USER_ID) VALUES (?, ?);");
         $stmt->bind_param('ii', $teamID, $managerID);
-
-        /*** execute the prepared statement ***/
         $stmt->execute();
+
+        //Now we add a calendar entry for the team
+        $stmt= $mysqli->prepare("INSERT INTO CALENDAR (CALENDAR_TEAM_ID) VALUES (?);");
+        $stmt->bind_param('i', $teamID);
+        $stmt->execute();
+
+        //Now we add a file manager entry for the team
+        $stmt= $mysqli->prepare("INSERT INTO FILEMANAGER (FILE_MANAGER_TEAM_ID) VALUES (?);");
+        $stmt->bind_param('i', $teamID);
+        $stmt->execute();
+
+        //Now we add a message board entry for the team
+        $stmt= $mysqli->prepare("INSERT INTO MESSAGEBOARD (MESSAGE_BOARD_TEAM_ID) VALUES (?);");
+        $stmt->bind_param('i', $teamID);
+        $stmt->execute();
+
+        //Now we add a task manager entry for the team
+        $stmt= $mysqli->prepare("INSERT INTO TASK_MANAGER (TASK_MANAGER_TEAM_ID) VALUES (?);");
+        $stmt->bind_param('i', $teamID);
+        $stmt->execute();
+
+        //All done!
         $mysqli->close();
 
-        /*** if all is done, say thanks ***/
-        $message = 'New user added to team';
         $_SESSION["team"]=$teamID;
     }
     catch(Exception $e)
