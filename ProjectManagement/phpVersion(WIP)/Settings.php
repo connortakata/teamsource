@@ -26,7 +26,7 @@
   								<p></p>
   							</div>
   							<div>
-  								<button id="change-name" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="change-name" type="button" class="btn btn-primary btn-xs" onclick="updateSettings()">Submit</button>
   								<button id="cancel-name-change" type="button" class="btn btn-default btn-xs">Cancel</button>
   							</div>
   						</li>

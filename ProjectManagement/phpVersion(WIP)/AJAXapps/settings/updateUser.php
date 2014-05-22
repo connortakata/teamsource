@@ -8,7 +8,7 @@ if(isLoggedIn()&&isInTeam())
 		$lastname = $_POST["lastName"];
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 		$stmt = $mysqli->prepare("UPDATE user SET USER_FIRSTNAME = ?, USER_LASTNAME = ? WHERE ID = ?");
-		$stmt->bind_param("ssi", $firsname, $lastname, $id);
+		$stmt->bind_param("ssi", $firstname, $lastname, $id);
 
 	    if (mysqli_connect_errno())
         {

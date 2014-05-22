@@ -63,11 +63,7 @@ function updateSettings() {
     var xmlhttp;
     var firstName = document.getElementById("txt-edit-fname").value;
     var lastName = document.getElementById("txt-edit-lname").value;
-    if(validateMessage(myMessage) != 0)
-    {
-        DisplayAlertPopUp("Error", "no message entered");
-        return;
-    }
+    
     if (window.XMLHttpRequest)
       {// code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp=new XMLHttpRequest();
@@ -92,8 +88,7 @@ function updateSettings() {
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
     document.getElementById("txt-edit-fname").value = "";
-    document.getElementById("txt-edit-lname").value = "";
-    
+    document.getElementById("txt-edit-lname").value = "";    
 }
 
 function EditPopup(task){
