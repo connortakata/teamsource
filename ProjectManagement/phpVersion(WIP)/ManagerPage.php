@@ -7,13 +7,13 @@
 	          <h1 class="page-header">Web Administer</h1>
 			</div>
 		  	<div class="well" style="position:fixed; left:310px; top:150px;">
-		  		<div class="panel-heading">
+		  		<!--<div class="panel-heading">
 		  			<h3>General User Settings</h3>
 		  		</div>
 		  		<div class="panel-body">
-		  		</div>
+		  		</div>-->
 		  		<div class="panel-heading">
-		  			<h3>Teams</h3>
+		  			<h3>System Teams</h3>
 		  		</div>
 		  		<div class="panel-body">
 		  			<table class="table">
@@ -21,28 +21,28 @@
 		  					<tr>
 		  						<th>Team Name</th>
 		  						<th>Team Leader</th>
-		  						<th></th>
+		  						<th>Delete Team</th>
 		  					</tr>
 		  				</thead>
 		  				<tbody>
 		  					<tr>
-		  						<td>Team1</td>
-		  						<td>Drew Howard</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+		  						<td>Angluar Fish</td>
+		  						<td>Ellie</td>
+		  						<td><button name="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
 		  					</tr>
 		  					<tr>
-		  						<td>Team2</td>
-		  						<td>Daniel Franz</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+		  						<td>Bouncy Ball</td>
+		  						<td>Sam</td>
+		  						<td><button name="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
 		  					</tr>
 		  					<tr>
-		  						<td>Team3</td>
-		  						<td>Joe Jazdzewski</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+		  						<td>Hateraid</td>
+		  						<td>Connor</td>
+		  						<td><button name="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
 		  					</tr>
 		  			</table>
 		  		</div>
-		  	</div>>';
-	
+		  	</div>
+<?php	
 	require "includes/footer.php";
 ?>
