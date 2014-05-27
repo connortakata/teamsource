@@ -419,3 +419,27 @@ function SelectTeam(id)
         location.reload();
     }
 }
+
+function AddUserToTeam()
+{
+    var xmlhttp;
+    var email = document.getElementById("AddUserToTeam").value;
+
+    if (email!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/team/AddToTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("email=" + email);
+        location.reload();
+    }
+}

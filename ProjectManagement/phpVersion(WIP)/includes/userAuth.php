@@ -101,3 +101,34 @@ function isInTeam()
             return true;
     }
 }
+
+function isManager()
+{
+    if(!isset($_SESSION['id']))
+    {
+        $message = 'You must be logged in to access this page';
+        return false;
+    }
+    else if(!isset($_SESSION['team']))
+    {
+        $message = 'No team selected';
+        return false;
+    }
+    else
+    {
+        $userID=$_SESSION["id"];
+        $teamID=$_SESSION["team"];
+        $con =  mysqli_connect("localhost", "root", "TeamSource1!","teamsource");
+        $sql="
+        SELECT TEAM_MANAGER_ID FROM TEAM
+        WHERE ID='$teamID';";
+        $result = mysqli_query($con,$sql);
+        $row = mysqli_fetch_row($result);
+        if($row[0]!=$userID)
+        {
+            return false;
+        }
+        else
+            return true;
+    }
+}

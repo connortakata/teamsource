@@ -57,8 +57,19 @@ else if($teamCount>0)
     print '</ul>';
     mysqli_close($con);
 }
+print                 '<div class="col-lg-6" style="padding-left: 0;">';
+if(isManager())
+{
+    print '
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick="AddUserToTeam();" style="padding-right: 26px;">Add a user</button>
+                                </span>
+                                <input id="AddUserToTeam" type="text" placeholder="User email" class="form-control">
+                            </div><!-- /input-group -->';
+}
 
-print'                  <div class="col-lg-6" style="padding-left: 0;">
+print'
                             <div class="input-group">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="AddTeam()">Create Team</button>
