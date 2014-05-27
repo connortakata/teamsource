@@ -14,21 +14,19 @@
 			<ul class="nav navbar-nav navbar-right">
                 <li>
                     <div style="padding-top:8px;padding-left:8px" class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <?php
-                            $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-                            $id = $_SESSION["id"];
-                            $sql = "SELECT USER_FIRSTNAME FROM USER WHERE ID='$id';";
-                            $result = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_array($result))
-                            {
-                                print $row["USER_FIRSTNAME"];
-                            }
-                            mysqli_close($con);
-                            ?>
-                            's Teams <span class="caret"></span>
-                        </button>
                         <?php
+                        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                        $teamID = $_SESSION["team"];
+                        $sql = "SELECT TEAM_NAME FROM TEAM WHERE ID='$teamID';";
+                        $result = mysqli_query($con, $sql);
+                        while($row = mysqli_fetch_array($result))
+                        {
+                            print'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">';
+                            print $row["TEAM_NAME"];
+                            print '  <span class="caret"></span></button>';
+                        }
+                        mysqli_close($con);
+
                         print '<ul class="dropdown-menu" role="menu">';
 
                         $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
