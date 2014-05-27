@@ -107,8 +107,12 @@
                                 print $row2["USER_FIRSTNAME"] . " " . $row2["USER_LASTNAME"];
                             }
                             print '</td>';
-                            print '<td style="text-align: right;"><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button></td>
-                            </tr>';
+                            print '<td style="text-align: right;">
+                                        <button id="team-delete" type="button" class="btn btn-default btn-xs" onclick="LeaveTeam('.$row["ID"].')">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                   </td>
+                                </tr>';
                         }
                         mysqli_close($con);
                         ?>

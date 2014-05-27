@@ -437,9 +437,32 @@ function AddUserToTeam()
 
             }
         }
-        xmlhttp.open("POST", "../AJAXapps/team/AddToTeam.php", false);
+        xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("email=" + email);
+        location.reload();
+    }
+}
+
+function LeaveTeam(id)
+{
+    var xmlhttp;
+
+    if (id!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/team/leaveTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + id);
         location.reload();
     }
 }
