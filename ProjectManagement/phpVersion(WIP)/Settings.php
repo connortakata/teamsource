@@ -71,31 +71,47 @@
 		  		<div class="panel-heading">
 		  			<h3>Your Teams</h3>
 		  		</div>
+
 		  		<div class="panel-body">
 		  			<table class="table">
 		  				<thead>
 		  					<tr>
 		  						<th>Team Name</th>
-		  						<th>Team Leader</th>
-		  						<th></th>
+		  						<th style="text-align: center;">Team Leader</th>
+		  						<th style="text-align: right;">Leave Team</th>
 		  					</tr>
 		  				</thead>
 		  				<tbody>
-		  					<tr>
-		  						<td>Team1</td>
-		  						<td>Drew Howard</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-		  					</tr>
-		  					<tr>
-		  						<td>Team2</td>
-		  						<td>Daniel Franz</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-		  					</tr>
-		  					<tr>
-		  						<td>Team3</td>
-		  						<td>Joe Jazdzewski</td>
-		  						<td><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-		  					</tr>
+                        <?php
+                        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                        $id = $_SESSION["id"];
+                        $sql = "SELECT TEAM_NAME, ID, TEAM_MANAGER_ID
+                        FROM TEAM
+                        INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
+                        WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
+                        ORDER BY TEAM_NAME ASC;";
+                        $result = mysqli_query($con, $sql);
+                        while($row = mysqli_fetch_array($result))
+                        {
+                            print '<tr>
+                            <td>'.$row["TEAM_NAME"].'</td>
+                            <td style="text-align: center;">';
+
+                            $teamManID = $row["TEAM_MANAGER_ID"];
+                            $sql2 = "SELECT USER_FIRSTNAME, USER_LASTNAME
+                            FROM USER
+                            WHERE ID='$teamManID'";
+                            $result2 = mysqli_query($con, $sql2);
+                            while($row2 = mysqli_fetch_array($result2))
+                            {
+                                print $row2["USER_FIRSTNAME"] . " " . $row2["USER_LASTNAME"];
+                            }
+                            print '</td>';
+                            print '<td style="text-align: right;"><button id="team-delete" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button></td>
+                            </tr>';
+                        }
+                        mysqli_close($con);
+                        ?>
 		  			</table>
 		  		</div>
 		  	</div>
