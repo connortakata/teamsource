@@ -59,7 +59,7 @@ function submitToChat() {
 	
 }
 
-function updateSettings() {
+function updateName() {
     var xmlhttp;
     var firstName = document.getElementById("txt-edit-fname").value;
     var lastName = document.getElementById("txt-edit-lname").value;
@@ -89,6 +89,45 @@ function updateSettings() {
     xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
     document.getElementById("txt-edit-fname").value = "";
     document.getElementById("txt-edit-lname").value = "";    
+}
+
+function updatePassword() {
+    var xmlhttp;
+    var password = document.getElementById("txt-edit-pass").value;
+    var confirm = document.getElementById("txt-pass-confirm").value;
+    
+    if(password != confirm)
+    {
+        DisplayAlertPopUp("Error", "Passwords do not match, try again.");
+        document.getElementById("txt-edit-pass").value = "";
+        document.getElementById("txt-pass-confirm").value = ""; 
+        return;
+    }
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var str = xmlhttp.responseText;
+            if(str != "")
+            {
+                DisplayAlertPopUp("Error", str);
+            }
+        }
+      }
+    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("password=" + password);
+    document.getElementById("txt-edit-pass").value = "";
+    document.getElementById("txt-pass-confirm").value = "";   
 }
 
 function EditPopup(task){

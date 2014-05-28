@@ -26,7 +26,7 @@
   								<p></p>
   							</div>
   							<div>
-  								<button id="change-name" type="button" class="btn btn-primary btn-xs" onclick="updateSettings()">Submit</button>
+  								<button id="change-name" type="button" class="btn btn-primary btn-xs" onclick="updateName()">Submit</button>
   								<button id="cancel-name-change" type="button" class="btn btn-default btn-xs">Cancel</button>
   							</div>
   						</li>
@@ -39,13 +39,13 @@
   							<div style="text-align:right; display: inline-block">
   								<div>Old Password: <input type="text" placeholder="*********"></input></div>
   								<p></p>
-  								<div>New Password: <input type="text" ></input></div>
+  								<div>New Password: <input id="txt-edit-pass" type="text" ></input></div>
   								<p></p>
-  								<div>Confirm Password: <input type="text" ></input></div>
+  								<div>Confirm Password: <input id="txt-pass-confirm" type="text" ></input></div>
   								<p></p>
   							</div>
   							<div>
-  								<button id="change-pass" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="change-pass" type="button" class="btn btn-primary btn-xs" onclick="updatePassword()">Submit</button>
   								<button id="cancel-pass-change" type="button" class="btn btn-default btn-xs">Cancel</button>
   							</div>
   						</li>
