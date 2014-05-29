@@ -19,7 +19,7 @@ print '
 						<form action="../AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
                         <label for="file">Upload:</label>
                         <input type="file" name="file" id="file">
-                        <button type="submit" class="btn btn-sm" name="submit">Submit</button>
+                        <button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button>
                         </form>
 					</td>
 				</tr>

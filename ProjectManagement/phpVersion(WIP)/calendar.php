@@ -10,7 +10,7 @@ print '
           <h1 class="page-header">Calendar</h1>
         </div>
 		<link href="css/tables.css" rel="stylesheet">
-		<div style="display:table; margin:0 auto;float:none; width:60%" class="well">
+		<div style="display:table; margin-left: 23% ;float:none; width:70%" class="well">
 
         <div id="CalendarPopUp" class="PopupShadow" style="display:none; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
             <div class="well" style="width:100%; height:100%;">
@@ -28,7 +28,7 @@ print '
                         </div>
                     </div>
                     <div class="btn-group">
-                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" onclick="AddEvent();HidePopUp(\'CalendarPopUp\', \'CalendarItem\')" />
+                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" onclick="AddEvent();HidePopUp(\'CalendarPopUp\', \'CalendarItem\');location.reload();" />
                         <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'CalendarPopUp\', \'CalendarItem\');" />
                     </div>
                 </div>

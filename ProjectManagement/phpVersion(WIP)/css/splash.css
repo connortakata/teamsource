@@ -1,9 +1,7 @@
 ﻿body {
     
     overflow: auto;
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(31%,rgba(43,136,217,1)), color-stop(72%,rgba(125,185,232,1)));
-    background: -moz-linear-gradient(-45deg, rgba(43,136,217,1) 31%, rgba(125,185,232,1) 72%); 
-    background: -ms-linear-gradient(-45deg, rgba(43,136,217,1) 31%,rgba(125,185,232,1) 72%);
+    background-image:url("background/blue-three.jpg");
 }
 
 

@@ -71,7 +71,7 @@
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Task Manager</h1>
         </div>
-        <div id="mainButtons" align="left" style="display:table; margin:0 auto; padding-bottom:10px">
+        <div id="mainButtons" align="center" style="display:table; margin-left: 52%; padding-bottom:10px">
             <!--<a href="add-task.html" rel="#overlay" stype="text-decoration:none">-->
               <button type="button" class="btn btn-default btn-med" onclick="DisplayPopup()">
                 <span class="glyphicon glyphicon-plus"></span> Add Task
@@ -81,13 +81,13 @@
             <span class="glyphicon glyphicon-remove"></span> Remove Task(s)
           </button>-->
           <select class="btn btn-default" onchange="SwitchDisplayedTasks(this)">
-          	<option value="0">Active</option>
-          	<option value="1">Finished</option>
+            <option value="0">Active</option>
+            <option value="1">Finished</option>
           </select>
         </div>
-		  <div id="mainContainer" style="display:table; margin:0 auto; float:none; width:60%" class="well">
-		  	<div id="TaskList" class="list-group">';
-		  	
+      <div id="mainContainer" style="display:table; margin-left: 23%; float:center; width:70%" class="well">
+        <div id="TaskList" class="list-group">';
+        
    				$sql = "SELECT * FROM task
    				        where TASK_IS_FINISHED = 0
    				        and TASK_TASK_MANAGER_ID = '$taskManID'
