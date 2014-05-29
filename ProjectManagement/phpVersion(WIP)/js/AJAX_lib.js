@@ -88,18 +88,21 @@ function updateName() {
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
     document.getElementById("txt-edit-fname").value = "";
-    document.getElementById("txt-edit-lname").value = "";    
+    document.getElementById("txt-edit-lname").value = "";
+    location.reload();
+
 }
 
 function updatePassword() {
     var xmlhttp;
-    var password = document.getElementById("txt-edit-pass").value;
+    var pass = document.getElementById("txt-old-pass").value;
+    var newPass = document.getElementById("txt-new-pass").value;
     var confirm = document.getElementById("txt-pass-confirm").value;
     
     if(password != confirm)
     {
         DisplayAlertPopUp("Error", "Passwords do not match, try again.");
-        document.getElementById("txt-edit-pass").value = "";
+        document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
@@ -125,8 +128,8 @@ function updatePassword() {
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("password=" + password);
-    document.getElementById("txt-edit-pass").value = "";
+    xmlhttp.send("oldPass=" + pass + "&newPass=" + newPass);
+    document.getElementById("txt-new-pass").value = "";
     document.getElementById("txt-pass-confirm").value = "";   
 }
 

@@ -11,18 +11,31 @@
 		  		<div class="panel-heading">
 		  			<h3>General User Settings</h3>
 		  		</div>
+		  		<?php
+		  			$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                    $id = $_SESSION["id"];
+                    $sql = "SELECT USER_FIRSTNAME, USER_LASTNAME, USER_PASSWORD, USER_EMAIL
+                    FROM user WHERE ID = '$id';";
+                    $result = mysqli_query($con, $sql);
+                    $row = mysqli_fetch_array($result);
+
+                    $userfirst = $row["USER_FIRSTNAME"];
+                    $userlast = $row["USER_LASTNAME"];
+                    $pass = $row["USER_PASSWORD"];
+                    $mail = $row["USER_EMAIL"];
+		  		?>
 		  		<div class="panel-body">
 		  			<ul class="list-group">
   						<li class="list-group-item" id="name">
-							<div><b>Name: Connor Takata</b>
+							<div><b>Name: <?php print "$userfirst $userlast"; ?></b>
 							<button id="name-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
 							</div>
   						</li>
   						<li class="list-group-item" id="div-edit-name" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>First Name: <input id="txt-edit-fname" type="text" placeholder="Connor"></input></div>
+  								<div>First Name: <input id="txt-edit-fname" type="text" placeholder=<?php print $userfirst; ?>></input></div>
   								<p></p>
-  								<div>Last Name: <input id="txt-edit-lname" type="text" placeholder="Takata"></input></div>
+  								<div>Last Name: <input id="txt-edit-lname" type="text" placeholder=<?php print $userlast; ?>></input></div>
   								<p></p>
   							</div>
   							<div>
@@ -37,9 +50,9 @@
   						</li>
   						<li class="list-group-item" id="div-edit-pass" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>Old Password: <input type="text" placeholder="*********"></input></div>
+  								<div>Old Password: <input id="txt-old-pass" type="text" placeholder="*********"></input></div>
   								<p></p>
-  								<div>New Password: <input id="txt-edit-pass" type="text" ></input></div>
+  								<div>New Password: <input id="txt-new-pass" type="text" ></input></div>
   								<p></p>
   								<div>Confirm Password: <input id="txt-pass-confirm" type="text" ></input></div>
   								<p></p>
@@ -50,13 +63,13 @@
   							</div>
   						</li>
   						<li class="list-group-item" id="email">
-							<div><b>Email Address: takatac@spu.edu</b>
+							<div><b>Email: <?php print $mail; ?></b>
 							<button id="email-edit" type="button" class="btn btn-default btn-xs" style="float: right"><span class="glyphicon glyphicon-pencil"></span></button>
 							</div>
   						</li>
   						<li class="list-group-item" id="div-edit-email" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>New Email: <input type="text" placeholder="takatac@spu.edu"></input></div>
+  								<div>New Email: <input type="text"></input></div>
   								<p></p>
   								<div>Confirm Email: <input type="text" ></input></div>
   								<p></p>
@@ -130,46 +143,46 @@
 
 		  	$("#name-edit").click(function() {
 		  		//$("#name").toggle(1);
-		  		$("#div-edit-name").toggle(100);
+		  		$("#div-edit-name").toggle(10);
 		  	});
 		  	$("#pass-edit").click(function() {
 		  		//$("#pass").toggle(1);
-		  		$("#div-edit-pass").toggle(100);
+		  		$("#div-edit-pass").toggle(10);
 		  	});
 		  	$("#email-edit").click(function() {
 		  		//$("#email").toggle(1);
-		  		$("#div-edit-email").toggle(100);
+		  		$("#div-edit-email").toggle(10);
 		  	});
 
 
 
 		  	$("#change-name").click(function() {
 		  		//$("#name").toggle(1);
-		  		$("#div-edit-name").toggle(100);
+		  		$("#div-edit-name").toggle(10);
 		  	});
 		  	$("#cancel-name-change").click(function() {
 		  		//$("#name").toggle(1);
-		  		$("#div-edit-name").toggle(100);
+		  		$("#div-edit-name").toggle(10);
 		  	});
 
 
 		  	$("#change-pass").click(function() {
 		  		//$("#pass").toggle(1);
-		  		$("#div-edit-pass").toggle(100);
+		  		$("#div-edit-pass").toggle(10);
 		  	});
 		  	$("#cancel-pass-change").click(function() {
 		  		//$("#pass").toggle(1);
-		  		$("#div-edit-pass").toggle(100);
+		  		$("#div-edit-pass").toggle(10);
 		  	});
 
 
 		  	$("#change-email").click(function() {
 		  		//$("#email").toggle(1);
-		  		$("#div-edit-email").toggle(100);
+		  		$("#div-edit-email").toggle(10);
 		  	});
 		  	$("#cancel-email-change").click(function() {
 		  		//$("#email").toggle(1);
-		  		$("#div-edit-email").toggle(100);
+		  		$("#div-edit-email").toggle(10);
 		  	});
 		  	</script>
 
