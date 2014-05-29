@@ -317,7 +317,7 @@ function CreateUser(){
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
         LogIn(email, pass);
-        window.location = "../index.php";
+        window.location = "../team.php";
     }
 }
 

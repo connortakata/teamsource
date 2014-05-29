@@ -66,7 +66,9 @@ $_SESSION['form_token'] = $form_token;
 				  <a class="navbar-brand" href="#">Team Source</a>
 				  
 				</div>
+
 				<div class="navbar-collapse collapse">
+
 					<form action="team.php" class="navbar-form navbar-right">
                         <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();window.location='team.php';" class="btn btn-default btn-sm" value="Log-in">
 					</form>
@@ -75,7 +77,7 @@ $_SESSION['form_token'] = $form_token;
 					</form>
 					<form action="team.php" class="navbar-form navbar-right">
 					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13){ LogIn();}" type="text" class="form-control" placeholder="Email">
-					</form>          	
+					</form><?php if(isset($_SESSION["logInError"])){ print'<form style="font-size:15px;padding-top:9px;color:#B00000;" action="team.php" class="navbar-form navbar-right">'.$_SESSION["logInError"].'</form>';unset($_SESSION["logInError"]);}?>
 				</div>
 			  </div>
 			</div>	
@@ -141,7 +143,9 @@ $_SESSION['form_token'] = $form_token;
                                     <input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="6" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
                             	</td>
                         	</tr>
-                            <tr class="rowSpaces"></tr>                        	
+                            <tr class="rowSpaces">
+                                <?php if(isset($_SESSION["createUserError"])){ print'<form style="font-size:15px;padding-top:9px;color:#B00000;" action="team.php" class="navbar-form navbar-right">'.$_SESSION["createUserError"].'</form>';unset($_SESSION["createUserError"]);}?>
+                            </tr>
                             <tr>
                                 <td>
                                     <input name="password" onkeydown="if (event.keyCode == 13){ CreateUser();}" type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">

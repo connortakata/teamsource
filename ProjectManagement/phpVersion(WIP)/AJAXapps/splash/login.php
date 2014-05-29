@@ -61,8 +61,8 @@ else
         /*** if we have no result then fail boat ***/
         if($user_id == false)
         {
-            $message = 'Login Failed';
-            header("Location:Splash.php");
+            $_SESSION["logInError"]="Email or password incorrect.";
+            //header("Location:../../Splash.php?error=1");
         }
         /*** if we do have a result, all is well ***/
         else
