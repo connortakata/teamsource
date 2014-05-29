@@ -253,10 +253,10 @@ function LogIn(){
     var xmlhttp;
     var email = document.getElementById("txtUsernameLog").value;
     var pass = document.getElementById("txtPasswordLog").value;
-
     if(window.XMLHttpRequest){
         xmlhttp = new XMLHttpRequest();
     }
+
     else{
         xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
     }
@@ -269,7 +269,6 @@ function LogIn(){
     xmlhttp.open("POST", "../AJAXapps/splash/login.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("email=" + email + "&pass=" + pass);
-    window.location = "../index.php";
 }
 
 function CreateUser(){

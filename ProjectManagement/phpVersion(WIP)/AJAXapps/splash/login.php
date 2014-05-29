@@ -72,7 +72,7 @@ else
 
             /*** tell the user we are logged in ***/
             $message = 'You are now logged in';
-            //header("Location:index.php");
+            header("Location: ../../index.php");
         }
     }
     catch(Exception $e)
@@ -82,19 +82,3 @@ else
         header("Location:Splash.php");
     }
 }
-/*if(isset($_POST["email"]) && isset($_POST["pass"]))
-{
-    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-    $email = $_POST["email"];
-    $sql = "SELECT ID,USER_PASSWORD FROM USER WHERE USER_EMAIL='$email';";
-    $result = mysqli_query($con, $sql);
-    $id = mysqli_fetch_array($result);
-    mysqli_close($con);
-    if($_POST["pass"]==$id["USER_PASSWORD"])
-    {
-        session_start();
-        $_SESSION["id"]=$id["ID"];
-        //setcookie("id", $id["ID"], time()+3600);
-        header("Location: index.php");
-    }
-}*/
