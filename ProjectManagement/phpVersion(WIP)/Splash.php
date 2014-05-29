@@ -158,8 +158,8 @@ $_SESSION['form_token'] = $form_token;
 	    			<tr class="rowSpaces"></tr>
 	    			<tr>
 	    				<td align= "right" width="100%">
-	    					<a onclick="validatePasswords(getElementsByName('password')); CreateUser();" href="#" class="a-btn">
-   						 		<span class="a-btn-text">Register now</span> 
+	    					<a onclick="/*validatePasswords(getElementsByName('password'));*/ CreateUser();" href="#" class="a-btn">
+   						 		<span class="a-btn-text">Register now</span>
     							<span class="a-btn-slide-text">It's Free</span>
     							<span class="a-btn-icon-right"><span></span></span>
 							</a>

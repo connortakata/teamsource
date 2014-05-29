@@ -281,15 +281,33 @@ function CreateUser(){
     var passConfirm = document.getElementById("txtPasswordConfirm").value;
     var form_token = document.getElementById("token").value;
 
-    if( (firstName!='') && (lastName!='') && (email!='') && (pass!='') && (pass==passConfirm) ){
+    if( (firstName=='') || (lastName==''))
+    {
+        document.getElementById("loginError").innerHTML = "Error: Please enter a valid first and last name.";
+    }
+
+    else if((email==''))
+    {
+        document.getElementById("loginError").innerHTML = "Error: Please enter a valid email.";
+    }
+
+    else if((pass==''))
+    {
+        document.getElementById("loginError").innerHTML = "Error: Please enter a valid password over 6 characters and under 20.";
+    }
+
+    else if(pass != passConfirm)
+    {
+        document.getElementById("loginError").innerHTML = "Error: Your passwords did not match.";
+    }
+    else
+    {
         if(window.XMLHttpRequest){
             xmlhttp = new XMLHttpRequest();
         }
         else{
             xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
         }
-
-
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
 
@@ -299,12 +317,8 @@ function CreateUser(){
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
         LogIn(email, pass);
+        window.location = "../index.php";
     }
-    else
-    {
-        document.getElementById("loginError").innerHTML = "Error: Your passwords did not match or you left a field empty.";
-    }
-    window.location = "../index.php";
 }
 
 function LogOut()
