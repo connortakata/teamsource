@@ -249,10 +249,10 @@ function isFinishTask(id, SetTo){
 	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
 }
 
-function LogIn(){
+function LogIn(email, pass){
     var xmlhttp;
-    var email = document.getElementById("txtUsernameLog").value;
-    var pass = document.getElementById("txtPasswordLog").value;
+    var email = typeof email !== 'undefined' ? email: document.getElementById("txtUsernameLog").value;
+    var pass = typeof pass !== 'undefined' ? pass: document.getElementById("txtPasswordLog").value;
     if(window.XMLHttpRequest){
         xmlhttp = new XMLHttpRequest();
     }
@@ -298,6 +298,7 @@ function CreateUser(){
         xmlhttp.open("POST", "../AJAXapps/splash/addUser.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
+        LogIn(email, pass);
     }
     else
     {

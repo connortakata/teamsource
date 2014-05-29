@@ -67,14 +67,14 @@ $_SESSION['form_token'] = $form_token;
 				  
 				</div>
 				<div class="navbar-collapse collapse">
-					<form class="navbar-form navbar-right">
-                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();" class="btn btn-default btn-sm" value="Log-in">
+					<form action="team.php" class="navbar-form navbar-right">
+                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();window.location='team.php';" class="btn btn-default btn-sm" value="Log-in">
 					</form>
-					<form class="navbar-form navbar-right">
-						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click();" type="password" class="form-control" placeholder="Password">
+					<form action="team.php" class="navbar-form navbar-right">
+						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13){ LogIn();}" type="password" class="form-control" placeholder="Password">
 					</form>
-					<form class="navbar-form navbar-right">
-					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13) document.getElementById('btnLogIn').click();" type="text" class="form-control" placeholder="Email">
+					<form action="team.php" class="navbar-form navbar-right">
+					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13){ LogIn();}" type="text" class="form-control" placeholder="Email">
 					</form>          	
 				</div>
 			  </div>
@@ -107,7 +107,7 @@ $_SESSION['form_token'] = $form_token;
 				</div>
 			</div>
 			<!--<div class="LeftPanelColor"></div>-->
-			<form name="createuser" method="post"> 
+			<form action="team.php" name="createuser" method="post">
 			<div class="RightPanel">
 				<div class="right-container">
 					
@@ -126,10 +126,10 @@ $_SESSION['form_token'] = $form_token;
                         <table align="center" width="70%">
                             <tr>
                                 <td>
-                                    <input type="text" tabindex="4" style="width:99%" class=" input" id="txtFirstName" name="txtFirstName" placeholder="First Name">
+                                    <input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="4" style="width:99%" class=" input" id="txtFirstName" name="txtFirstName" placeholder="First Name">
                                 </td>
                                 <td>
-                  					<input type="text" tabindex="5" style="width:99%" class=" input" id="txtLastName" name="txtLastName" placeholder="Last Name">
+                  					<input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="5" style="width:99%" class=" input" id="txtLastName" name="txtLastName" placeholder="Last Name">
                                 </td>
                             </tr>
                         </table>
@@ -138,19 +138,19 @@ $_SESSION['form_token'] = $form_token;
                             <tr class="rowSpaces"></tr> 
     					    <tr>
                                 <td>
-                                    <input type="text" tabindex="6" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
+                                    <input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="6" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
                             	</td>
                         	</tr>
                             <tr class="rowSpaces"></tr>                        	
                             <tr>
                                 <td>
-                                    <input name="password" type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
+                                    <input name="password" onkeydown="if (event.keyCode == 13){ CreateUser();}" type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>
                             <tr>
                                 <td>
-                                    <input name="password" type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
+                                    <input name="password" onkeydown="if (event.keyCode == 13){ CreateUser();}" type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
                                 </td>
                             </tr>
                             <tr class="rowSpaces"></tr>

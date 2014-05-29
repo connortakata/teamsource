@@ -3,7 +3,7 @@ session_start();
 
 if(isset( $_SESSION['user_id'] ))
 {
-    $message = 'User is already logged in';
+    header("Location: ../../Splash.php?error=1");
 }
 
 if(!isset( $_POST['email'], $_POST['pass']))
@@ -72,7 +72,6 @@ else
 
             /*** tell the user we are logged in ***/
             $message = 'You are now logged in';
-            header("Location: ../../index.php");
         }
     }
     catch(Exception $e)
