@@ -8,14 +8,11 @@ if(isLoggedIn()&&isInTeam())
     {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-    $ID=$_POST["id"];
-    mysqli_select_db($con, "teamsource");
+    $ID=$_POST["id"];//Retrieve the event from the DB using its ID
     $sql = "SELECT * FROM EVENT WHERE ID='$ID';";
-
     $result = mysqli_query($con, $sql);
-
     while($row = mysqli_fetch_array($result))
-    {
+    {//Printing out the form for event editing
         echo '
         <div class="well" style="width:100%; height:auto;">
             <div class="panel panel-primary" style="height:auto">

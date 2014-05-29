@@ -18,9 +18,6 @@ while($row = mysqli_fetch_array($result))
     $teamCount = $row[0];
 }
 
-if(isset($_SESSION["error"]))
-    print $_SESSION["error"];
-
 if($teamCount<1)
 {
     //If user belongs to no teams or something weird happened

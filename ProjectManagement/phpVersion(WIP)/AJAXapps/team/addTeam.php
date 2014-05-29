@@ -19,37 +19,37 @@ if(isLoggedIn())
 
     else
     {
-        /*** if we are here the data is valid and we can insert it into database ***/
+        // if we are here the data is valid and we can insert it into database
         $teamName = filter_var($_POST['teamName'], FILTER_SANITIZE_STRING);
         $managerID = $_SESSION["id"];
 
-        /*** connect to database ***/
-        /*** mysql hostname ***/
+        // connect to database
+        // mysql hostname
         $mysql_hostname = 'localhost';
 
-        /*** mysql username ***/
+        // mysql username
         $mysql_username = 'root';
 
-        /*** mysql password ***/
+        // mysql password
         $mysql_password = 'TeamSource1!';
 
-        /*** database name ***/
+        // database name
         $mysql_dbname = 'teamsource';
 
         try //creating the team
         {
             $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
-            /*** $message = a message saying we have connected ***/
+            // $message = a message saying we have connected
 
-            /*** set the error mode to excptions ***/
+            // set the error mode to excptions
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            /*** prepare the insert ***/
+            // prepare the insert
             $stmt = $dbh->prepare("INSERT INTO TEAM (TEAM_MANAGER_ID, TEAM_NAME) VALUES (:managerID, :teamName);");
-            /*** bind the parameters ***/
+            // bind the parameters
             $stmt->bindParam(':managerID', $managerID, PDO::PARAM_STR);
             $stmt->bindParam(':teamName', $teamName, PDO::PARAM_STR);
-            /*** execute the prepared statement ***/
+            // execute the prepared statement
             $stmt->execute();
 
             //Now we add the manager to the user list for this team
@@ -88,12 +88,11 @@ if(isLoggedIn())
 
             //All done!
             $mysqli->close();
-
+            //Load the current team for the user
             $_SESSION["team"]=$teamID;
         }
         catch(Exception $e)
         {
-            $_SESSION["error"]=$e->getCode();
             if( $e->getCode() == 23000)
             {
                 $message = 'Team Name already exists';

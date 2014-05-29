@@ -12,18 +12,19 @@ if(isLoggedIn()&&isInTeam())
     {
         $calID = $row[0];
     }
+    mysql_close();
 
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
-    if(isset($_POST["id"])&&$_POST["id"]==true)
+    if(isset($_POST["id"])&&$_POST["id"]==true)//Are we updating a current event or adding a new one?
     {
         $stmt= $mysqli->prepare("UPDATE EVENT SET EVENT_TITLE=?, EVENT_DATETIME=?, EVENT_DESCRIPTION=? WHERE ID=?");
         $stmt->bind_param('sssi', $title, $date, $description, $id);
-        $id=$_POST["id"];
+        $id=$_POST["id"];//In this case, we are updating a current event
     }
     else
     {
         $stmt= $mysqli->prepare("INSERT INTO EVENT (EVENT_CALENDAR_ID, EVENT_TITLE, EVENT_DATETIME, EVENT_DESCRIPTION) VALUES (?,?,?,?);");
-        $stmt->bind_param('isss', $calID, $title, $date, $description);
+        $stmt->bind_param('isss', $calID, $title, $date, $description);//In this case, we are adding a brand new event
     }
     $title=$_POST["title"];
     $date=$_POST["date"];
@@ -31,7 +32,7 @@ if(isLoggedIn()&&isInTeam())
     $description=$_POST["description"];
 
     $theTime = substr_replace($theTime, ":", 2, 0);
-    if($_POST["edit"])
+    if($_POST["edit"])//String formatting for correct insertion into mysql column of type DATETIME
     {
         $date = $date." ".$theTime;
         $theTime = substr_replace($theTime, ":", 2, 0);

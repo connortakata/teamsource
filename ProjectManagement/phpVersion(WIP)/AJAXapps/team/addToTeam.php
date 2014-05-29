@@ -14,26 +14,26 @@ if(isLoggedIn()&&isManager()&&isInTeam())
 
     else
     {
-        /*** if we are here the data is valid and we can insert it into database ***/
+        // if we are here the data is valid and we can insert it into database //
         $email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
         $teamID = $_SESSION["team"];
-        /*** connect to database ***/
-        /*** mysql hostname ***/
+        // connect to database
+        // mysql hostname
         $mysql_hostname = 'localhost';
 
-        /*** mysql username ***/
+        // mysql username
         $mysql_username = 'root';
 
-        /*** mysql password ***/
+        // mysql password
         $mysql_password = 'TeamSource1!';
 
-        /*** database name ***/
+        // database name
         $mysql_dbname = 'teamsource';
 
         $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
         $sql = "SELECT ID FROM USER WHERE USER_EMAIL = '$email';";
         $result = mysqli_query($con,$sql);
-        while($row = mysqli_fetch_array($result))
+        while($row = mysqli_fetch_array($result))//find the user's id
         {
             $userID = $row[0];
         }
@@ -42,18 +42,18 @@ if(isLoggedIn()&&isManager()&&isInTeam())
             try //adding the user
             {
                 $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
-                /*** $message = a message saying we have connected ***/
+                //$message = a message saying we have connected
 
-                /*** set the error mode to excptions ***/
+                //set the error mode to excptions
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                /*** prepare the insert ***/
+                //prepare the insert //
                 $stmt = $dbh->prepare("INSERT INTO TEAM_MEMBER_LIST (TEAM_MEMBER_LIST_USER_ID, TEAM_MEMBER_LIST_TEAM_ID)
                 VALUES (:userID, :teamID);");
-                /*** bind the parameters ***/
+                //bind the parameters
                 $stmt->bindParam(':userID', $userID, PDO::PARAM_STR);
                 $stmt->bindParam(':teamID', $teamID, PDO::PARAM_STR);
-                /*** execute the prepared statement ***/
+                //execute the prepared statement
                 $stmt->execute();
                 //All done!
                 $mysqli->close();

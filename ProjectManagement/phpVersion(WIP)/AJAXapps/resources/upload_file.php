@@ -29,17 +29,26 @@ if(isLoggedIn()&&isInTeam())
                     $fileID = $row[0];
                 }
 
-                move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
-                $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
-                $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE, FILE_FILE_MANAGER_ID) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('ssssi', $filename, $date, $time, $size, $fileID);
-                $filename = $_FILES["file"]["name"];
-                $date = date('Y-m-d');
-                $time = date('H:i:s');
-                $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
-                list($left, $right) = explode('.', $size, 2);
-                $stmt->execute();
-                $mysqli->close();
+                try
+                {//move the file into the correct destination
+                    move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
+                    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
+                    $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE, FILE_FILE_MANAGER_ID) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->bind_param('ssssi', $filename, $date, $time, $size, $fileID);
+                    $filename = $_FILES["file"]["name"];
+                    $date = date('Y-m-d');
+                    $time = date('H:i:s');
+                    $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
+                    list($left, $right) = explode('.', $size, 2);
+                    $stmt->execute();
+                    $mysqli->close();
+                }
+                catch(Exception $e)
+                {
+                    $_SESSION["fileUploadError"] = "An error occurred during file upload, please try again.";
+                    unlink("../../upload/" . $_FILES["file"]["name"]);
+                    //If the db insertion failed we need to delete the file so the user can try again
+                }
             }
         }
     }

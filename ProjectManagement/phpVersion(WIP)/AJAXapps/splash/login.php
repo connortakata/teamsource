@@ -18,65 +18,65 @@ elseif (strlen( $_POST['pass']) > 20 || strlen($_POST['pass']) < 6)
 
 else
 {
-    /*** if we are here the data is valid and we can insert it into database ***/
+    //if we are here the data is valid and we can insert it into database
     $email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
 
-    /*** now we can encrypt the password ***/
+    //now we can encrypt the password
     $password = crypt($password, 'PASSWORD_DEFAULT');
 
-    /*** connect to database ***/
-    /*** mysql hostname ***/
+    //connect to database //
+    //mysql hostname //
     $mysql_hostname = 'localhost';
 
-    /*** mysql username ***/
+    //mysql username //
     $mysql_username = 'root';
 
-    /*** mysql password ***/
+    //mysql password //
     $mysql_password = 'TeamSource1!';
 
-    /*** database name ***/
+    //database name //
     $mysql_dbname = 'teamsource';
 
     try
     {
         $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
-        /*** $message = a message saying we have connected ***/
+        // $message = a message saying we have connected //
 
-        /*** set the error mode to excptions ***/
+        //set the error mode to excptions
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        /*** prepare the insert ***/
+        //prepare the insert
         $stmt = $dbh->prepare("SELECT ID, USER_EMAIL, USER_PASSWORD FROM USER WHERE USER_EMAIL = :email AND USER_PASSWORD = :password");
 
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
 
-        /*** execute the prepared statement ***/
+        //execute the prepared statement
         $stmt->execute();
 
-        /*** check for a result ***/
+        //check for a result
         $user_id = $stmt->fetchColumn();
 
-        /*** if we have no result then fail boat ***/
+        //if we have no result then fail boat
         if($user_id == false)
         {
             $_SESSION["logInError"]="Email or password incorrect.";
             //header("Location:../../Splash.php?error=1");
         }
-        /*** if we do have a result, all is well ***/
+        //if we do have a result, all is well
         else
         {
-            /*** set the session user_id variable ***/
+            //set the session user_id variable
             $_SESSION['id'] = $user_id;
 
-            /*** tell the user we are logged in ***/
+            //tell the user we are logged in
             $message = 'You are now logged in';
         }
     }
     catch(Exception $e)
     {
-        /*** if we are here, something has gone wrong with the database ***/
+        //if we are here, something has gone wrong with the database
         $message = 'We are unable to process your request. Please try again later"';
         header("Location:Splash.php");
     }
