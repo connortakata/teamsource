@@ -11,16 +11,20 @@ print '
 		<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">
+			<b><p for="file" style="text-align: center">Upload Documents</p></b>
 			<table>
 				<tr>
 					<td style="width:50%">Files for team &lsaquo;team&rsaquo;</td>
 					<td style="width:50%;">
 						<!--<button id="btnUpload" type="button" class="btn btn-default">Upload</button>-->
 						<form action="../AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
-                        <label for="file">Upload:</label>
+
                         <input type="file" name="file" id="file">
-                        <button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button>
+                        
                         </form>
+					</td>
+					<td>
+						<button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button>
 					</td>
 				</tr>
 			</table>
