@@ -62,4 +62,3 @@ print '</table>
 		</div>
 	  </div>';
 require "includes/footer.php";
-?>
