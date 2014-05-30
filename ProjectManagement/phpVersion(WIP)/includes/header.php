@@ -4,7 +4,7 @@ if(isLoggedIn()!=true)
 {
     header("Location:Splash.php");
 }
-if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php")
+if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php"&& $_SERVER['PHP_SELF']!="/Settings.php")
 {
     header("Location:team.php");
 }
