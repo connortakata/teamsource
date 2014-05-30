@@ -7,8 +7,8 @@ if(isLoggedIn()&&isInTeam())
     $fakeFileName= $fileName;
     $realFileName = $teamID."/".$fileName;
 
-    $file = "upload/".$realFileName;
-    $fp = fopen($file, 'rb');
+    $file = "../../upload/".$realFileName;
+    $fp = fopen($file, 'r');
 
     header("Content-Type: application/octet-stream");
     header("Content-Disposition: attachment; filename=$fakeFileName");

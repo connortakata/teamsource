@@ -82,13 +82,9 @@ while($row = mysqli_fetch_array($result)){
     print '<td>' . $row['FILE_NAME'] . '</td>';
     print '<td style="text-align:right">' . $row['FILE_DATE'] . '</td>';
     print '<td style="text-align:right">' . $row['FILE_SIZE'] . '</td>';
-    /*print '<td style="text-align:right">
-						<button id="btnDownload" type="button" class="btn btn-default" onclick="window.location = \'upload/'.$row['FILE_NAME'].'\'")" >Download</button>
-					</td>';*/
     print '<td style="text-align:right">
-						<button id="btnDownload" type="button" class="btn btn-default" onclick="DownloadFile('.$teamID.',\''.$row['FILE_NAME'].'\')" >Download</button>
+						<a id="btnDownload" href="AJAXapps/resources/download.php?teamID='.$teamID.'&fileName='.$row["FILE_NAME"].'" class="btn btn-primary btn-sm active" role="button" >Download</button>
 					</td>';
-    print '<a href="AJAXapps/resources/download.php?teamID='.$teamID.'&fileName='.$row["FILE_NAME"].'" target="_blank">Download!</a>';
     print '</tr>';
 }
 print '</table>
