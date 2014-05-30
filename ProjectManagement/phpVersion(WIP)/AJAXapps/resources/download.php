@@ -2,10 +2,10 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn()&&isInTeam())
 {
-    $teamID = $_GET["teamID"];
+    $teamID = $_SESSION["team"];
     $fileName = $_GET["fileName"];
-    $fakeFileName= $fileName;
-    $realFileName = $teamID."/".$fileName;
+    $fakeFileName= $fileName;//filename shown to user
+    $realFileName = $teamID."/".$fileName;//true filename containing file path
 
     $file = "../../upload/".$realFileName;
     $fp = fopen($file, 'r');
