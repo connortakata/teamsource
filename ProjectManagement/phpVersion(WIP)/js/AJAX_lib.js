@@ -522,3 +522,25 @@ function LeaveTeam(id)
         location.reload();
     }
 }
+
+function DownloadFile(teamID, fileName)
+{
+    var xmlhttp;
+    if (teamID!=''&&fileName!='')
+    {
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/resources/download.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("teamID=" + teamID + "&fileName=" + fileName);
+    }
+}
