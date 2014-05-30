@@ -147,7 +147,7 @@ function printCalendar()
         print '<tr class="dayDetail" style="vertical-align: top">';
         for( $j=0; $j<7; $j++)//Printing the details of each day
         {
-            print '<td class="days" width="11.43%">';
+            print '<td class="days" width="11.43%"><div class=scrollable>';
             if(isset($dayEvents[$days[$dayDetail]]))
                 for($k=0;$k<count($dayEvents[$days[$dayDetail]]);$k++)
                 {//If statements here are to add some overflow behavior; maybe not necessary because of the css overflow property
@@ -161,7 +161,7 @@ function printCalendar()
                     print '</a>';
                     print "<br>";
                 }
-            print '</td>';
+            print '</div></td>';
             $dayDetail++;
         }
         print '</tr>';
