@@ -49,7 +49,7 @@ function printFilesList($teamID)
         print '<td style="text-align:right">' . $row['FILE_SIZE'] . '</td>';
         print ' <td style="text-align:right">
 		    <a id="btnDownload" href="AJAXapps/resources/download.php?fileName='.$row["FILE_NAME"].'" class="btn btn-primary btn-sm active" target="_blank" >Download</a>
-		    <a id="btnDelete" href="AJAXapps/resources/deleteFile.php?fileName='.$row["FILE_NAME"].'&id='.$row["ID"].'" target="_blank" ><span class="glyphicon glyphicon-trash"></span></a>
+		    <a id="btnDelete" href="AJAXapps/resources/deleteFile.php?fileName='.$row["FILE_NAME"].'&id='.$row["ID"].'" ><span class="glyphicon glyphicon-trash"></span></a>
 		    </td>';
         print '</tr>';
     }

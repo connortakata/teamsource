@@ -1,5 +1,6 @@
 <?php
 require "userAuth.php";
+require "./functions/mysqlFunctions.php";
 if(isLoggedIn()!=true)
 {
     header("Location:Splash.php");
