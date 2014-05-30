@@ -5,7 +5,24 @@ if(isLoggedIn()&&isInTeam())
     $allowedExts = array("gif", "jpeg", "jpg", "png");//array that defines allowed file types
     $temp = explode(".", $_FILES["file"]["name"]);
     $extension = end($temp);
-    if (true)//restrict file types here
+
+    $teamID = $_SESSION["team"];
+    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    $sql = "SELECT FILE_SIZE FROM FILE WHERE FILE_FILE_MANAGER_ID='$fileID'";
+    $result = mysqli_query($con,$sql);
+    $fileSize=0;
+    while($row = mysqli_fetch_array($result))
+    {
+        if(substr($row[0],strlen($row[0])-2,1)=='m')
+            $fileSize += $row[0]*1024*1024;
+        else if(substr($row[0],strlen($row[0])-2,1)=='k')
+            $fileSize += $row[0]*1024;
+        else
+            $fileSize += $row[0];
+    }
+    $fileSize+=$_FILES["file"]["size"];
+
+    if ($fileSize<2000000000&&($_FILES["file"]["size"]/1024 < 256000))//Files of size 1gb+ are not allowed, and the team cap is 2gb
     {
         if ($_FILES["file"]["error"] > 0)
         {
@@ -38,7 +55,16 @@ if(isLoggedIn()&&isInTeam())
                     $filename = $_FILES["file"]["name"];
                     $date = date('Y-m-d');
                     $time = date('H:i:s');
-                    $size = substr(($_FILES["file"]["size"] / 1024),0,6) . "kB";
+                    if(substr(($_FILES["file"]["size"] / 1024),0)>=1000000)
+                    {
+                        $size = substr(($_FILES["file"]["size"] / (1024*1024*1024)),0,4) . "gB";
+                    }
+                    else if(substr(($_FILES["file"]["size"] / 1024),0)>=1000)
+                    {
+                        $size = substr(($_FILES["file"]["size"] / (1024*1024)),0,4) . "mB";
+                    }
+                    else
+                        $size = substr(($_FILES["file"]["size"] / 1024),0,4) . "kB";
                     list($left, $right) = explode('.', $size, 2);
                     $stmt->execute();
                     $mysqli->close();

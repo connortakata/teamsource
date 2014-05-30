@@ -14,18 +14,47 @@ print '
 			<b><p for="file" style="text-align: center">Upload Documents</p></b>
 			<table>
 				<tr>
-					<td style="width:50%">Files for team &lsaquo;team&rsaquo;</td>
-					<td style="width:50%;">
+					<td style="width:50%">Files for team &lsaquo;team&rsaquo;</td>';
+                    //Select the team's file manager to identify with
+                    $teamID = $_SESSION["team"];
+                    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                    $sql = "SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID='$teamID'";
+                    $result = mysqli_query($con,$sql);
+                    while($row = mysqli_fetch_array($result))
+                    {
+                        $fileID = $row[0];
+                    }
+
+                    $teamID = $_SESSION["team"];
+                    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+                    $sql = "SELECT FILE_SIZE FROM FILE WHERE FILE_FILE_MANAGER_ID='$fileID'";
+                    $result = mysqli_query($con,$sql);
+                    $fileSize=0;
+                    while($row = mysqli_fetch_array($result))
+                    {
+                        if(substr($row[0],strlen($row[0])-2,1)=='m')
+                            $fileSize += $row[0]*1024*1024;
+                        else if(substr($row[0],strlen($row[0])-2,1)=='k')
+                            $fileSize += $row[0]*1024;
+                        else
+                            $fileSize += $row[0];
+                    }
+                    if($fileSize<2000000000)
+                    {
+					    print '<td style="width:50%;">
 						<!--<button id="btnUpload" type="button" class="btn btn-default">Upload</button>-->
-						<form action="../AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
+						<form action="AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
 
                         <input type="file" name="file" id="file">
                         
 
-					</td>
-					<td>
-						<button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button></form>
-					</td>
+					    </td>
+					    <td>
+						    <button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button></form>
+					    </td>';
+                    }
+                    print '
+
 				</tr>
 			</table>
 		</div>
@@ -41,15 +70,7 @@ print '
 					<td style="text-align:right">Action</td>
 				</tr>';
 
-//Select the team's file manager to identify with
-$teamID = $_SESSION["team"];
-$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-$sql = "SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID='$teamID'";
-$result = mysqli_query($con,$sql);
-while($row = mysqli_fetch_array($result))
-{
-    $fileID = $row[0];
-}
+
 $sql = "SELECT * FROM file WHERE FILE_FILE_MANAGER_ID = '$fileID'";
 $result = mysqli_query($con,$sql);
 while($row = mysqli_fetch_array($result)){
