@@ -12,6 +12,8 @@ if(isLoggedIn()&&isInTeam())
             $lastname = $_POST["lastName"];
         	$stmt = $mysqli->prepare("UPDATE user SET USER_FIRSTNAME = ?, USER_LASTNAME = ? WHERE ID = ?");
 			$stmt->bind_param("ssi", $firstname, $lastname, $id);
+            $stmt->execute();
+            $mysqli->close();
         }
         if(isset($_POST["curPass"]) && isset($_POST["newPass"]))
         {
@@ -27,6 +29,12 @@ if(isLoggedIn()&&isInTeam())
                 $newPass = crypt($newPass, 'PASSWORD_DEFAULT');
                 $stmt = $mysqli->prepare("UPDATE user SET USER_PASSWORD = ? WHERE ID = ?");
                 $stmt->bind_param("si", $newPass, $id);
+                $stmt->execute();
+                $mysqli->close();
+            }
+            else
+            {
+                echo "Incorrect password.  Please try again.";
             }
         }
         if(isset($_POST["email"]))
@@ -34,6 +42,8 @@ if(isLoggedIn()&&isInTeam())
             $email = $_POST["email"];
             $stmt = $mysqli->prepare("UPDATE user SET USER_EMAIL = ? WHERE ID = ?");
             $stmt->bind_param("si", $email, $id);
+            $stmt->execute();
+            $mysqli->close();
         }
 		
 
@@ -41,8 +51,7 @@ if(isLoggedIn()&&isInTeam())
         {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
-	    $stmt->execute();
-        $mysqli->close();
+	    
 }
 else
     header("Location:../../index.php");

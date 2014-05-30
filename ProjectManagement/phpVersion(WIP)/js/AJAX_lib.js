@@ -129,6 +129,7 @@ function updatePassword() {
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
+    document.getElementById("txt-old-pass").value = "";
     document.getElementById("txt-new-pass").value = "";
     document.getElementById("txt-pass-confirm").value = "";   
 }
