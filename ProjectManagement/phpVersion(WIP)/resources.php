@@ -21,10 +21,10 @@ print '
 
                         <input type="file" name="file" id="file">
                         
-                        </form>
+
 					</td>
 					<td>
-						<button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button>
+						<button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button></form>
 					</td>
 				</tr>
 			</table>

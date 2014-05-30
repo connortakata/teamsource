@@ -18,7 +18,7 @@ while($row = mysqli_fetch_array($result))
     $teamCount = $row[0];
 }
 
-if($teamCount<1)
+if(!isset($teamCount)||$teamCount<1)
 {
     //If user belongs to no teams or something weird happened
     print'      <div class="panel-heading">It seems you are not part of a team yet.</div>
