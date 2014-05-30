@@ -53,6 +53,8 @@ print '
 						    <button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button></form>
 					    </td>';
                     }
+                    else
+                        print'<td>Your team\'s file cap has been reached or will be reached with this file. Please delete some files or upload a smaller file.';
                     print '
 
 				</tr>
