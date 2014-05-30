@@ -48,7 +48,10 @@ if(isLoggedIn()&&isInTeam())
 
                 try
                 {//move the file into the correct destination
-                    move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/" . $_FILES["file"]["name"]);
+                    if (!file_exists("../../upload/".$teamID."/")) {
+                        mkdir("../../upload/".$teamID."/", 0777, true);
+                    }
+                    move_uploaded_file($_FILES["file"]["tmp_name"], "../../upload/".$teamID."/" . $_FILES["file"]["name"]);
                     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
                     $stmt= $mysqli->prepare("INSERT INTO FILE (FILE_NAME, FILE_DATE, FILE_TIME, FILE_SIZE, FILE_FILE_MANAGER_ID) VALUES (?, ?, ?, ?, ?)");
                     $stmt->bind_param('ssssi', $filename, $date, $time, $size, $fileID);
