@@ -1,13 +1,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-			<ul class="nav nav-sidebar">
-				<li><a href="index.html">Dashboard</a></li>
-				<li class="active"><a href="calender.html">Calender</a></li>
-				<li><a href="resources.html">Resources</a></li>
-				<li><a href="tasks.html">Tasks</a></li>
-			</ul>
-    </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Calender</h1>
-    </div>
+            <ul class="nav nav-sidebar">
+                <li <?php if($_SERVER['PHP_SELF']=="/index.php") print 'class="active"';?>><a href="index.php">Dashboard</a></li>
+                <li <?php if($_SERVER['PHP_SELF']=="/calendar.php") print 'class="active"';?>><a href="calendar.php">Calendar</a></li>
+                <li <?php if($_SERVER['PHP_SELF']=="/resources.php") print 'class="active"';?>><a href="resources.php">Resources</a></li>
+                <li <?php if($_SERVER['PHP_SELF']=="/tasks.php") print 'class="active"';?>><a href="tasks.php">Tasks</a></li>
+            </ul>
+        </div>

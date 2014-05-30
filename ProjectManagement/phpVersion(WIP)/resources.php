@@ -1,21 +1,51 @@
 <?php
-	require "includes/header.php";
-	require "includes/topNav.php";
-	require "includes/sidebar.php";
+require "includes/header.php";
+require "includes/topNav.php";
+require "includes/sidebar.php";
+require "functions/resourcesFunctions.php";
 
-	print <<<END 
-		<div style="display:table; margin:0 250px; float:none; width:40%" class="well">
+print '
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Resources</h1>
+        </div>
+		<div style="display:table; margin:0 350px; float:none; width:60%" class="well">
 		<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">
+			<b><p for="file" style="text-align: center">Upload Documents</p></b>
 			<table>
-				<tr>
-					<td style="width:70%">Files for team &lsaquo;team&rsaquo;</td>
-					<td style="width:25%"></td>
-					<td style="width:5%"></td>
-					<td style="width:10%;">
-						<button id="btnUpload" type="button" class="btn btn-default" >Upload</button>
-					</td>
+				<tr>';
+
+            //Select the team's file manager to identify with
+            $teamID = $_SESSION["team"];
+            $fileID = getTeamSubId($teamID,"FILE");
+
+            //Now we check to see if the team has uploaded too much file space.
+            $fileSize = getUsedStorageSpace($teamID);
+
+            $teamName = getTeamName($teamID);
+            print '<td style="width:50%">Files for team '.$teamName.'</td>';
+
+            $remainingSpace = getRemainingStorageSpace($fileSize);
+            print '<td style="width:50%">Remaining Space: '.$remainingSpace.'</td>';
+
+            //If the team has uploaded more than 2gb, hide the upload function
+            if($fileSize<2000000000)
+            {
+                print '<td style="width:50%;">
+                <!--<button id="btnUpload" type="button" class="btn btn-default">Upload</button>-->
+                <form action="AJAXapps/resources/upload_file.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                </td>
+                <td>
+                    <button type="submit" style="float: right;" class="btn btn-default" name="submit">Upload</button>
+                </form>
+                </td>';
+            }
+            else
+                print'<td>Your team\'s file cap has been reached or will be reached with this file. Please delete some files or upload a smaller file.';
+
+            print '
 				</tr>
 			</table>
 		</div>
@@ -27,22 +57,10 @@
 				<tr>
 					<td>File Name</td>
 					<td style="text-align:right">Added</td>
-					<td style="text-align:right">Modified</td>
 					<td style="text-align:right">Size</td>
 					<td style="text-align:right">Action</td>
-				</tr>
-				<tr>
-					<td>file1.txt</td>
-					<td style="text-align:right">Mar 13, 2014</td>
-					<td style="text-align:right">12:28pm</td>
-					<td style="text-align:right">121kb</td>
-					<td style="text-align:right">
-						<button id="btnDownload" type="button" class="btn btn-default" onclick="btnDownloadClick()">Download</button>
-					</td>
-				</tr>
-			</table>
+				</tr>';printFilesList($teamID);print '
+            </table>
 		</div>
-	  </div>
-	END;
-	require "includes/footer.php";
-?>
+	  </div>';
+require "includes/footer.php";

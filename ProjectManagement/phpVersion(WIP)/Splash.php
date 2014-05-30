@@ -1,7 +1,15 @@
-﻿<?php
+<?php
 
-	print <<<END 
-		<!DOCTYPE html>
+/*** begin our session ***/
+session_start();
+
+/*** set a form token ***/
+$form_token = md5( uniqid('auth', true) );
+
+/*** set the session form token ***/
+$_SESSION['form_token'] = $form_token;
+?>
+        <!DOCTYPE html>
 		<html lang="en">
 		  <head>
 			<meta charset="utf-8">
@@ -31,7 +39,21 @@
 		  </head>
 
 		  <body>
-
+			<div id="AlertPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+				<div class="well" style="width:100%; height:100%;">
+					<div class="panel panel-primary" style="height:100%;">
+						<div class="panel-heading">
+							<label id="AlertPopUpTitle"></label>
+						</div>
+						<div id="AlertPopUpBody" class="panel-body">
+		
+						</div>
+						<div class="btn-group">
+							<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+						</div>
+					</div>
+				</div>
+			</div>   
 			<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			  <div class="container-fluid">
 				<div class="navbar-header">
@@ -44,26 +66,30 @@
 				  <a class="navbar-brand" href="#">Team Source</a>
 				  
 				</div>
+
 				<div class="navbar-collapse collapse">
-					<form class="navbar-form navbar-right">
-						<input id="btnLogIn" type="button" value="Log-in">
+
+					<form action="team.php" class="navbar-form navbar-right">
+                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();window.location='team.php';" class="btn btn-default btn-sm" value="Log-in">
 					</form>
-					<form class="navbar-form navbar-right">
-						<input id="txtPasswordLog" type="text" class="form-control" placeholder="Password">
+					<form action="team.php" class="navbar-form navbar-right">
+						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13){ LogIn();}" type="password" class="form-control" placeholder="Password">
 					</form>
-					<form class="navbar-form navbar-right">
-					  <input id="txtUsernameLog" type="text" class="form-control" placeholder="Username">
-					</form>          	
+					<form action="team.php" class="navbar-form navbar-right">
+					  <input id="txtUsernameLog" tabindex="1" onkeydown="if (event.keyCode == 13){ LogIn();}" type="text" class="form-control" placeholder="Email">
+					</form><?php if(isset($_SESSION["logInError"])){ print'<form style="font-size:15px;padding-top:9px;color:#B00000;" action="team.php" class="navbar-form navbar-right">'.$_SESSION["logInError"].'</form>';unset($_SESSION["logInError"]);}?>
 				</div>
 			  </div>
-			</div>
-				
+			</div>	
 			<div class="LeftPanel">
 				<div class="container-fluid">
 					<div class="panel-body">
 						<h1 style="margin-left:30%">
 							Team Source
 						</h1>
+						<h4 align="center">
+							A free Project Management Tool
+						</h4>
 						<label class="PanelBody">
 							This project is created by Team H8er-aid for a Seattle Pacific University 
 							Software Engineering Project. Our Project Manager is Connor Takata, who is
@@ -76,65 +102,93 @@
 						</label>
 						<label class="PanelBody">
 							Team Source was created to fill the void of Seattle Pacific Universitys lack 
-							of a good option to manage student projects. Our Goal is to make A students way
-							of managing their projects with other students.  	
+							of a good option to manage student projects. Our Goal is to make a better way for students
+							to manage their projects with other students.  	
 						</label>
 					</div>
 				</div>
 			</div>
 			<!--<div class="LeftPanelColor"></div>-->
+			<form action="team.php" name="createuser" method="post">
 			<div class="RightPanel">
-				<div class="container-fluid">
-					<div class="panel-body">
-						<h1 style="margin-left:25%">
+				<div class="right-container">
+					
+						<h1 align="center">
 							Sign - up
 						</h1>
-						<h4 style="margin-left:10%">
-							Its a free Project Management Tool
+						<h4 align="center">
+							Create a Free Account Now!
 						</h4>
-						<table style="margin-left:25%">
-							<tr style="height:30px" ></tr>
-							<tr>
-								<td>	
-									<input type="text" style="width:100%" class=" form-control" id="txtUsernameSign" placeholder="Username">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
-							<tr>
-								<td>
-									<input type="password" class=" form-control" id="txtUserPassword" placeholder="Password">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
+						<table align="center">
+    					<tr style="height:30px" ></tr>
+    					<tr>
+                        	</tr>
+                            <tr class="rowSpaces"></tr>
+                        </table>
+                        <table align="center" width="70%">
+                            <tr>
+                                <td>
+                                    <input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="4" style="width:99%" class=" input" id="txtFirstName" name="txtFirstName" placeholder="First Name">
+                                </td>
+                                <td>
+                  					<input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="5" style="width:99%" class=" input" id="txtLastName" name="txtLastName" placeholder="Last Name">
+                                </td>
+                            </tr>
+                        </table>
+                    <input id="token" value="<?php print $form_token;?>" style="visibility: hidden;"/>
+                    <table align="center" width="70%">
+                            <tr class="rowSpaces"></tr> 
+    					    <tr>
+                                <td>
+                                    <input type="text" onkeydown="if (event.keyCode == 13){ CreateUser();}" tabindex="6" class=" input" id="txtEmail" name="txtEmail" placeholder="Email Address">
+                            	</td>
+                        	</tr>
+                            <tr class="rowSpaces">
+                                <?php if(isset($_SESSION["createUserError"])){ print'<form style="font-size:15px;padding-top:9px;color:#B00000;" action="team.php" class="navbar-form navbar-right">'.$_SESSION["createUserError"].'</form>';unset($_SESSION["createUserError"]);}?>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name="password" onkeydown="if (event.keyCode == 13){ CreateUser();}" type="password" tabindex="7" class="input" id="txtPassword" name="txtPassword" placeholder="Password">
+                                </td>
+                            </tr>
+                            <tr class="rowSpaces"></tr>
+                            <tr>
+                                <td>
+                                    <input name="password" onkeydown="if (event.keyCode == 13){ CreateUser();}" type="password" tabindex="8" class=" input" id="txtPasswordConfirm" name="txtPasswordConfirm" placeholder="Confirm Password">
+                                </td>
+                            </tr>
+                            <tr class="rowSpaces"></tr>
 
-							<tr>
-								<td>
-									<input type="password" class=" form-control" id="txtUserPasswordConfirm" placeholder="Password">
-								</td>
-							</tr>
-							<tr class="rowSpaces"></tr>
-							<tr>
-								<td >
-									<input style="margin-left:30%" type="button" value="Sign-Up">
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div>
+	    			<tr class="rowSpaces"></tr>
+	    			<tr>
+	    				<td align= "right" width="100%">
+	    					<a onclick="/*validatePasswords(getElementsByName('password'));*/ CreateUser();" href="#" class="a-btn">
+   						 		<span class="a-btn-text">Register now</span>
+    							<span class="a-btn-slide-text">It's Free</span>
+    							<span class="a-btn-icon-right"><span></span></span>
+							</a>
+	    				</td>
+	    			</tr>
+
+
+                    </table>
+                    <p align="center" id="loginError"></p>
+
+                </div>
 			</div>
-			<div class="BottomPanel">
+			</form>
+			<div class="BottomPanel" align="center">
 				This Project was created by Connor, Drew, Daniel, and Joe. All CS majors from Seattle Pacific University
-			</div>
 			<!--<div class="contentCurve"></div>-->
-				  
+	  </div>
 			<!-- Bootstrap core JavaScript
 			================================================== -->
 			<!-- Placed at the end of the document so the pages load faster -->
 			<script src="jquery.min.js"></script>
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
+			<script src="js/AJAX_lib.js"></script>
+			<script src="js/Validation.js"></script>
+			<script src="js/AlertPopUp.js"></script>
 		  </body>
 		</html>
-
-	END;
-?>
