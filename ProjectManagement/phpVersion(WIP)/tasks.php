@@ -2,6 +2,9 @@
 	require "includes/header.php";
 	require "includes/topNav.php";
 	require "includes/sidebar.php";
+    require "functions/tasksFunctions.php";
+
+
 
 	print '
 			<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
@@ -10,46 +13,15 @@
 				  <div class="panel-heading">
 					<input name="popItem" id="TaskTitle" type="text" class="form-control" placeholder="Task Title">			    
 				  </div>
-				  <div class="panel-body">
-			
-					Task Issued By: <Label><input type="hidden" name="popItem" id="IssuedBy" value="';
-                    //Select the team's task manager to identify with
+                    <div class="panel-body">';
                     $teamID = $_SESSION["team"];
-                    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-                    $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
-                    $result = mysqli_query($con,$sql);
-                    while($row = mysqli_fetch_array($result))
-                    {
-                        $taskManID = $row[0];
-                    }
-
-				    if (mysqli_connect_errno())
-			        {
-			            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-			        }    
-   					$Current_User_SQL = "SELECT USER_FIRSTNAME FROM user WHERE ID = '$id'";
-					$User = mysqli_query($con, $Current_User_SQL); 
-					while($row = mysqli_fetch_array($User))
-					{
-						echo $row['USER_FIRSTNAME'] . '"/>'. $row['USER_FIRSTNAME'];
-					}					
-					print '</label><br><br>
+                    $taskManID = getTeamSubId($teamID, "TASK");
+                    getTaskIssuer();
+					print '<br><br>
 					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
 
-                    //Assign task to someone on your team
-					$sql = "SELECT USER_FIRSTNAME
-                            FROM USER
-                            INNER JOIN TEAM_MEMBER_LIST
-                            ON USER.ID=TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID
-                            WHERE TEAM_MEMBER_LIST_TEAM_ID='$teamID'";
-					$result = mysqli_query($con, $sql);
-					
-					while($row = mysqli_fetch_array($result))
-					{
-						echo'<option>' . $row['USER_FIRSTNAME'] . '</option>'; 
-					}
-
+                    getTaskTeamMembers($teamID);
 					
 					print'</select><br><br>
 					Priority: <select name="popItem" id="Priority"><option>High</option><option>Medium</option><option>Low</option></select><br><br>
@@ -88,26 +60,7 @@
       <div id="mainContainer" style="display:table; margin-left: 23%; float:center; width:70%" class="well">
         <div id="TaskList" class="list-group">';
         
-   				$sql = "SELECT * FROM task
-   				        where TASK_IS_FINISHED = 0
-   				        and TASK_TASK_MANAGER_ID = '$taskManID'
-   				        ORDER BY TASK_DUE_DATE ASC;";
-				$result = mysqli_query($con, $sql);
-
-		    	while($row = mysqli_fetch_array($result))
-				{
-						echo "<a href='#' class='list-group-item' ondblclick='EditPopup(" .  $row['ID'] . ")'>";
-			       		echo	"<h4 class='list-group-item-heading'>"; 
-					    echo	"<table width='100%'>";
-					    echo		"<td name='TaskTitle' style='width:200px;' size='15';><input type='checkbox'> " . $row['TASK_TITLE'] . "</td>";
-					    echo	    "<td style='width:200px;text-align:right'> Due: " . $row['TASK_DUE_DATE'] ."</td>";
-					    echo		"<td style='width:200px; text-align:center'> To: " . $row['TASK_ASSIGNED_TO'] . "</td>";
-					    echo		"<td style='width:150px; text-align:right'> Priority: " . $row['TASK_PRIORITY'] . "</td>";
-					    echo	"</table>";
-					    echo	"</h4>";
-					    echo "</a>";	
-				}
-			mysqli_close($con); 
+   				getTasks(getTeamSubId($teamID,"TASK"));
 				
 		print	' 	
 			</div>
