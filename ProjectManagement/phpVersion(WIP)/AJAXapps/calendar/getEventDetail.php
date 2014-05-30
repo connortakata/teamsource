@@ -2,16 +2,12 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn()&&isInTeam())
 {
-    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-
-    if (mysqli_connect_errno())
-    {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }
     $ID=$_POST["id"];//Retrieve the event from the DB using its ID
-    $sql = "SELECT * FROM EVENT WHERE ID='$ID';";
-    $result = mysqli_query($con, $sql);
-    while($row = mysqli_fetch_array($result))
+    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
+    $stmt= $mysqli->prepare("SELECT * FROM EVENT WHERE ID='$ID';");
+    $stmt->execute();
+    $res = $stmt->get_result();
+    while($row = mysqli_fetch_array($res))
     {//Printing out the form for event editing
         echo '
         <div class="well" style="width:100%; height:auto;">
@@ -40,6 +36,7 @@ if(isLoggedIn()&&isInTeam())
             </div>
        ';
     }
+    $mysqli->close();
 }
 else
     header("Location:../../index.php");

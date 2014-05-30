@@ -1,30 +1,25 @@
 <?php
 require "../../includes/userAuth.php";
-
+require "../../functions/mysqlFunctions.php";
 if(isLoggedIn()&&isInTeam())
 {
     //Select the team's calendar to identify with
     $teamID = $_SESSION["team"];
-    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-    $sql = "SELECT ID FROM CALENDAR WHERE CALENDAR_TEAM_ID='$teamID'";
-    $result = mysqli_query($con,$sql);
-    while($row = mysqli_fetch_array($result))
-    {
-        $calID = $row[0];
-    }
-    mysql_close();
+    $calID = getTeamSubId($teamID,"EVENT");
 
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     if(isset($_POST["id"])&&$_POST["id"]==true)//Are we updating a current event or adding a new one?
     {
         $stmt= $mysqli->prepare("UPDATE EVENT SET EVENT_TITLE=?, EVENT_DATETIME=?, EVENT_DESCRIPTION=? WHERE ID=?");
         $stmt->bind_param('sssi', $title, $date, $description, $id);
-        $id=$_POST["id"];//In this case, we are updating a current event
+        $id=$_POST["id"];
+        //In this case, we are updating a current event
     }
     else
     {
         $stmt= $mysqli->prepare("INSERT INTO EVENT (EVENT_CALENDAR_ID, EVENT_TITLE, EVENT_DATETIME, EVENT_DESCRIPTION) VALUES (?,?,?,?);");
-        $stmt->bind_param('isss', $calID, $title, $date, $description);//In this case, we are adding a brand new event
+        $stmt->bind_param('isss', $calID, $title, $date, $description);
+        //In this case, we are adding a brand new event
     }
     $title=$_POST["title"];
     $date=$_POST["date"];

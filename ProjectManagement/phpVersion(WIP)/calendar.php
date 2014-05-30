@@ -4,8 +4,7 @@ require "includes/topNav.php";
 require "includes/sidebar.php";
 require "functions/calendarFunctions.php";
 
-print '
-        <div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
+print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Calendar</h1>
