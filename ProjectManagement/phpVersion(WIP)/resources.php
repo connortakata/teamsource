@@ -82,9 +82,10 @@ while($row = mysqli_fetch_array($result)){
     print '<td>' . $row['FILE_NAME'] . '</td>';
     print '<td style="text-align:right">' . $row['FILE_DATE'] . '</td>';
     print '<td style="text-align:right">' . $row['FILE_SIZE'] . '</td>';
-    print '<td style="text-align:right">
-						<a id="btnDownload" href="AJAXapps/resources/download.php?fileName='.$row["FILE_NAME"].'" class="btn btn-primary btn-sm active" role="button" >Download</button>
-					</td>';
+    print ' <td style="text-align:right">
+		    <a id="btnDownload" href="AJAXapps/resources/download.php?fileName='.$row["FILE_NAME"].'" class="btn btn-primary btn-sm active" target="_blank" >Download</a>
+		    <a id="btnDelete" href="AJAXapps/resources/deleteFile.php?fileName='.$row["FILE_NAME"].'&id='.$row["ID"].'" target="_blank" ><span class="glyphicon glyphicon-trash"></span></a>
+		    </td>';
     print '</tr>';
 }
 print '</table>
