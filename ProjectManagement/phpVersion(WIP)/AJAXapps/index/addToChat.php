@@ -1,6 +1,6 @@
 ﻿<?php
 require "../../includes/userAuth.php";
-
+require "../../functions/mysqlFunctions.php";
 if(isLoggedIn()&&isInTeam())
 {
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
@@ -13,13 +13,7 @@ if(isLoggedIn()&&isInTeam())
         }
         //Select the team's message board to identify with
         $teamID = $_SESSION["team"];
-        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-        $sql = "SELECT ID FROM MESSAGEBOARD WHERE MESSAGE_BOARD_TEAM_ID='$teamID'";
-        $result = mysqli_query($con,$sql);
-        while($row = mysqli_fetch_array($result))
-        {
-            $boardID = $row[0];
-        }
+        $boardID=getTeamSubId($teamID,"MESSAGE");
 
 	    $user = $_SESSION['id'];
 	    $message = $_REQUEST['message'];
