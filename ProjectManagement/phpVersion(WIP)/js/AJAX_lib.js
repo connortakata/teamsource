@@ -438,8 +438,8 @@ function AddEvent(edit){
     }
 }
 
-function EditEvent(id){
-
+function EditEvent(id)
+{
     var xmlhttp;
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -462,13 +462,36 @@ function EditEvent(id){
     xmlhttp.send("id=" + id);
 }
 
+function DeleteEvent()
+{
+    var id = document.getElementById("CalendarEditId").value;
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+            var test = document.getElementById("SelectedPopup");
+            test.innerHTML=xmlhttp.responseText;
+            DisplaySelectedPopup();
+        }
+    }
+    xmlhttp.open("POST","../AJAXapps/calendar/deleteEvent.php",false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("id=" + id);
+    location.reload();
+}
+
 function SwitchDisplayedTasks(object)
 {
 	 RefreshTasks(object.value);	
 }
-
-
-
 
 function AddTeam()
 {

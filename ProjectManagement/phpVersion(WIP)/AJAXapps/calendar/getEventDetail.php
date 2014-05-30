@@ -28,7 +28,7 @@ if(isLoggedIn()&&isInTeam())
                         </div>
                         <div class="btn-group">
                             <button id="btnSelEdit" type="button" class="btn btn-default" onclick="EditSelectedPopup();"><span class="glyphicon glyphicon-wrench"></span> Edit</button>
-                            <button id="btnSelDelete" type="button" class="btn btn-default" onclick="HideSelectedPopup();"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                            <button id="btnSelDelete" type="button" class="btn btn-default" onclick="DeleteEvent();HideSelectedPopup();"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                             <button id="btnSelClose" type="button" class="btn btn-default" onclick="HideSelectedPopup();"> Close</button>
                         </div>
                     </div>
