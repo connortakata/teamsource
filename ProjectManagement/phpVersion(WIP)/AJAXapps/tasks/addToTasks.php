@@ -1,16 +1,11 @@
 <?php
 require "../../includes/userAuth.php";
+require "../../functions/mysqlFunctions.php";
 if(isLoggedIn()&&isInTeam())
 {
     //Select the team's task manager to identify with
     $teamID = $_SESSION["team"];
-    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-    $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
-    $result = mysqli_query($con,$sql);
-    while($row = mysqli_fetch_array($result))
-    {
-        $taskManID = $row[0];
-    }
+    $taskManID = getTeamSubId($teamID,"TASK");
 
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
 
@@ -25,8 +20,6 @@ if(isLoggedIn()&&isInTeam())
     $by = $_REQUEST['byWhom'];
     $finished = $_REQUEST['finished'];
     $stmt->execute();
-    //$stmt->close();
-    //mysqli_query($con, "INSERT INTO task (TASK_TITLE, TASK_DESCRIPTION, TASK_DUE_DATE, TASK_PRIORITY, TASK_ASSIGNED_TO, TASK_ISSUED_BY, TASK_IS_FINISHED) VALUES ('$title', '$description', '$dueDate', '$priority', '$to', '$by', $finished);");
 
     $mysqli->close();
 	}

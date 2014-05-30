@@ -1,30 +1,22 @@
 ﻿<?php
-
 require "../../includes/userAuth.php";
+require "../../functions/mysqlFunctions.php";
 if(isLoggedIn()&&isInTeam())
 {
     //Select the team's task manager to identify with
     $teamID = $_SESSION["team"];
-    $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
-    $sql = "SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID='$teamID'";
-    $result = mysqli_query($con,$sql);
-    while($row = mysqli_fetch_array($result))
-    {
-        $taskManID = $row[0];
-    }
+    $taskManID = getTeamSubId($teamID,"TASK");
 
-    if (mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        }    
-    $finished = $_REQUEST['finished'];    
-	$sql = "SELECT * FROM task
+    $finished = $_REQUEST['finished'];
+    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
+    $stmt= $mysqli->prepare("SELECT * FROM task
 	 WHERE TASK_IS_FINISHED = '$finished'
 	 AND TASK_TASK_MANAGER_ID = '$taskManID'
-	 ORDER BY TASK_DUE_DATE ASC;";
-	$result = mysqli_query($con, $sql);
+	 ORDER BY TASK_DUE_DATE ASC;");
+    $stmt->execute();
+    $res = $stmt->get_result();
 		
-	while($row = mysqli_fetch_array($result))
+	while($row = mysqli_fetch_array($res))
 	{
 			echo "<a href='#' class='list-group-item'>";
        		echo	"<h4 class='list-group-item-heading'>"; 
@@ -37,7 +29,7 @@ if(isLoggedIn()&&isInTeam())
 		    echo	"</h4>";
 		    echo "</a>";	
 	}
-	mysqli_close($con);
+	$mysqli->close();
 }
 else
     header("Location:../../index.php");

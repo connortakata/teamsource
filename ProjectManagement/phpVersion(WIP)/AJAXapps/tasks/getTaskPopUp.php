@@ -2,19 +2,13 @@
 require "../../includes/userAuth.php";
 if(isLoggedIn()&&isInTeam())
 {
-	$con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
+    $id = $_REQUEST['id'];
+    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
+    $stmt= $mysqli->prepare("SELECT * FROM task WHERE id ='$id';");
+    $stmt->execute();
+    $res = $stmt->get_result();
 
-    if (mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        }
-	$id = $_REQUEST['id'];
-	mysqli_select_db($con, "teamsource");
-	$sql = "SELECT * FROM task WHERE id =" . $id . ";";
-	
-	$result = mysqli_query($con, $sql);
-		
-	while($row = mysqli_fetch_array($result))
+	while($row = mysqli_fetch_array($res))
 	{
 		echo '<div class="well" style="width:100%; height:auto;">';
 		echo '	<div class="panel panel-primary" style="height:auto">';
@@ -46,6 +40,7 @@ if(isLoggedIn()&&isInTeam())
 		echo '	</div>';
 		echo '</div>';
 	}
+    $mysqli->close();
 }
 else
     header("Location:../../index.php");

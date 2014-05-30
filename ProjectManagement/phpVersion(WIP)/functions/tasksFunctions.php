@@ -36,9 +36,9 @@ function getTaskTeamMembers($teamID)
     $mysqli->close();
 }
 
-
-function getTasks($taskManID)
+function getTasks($teamID)
 {
+    $taskManID = getTeamSubId($teamID,"TASK");
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     $stmt= $mysqli->prepare("SELECT * FROM task
    				        where TASK_IS_FINISHED = 0

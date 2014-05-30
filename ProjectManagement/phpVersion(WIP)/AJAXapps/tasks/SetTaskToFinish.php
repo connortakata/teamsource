@@ -1,5 +1,4 @@
 <?php
-
 require "../../includes/userAuth.php";
 if(isLoggedIn()&&isInTeam())
 {
@@ -15,7 +14,6 @@ if(isLoggedIn()&&isInTeam())
 
     $fid = $_REQUEST['id'];
     $fin = $_REQUEST['Finished'];
-    //mysqli_query($con, "UPDATE task SET TASK_IS_FINISHED = $finished WHERE ID = $id;");
     $stmt->execute();
     $mysqli->close();
 }
