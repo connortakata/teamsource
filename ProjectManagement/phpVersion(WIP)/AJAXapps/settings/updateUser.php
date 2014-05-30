@@ -13,20 +13,27 @@ if(isLoggedIn()&&isInTeam())
         	$stmt = $mysqli->prepare("UPDATE user SET USER_FIRSTNAME = ?, USER_LASTNAME = ? WHERE ID = ?");
 			$stmt->bind_param("ssi", $firstname, $lastname, $id);
         }
-        if(isset($_POST["oldPass"]) && isset($_POST["newPass"]))
+        if(isset($_POST["curPass"]) && isset($_POST["newPass"]))
         {
-            $oldPass = $_POST["oldPass"];
-            $oldPass = crypt($oldPass, 'PASSWORD_DEFAULT');
+            $curPass = $_POST["curPass"];
+            $curPass = crypt($curPass, 'PASSWORD_DEFAULT');
             
             $newPass = $_POST["newPass"];
-            $existingPass = mysqli_query($con, "SELECT USER_PASSWORD FROM user WHERE ID = '$id';");
+            $user = mysqli_query($mysqli, "SELECT USER_PASSWORD FROM user WHERE ID = '$id';");
+            $userpass = mysqli_fetch_array($user);
 
-            if($oldPass == $existingPass)
+            if($curPass == $userpass["USER_PASSWORD"])
             {
-                $stmt = $mysqli->prepare("UPDATE user SET USER_PASSWORD WHERE ID = ?");
+                $newPass = crypt($newPass, 'PASSWORD_DEFAULT');
+                $stmt = $mysqli->prepare("UPDATE user SET USER_PASSWORD = ? WHERE ID = ?");
                 $stmt->bind_param("si", $newPass, $id);
             }
-        	
+        }
+        if(isset($_POST["email"]))
+        {
+            $email = $_POST["email"];
+            $stmt = $mysqli->prepare("UPDATE user SET USER_EMAIL = ? WHERE ID = ?");
+            $stmt->bind_param("si", $email, $id);
         }
 		
 

@@ -99,7 +99,7 @@ function updatePassword() {
     var newPass = document.getElementById("txt-new-pass").value;
     var confirm = document.getElementById("txt-pass-confirm").value;
     
-    if(password != confirm)
+    if(newPass != confirm)
     {
         DisplayAlertPopUp("Error", "Passwords do not match, try again.");
         document.getElementById("txt-new-pass").value = "";
@@ -128,9 +128,51 @@ function updatePassword() {
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("oldPass=" + pass + "&newPass=" + newPass);
+    xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
     document.getElementById("txt-new-pass").value = "";
     document.getElementById("txt-pass-confirm").value = "";   
+}
+
+function updateEmail() {
+    var xmlhttp;
+    var newEmail = document.getElementById("txt-new-email").value;
+    var confirmEmail = document.getElementById("txt-email-confirm").value;
+    
+
+    if(newEmail != confirmEmail)
+    {
+        DisplayAlertPopUp("Error", "Emails do not match, try again.");
+        document.getElementById("txt-new-email").value = "";
+        document.getElementById("txt-email-confirm").value = ""; 
+        return;
+    }
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var str = xmlhttp.responseText;
+            if(str != "")
+            {
+                DisplayAlertPopUp("Error", str);
+            }
+        }
+      }
+    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("email=" + newEmail);
+    document.getElementById("txt-new-email").value = "";
+    document.getElementById("txt-email-confirm").value = "";
+    location.reload();
+
 }
 
 function EditPopup(task){

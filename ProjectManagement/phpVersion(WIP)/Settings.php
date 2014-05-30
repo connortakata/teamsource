@@ -69,13 +69,13 @@
   						</li>
   						<li class="list-group-item" id="div-edit-email" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>New Email: <input type="text"></input></div>
+  								<div>New Email: <input id="txt-new-email" type="text"></input></div>
   								<p></p>
-  								<div>Confirm Email: <input type="text" ></input></div>
+  								<div>Confirm Email: <input id="txt-email-confirm" type="text" ></input></div>
   								<p></p>
   							</div>
   							<div>
-  								<button id="change-email" type="button" class="btn btn-primary btn-xs">Submit</button>
+  								<button id="change-email" type="button" class="btn btn-primary btn-xs" onclick="updateEmail()">Submit</button>
   								<button id="cancel-email-change" type="button" class="btn btn-default btn-xs">Cancel</button>
   							</div>
   						</li>
