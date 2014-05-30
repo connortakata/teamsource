@@ -88,6 +88,7 @@ while($row = mysqli_fetch_array($result)){
     print '<td style="text-align:right">
 						<button id="btnDownload" type="button" class="btn btn-default" onclick="DownloadFile('.$teamID.',\''.$row['FILE_NAME'].'\')" >Download</button>
 					</td>';
+    print '<a href="AJAXapps/resources/download.php?teamID='.$teamID.'&fileName='.$row["FILE_NAME"].'" target="_blank">Download!</a>';
     print '</tr>';
 }
 print '</table>
