@@ -102,7 +102,7 @@ function isInTeam()
     }
 }
 
-function isManager()
+function isManager($id = null)
 {
     if(!isset($_SESSION['id']))
     {
@@ -116,7 +116,10 @@ function isManager()
     }
     else
     {
-        $userID=$_SESSION["id"];
+        if($id==null)//Can check if any user is the manager of the currently selected team
+            $userID=$_SESSION["id"];
+        else
+            $userID = $id;
         $teamID=$_SESSION["team"];
         $con =  mysqli_connect("localhost", "root", "TeamSource1!","teamsource");
         $sql="

@@ -87,6 +87,7 @@ if(isLoggedIn())
             $stmt->execute();
 
             //All done!
+            $_SESSION["successTeamAdded"] = true;
             $mysqli->close();
             //Load the current team for the user
             $_SESSION["team"]=$teamID;
@@ -96,10 +97,12 @@ if(isLoggedIn())
             if( $e->getCode() == 23000)
             {
                 $message = 'Team Name already exists';
+                $_SESSION["errorTeamExists"] = true;
             }
             else
             {
                 $message = 'We are unable to process your request. Please try again later"';
+                $_SESSION["errorTeamGeneral"] = true;
             }
             print $message;
         }

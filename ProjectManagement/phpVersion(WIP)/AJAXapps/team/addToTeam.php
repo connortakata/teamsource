@@ -56,20 +56,34 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                 //execute the prepared statement
                 $stmt->execute();
                 //All done!
+<<<<<<< HEAD
                 $con->close();
+=======
+                $_SESSION["successUserAdded"] = true;
+                $mysqli->close();
+>>>>>>> feb0fe46facd7938931622955952068b8c846240
             }
             catch(Exception $e)
             {
                 $_SESSION["error"]=$e->getCode();
                 if( $e->getCode() == 23000)
                 {
+<<<<<<< HEAD
                     $message = 'The User already exists on your team.';
+=======
+                    $message = 'Team Name already exists';
+                    $_SESSION["errorUserInTeam"] = true;
+>>>>>>> feb0fe46facd7938931622955952068b8c846240
                 }
                 else
                 {
                     $message = 'We are unable to process your request. Please try again later"';
                 }
             }
+        }
+        else
+        {
+            $_SESSION["errorNoUserFound"] = true;
         }
     }
     print @$message;
