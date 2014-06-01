@@ -28,7 +28,7 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
                         </div>
                     </div>
                     <div class="btn-group">
-                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" onclick="AddEvent();HidePopUp(\'CalendarPopUp\', \'CalendarItem\');location.reload();" />
+                        <input type="button" id="CalAdd" value="Add" style="margin-left:233px; width:50px" onclick="AddEvent(false);HidePopUp(\'CalendarPopUp\', \'CalendarItem\');location.reload();" />
                         <input type="button" value="Cancel" style="margin-left:10px;" onclick="HidePopUp(\'CalendarPopUp\', \'CalendarItem\');" />
                     </div>
                 </div>
@@ -56,13 +56,17 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
 				container.hide();
 			}
         });
-        
+
     $("#CalAdd").click(function () {
             var controls = document.getElementsByName("CalendarItem");
             validatePopUp(controls, "Calendar");
         });
-    function DisplayPopUp(PopId) {
+    function DisplayPopUp(PopId, date) {
+    if(date!=null){
+        document.getElementById("CalendarDate").value = date;
+        }
     $("#" + PopId).show()
+
     }
     function HidePopUp(PopId, ItemsInPopId) {
         var aPopUp = document.getElementById(PopId);

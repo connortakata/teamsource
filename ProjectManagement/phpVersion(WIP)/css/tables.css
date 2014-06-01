@@ -11,26 +11,44 @@ table.calender
 }
 
 tr.dayDetail
-{
-	border: 1px solid #428bca;
-	height: 100px;
-}
+ {
+     /*border: 1px solid #428bca;*/
+     height: 100px;
+ }
 
 tr.day
 {
-	border: 1px solid #428bca;
+	/*border: 1px solid #428bca;*/
 	height: 100px;
 }
 
 tr.date
 {
 	border-collapse:collapse;
+    border-top: 1px solid #428bca;
+}
+
+td.daysDetail{
+    border-right: 1px solid #428bca;
+    overflow: hidden;
+}
+
+a.showMe{
+    display:none;
 }
 
 td.days
 {
-	border: 1px solid #428bca;
+    border-right: 1px solid #428bca;
     overflow: hidden;
+}
+
+td.days:hover > a.showMe{
+    display:block;
+}
+
+div.scrollable:hover + a.showMe{
+    display:block;
 }
 
 div.scrollable {
