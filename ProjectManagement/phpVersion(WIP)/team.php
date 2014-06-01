@@ -7,8 +7,8 @@ require "functions/teamFunctions.php";
 print'
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Manage Teams</h1>
-    <div align="left" style="display:table; width:1000px; height: 500px; margin-right: 25px;" class="well">
-        <div class="panel panel-primary" style="width: 1000px;">';
+    <div align="left" style="display:table; height: 500px; margin-right: 25px;" class="well">
+        <div class="panel panel-primary" style="width: 100%;">';
 
 $teamCount = countTeams();
 

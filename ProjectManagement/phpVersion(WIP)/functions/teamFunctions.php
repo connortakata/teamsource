@@ -15,8 +15,8 @@ function countTeams()
 function printTeamSelector()
 {
     print'      <div class="panel-heading">Welcome Back!</div>
-                    <div class="panel-body" style="height: 400px;">
-                    <div class="col-lg-6" style="padding-left: 0;"></br>
+                    <div class="panel-body" style="height: 100%;">
+                    <div class="col-lg-6" style="padding-left: 0;width: 400px"></br>
                         Please select a team to use or create a new team.</br></br>Team(s):</br>
                         <ul class="nav nav-pills nav-stacked">';
     $id = $_SESSION["id"];
@@ -45,10 +45,10 @@ function printTeamSelector()
 
 function printUsersInTeam()
 {
-    print'<div class="col-lg-6" style="padding-left: 0;width: 950px"></br>
-                <div class="well" style="height: 330px;">
+    print'<div class="col-lg-6" style="padding-left: 0;width: 800px"></br>
+                <div class="well" style="height: 330px; width:50%;overflow-y: scroll;">
                         Team members for current team:</br>
-                        <div class="list-group" style="width: 430px">';
+                        <div class="list-group" style="width: 350px">';
     if(isset($_SESSION["team"]))
     {
     $id = $_SESSION["team"];
@@ -65,7 +65,7 @@ function printUsersInTeam()
     while($row = mysqli_fetch_array($res))
     {
         if(($row["ID"]==$_SESSION["id"]))
-            print '<a class="list-group-item active"';
+            print '<a class="list-group-item list-group-item-info"';
         else
             print '<a class="list-group-item" ';
         if(isManager())
@@ -73,6 +73,8 @@ function printUsersInTeam()
         else
             print ' >';
         print $row["USER_FIRSTNAME"].' '.$row["USER_LASTNAME"];
+        if(isManager($row["ID"]))
+            print ' - Manager';
         print '</a>';
     }
         $mysqli->close();
