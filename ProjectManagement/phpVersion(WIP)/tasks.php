@@ -7,7 +7,7 @@
 
 
 	print '
-			<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
+			<div id="pop-up" class="PopupShadow" style="display:none; position:fixed; top:150px; left:auto; right:auto; width:600px; height:auto;">
 			<div class="well" style="width:100%; height:auto;">
 				<div class="panel panel-primary" style="height:auto">
 				  <div class="panel-heading">

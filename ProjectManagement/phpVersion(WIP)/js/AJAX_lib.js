@@ -497,6 +497,10 @@ function AddTeam()
 {
     var xmlhttp;
     var teamName = document.getElementById("CreateTeamName").value;
+    if(teamName == "")
+    {
+    	DisplayAlertPopUp("Error", "Team Name is empty");
+    }
 
     if (teamName!=''){
         if(window.XMLHttpRequest){
@@ -509,7 +513,11 @@ function AddTeam()
 
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
+				var str = xmlhttp.responseText;
+	            if(str != "")
+	            {
+	                DisplayAlertPopUp("Error", str);
+	            }	
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
@@ -546,6 +554,10 @@ function AddUserToTeam()
 {
     var xmlhttp;
     var email = document.getElementById("AddUserToTeam").value;
+    if (email == "")
+    {
+    	DisplayAlertPopUp("Error", "Email textbox is empty.");
+    }
 
     if (email!=''){
         if(window.XMLHttpRequest){
@@ -556,7 +568,11 @@ function AddUserToTeam()
         }
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
+				var str = xmlhttp.responseText;
+	            if(str != "")
+	            {
+	                DisplayAlertPopUp("Error", str);
+	            }	
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);

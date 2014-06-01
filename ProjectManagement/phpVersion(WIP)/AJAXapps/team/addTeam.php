@@ -101,6 +101,7 @@ if(isLoggedIn())
             {
                 $message = 'We are unable to process your request. Please try again later"';
             }
+            print $message;
         }
     }
 }

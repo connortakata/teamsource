@@ -56,14 +56,14 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                 //execute the prepared statement
                 $stmt->execute();
                 //All done!
-                $mysqli->close();
+                $con->close();
             }
             catch(Exception $e)
             {
                 $_SESSION["error"]=$e->getCode();
                 if( $e->getCode() == 23000)
                 {
-                    $message = 'Team Name already exists';
+                    $message = 'The User already exists on your team.';
                 }
                 else
                 {
@@ -72,4 +72,5 @@ if(isLoggedIn()&&isManager()&&isInTeam())
             }
         }
     }
+    print @$message;
 }
