@@ -9,7 +9,9 @@ function countTeams()
     {
         $teamCount = $row[0];
     }
-    return $teamCount;
+    if(isset($teamCount))
+        return $teamCount;
+    else return 0;
 }
 
 function printTeamSelector()
@@ -100,8 +102,6 @@ function printUsersInTeam()
                 print '<p>Success! The user has been added to your team.</p>';
                 unset($_SESSION["successUserAdded"]);
             }
-            else
-                print '</br>';
         }
     }
     print '</div>';
