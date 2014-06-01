@@ -48,6 +48,15 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
     print '
     <script src="js/AJAX_lib.js"></script>
     <script>
+    $(document).mouseup(function (e){
+        	var container = $(\'.PopupShadow\');
+        	if(!container.is(e.target)
+        		&& container.has(e.target).length === 0)
+			{
+				container.hide();
+			}
+        });
+        
     $("#CalAdd").click(function () {
             var controls = document.getElementsByName("CalendarItem");
             validatePopUp(controls, "Calendar");
