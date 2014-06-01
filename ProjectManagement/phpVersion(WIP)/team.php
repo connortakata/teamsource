@@ -54,7 +54,23 @@ print'
                                 <button id="CreateTeamButton" class="btn btn-default" type="button" onclick="AddTeam()">Create Team</button>
                             </span>
                             <input id="CreateTeamName" type="text" placeholder="Team Name" class="form-control" onkeydown="if (event.keyCode == 13) document.getElementById(\'CreateTeamButton\').click()">
-                        </div><!-- /input-group -->
+                        </div><!-- /input-group -->';
+if(isset($_SESSION["successTeamAdded"])&&$_SESSION["successTeamAdded"])
+{
+    print '<p>Success! The team has been created.</p>';
+    unset($_SESSION["successTeamAdded"]);
+}
+else if(isset($_SESSION["errorTeamExists"])&&$_SESSION["errorTeamExists"])
+{
+    print '<p>Error: a team by this name already exists.</p>';
+    unset($_SESSION["errorTeamExists"]);
+}
+else if(isset($_SESSION["errorTeamGeneral"])&&$_SESSION["errorTeamGeneral"])
+{
+    print '<p>Error: an unknown error occurred.</p>';
+    unset($_SESSION["errorTeamGeneral"]);
+}
+print'
                     </div><!-- /.col-lg-6 -->
                 </div><!--/panel-body-->
             </div><!--/panel-->
