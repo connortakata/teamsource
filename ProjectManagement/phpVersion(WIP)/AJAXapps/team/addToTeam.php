@@ -56,6 +56,7 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                 //execute the prepared statement
                 $stmt->execute();
                 //All done!
+                $_SESSION["successUserAdded"] = true;
                 $mysqli->close();
             }
             catch(Exception $e)
@@ -70,6 +71,10 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                     $message = 'We are unable to process your request. Please try again later"';
                 }
             }
+        }
+        else
+        {
+            $_SESSION["errorNoUserFound"] = true;
         }
     }
 }
