@@ -68,6 +68,7 @@ if(isLoggedIn()&&isInTeam())
             // execute the prepared statement
             $stmt->execute();
             //All done!
+            unset($_SESSION["team"]);
             $mysqli->close();
         }
         catch(Exception $e)
