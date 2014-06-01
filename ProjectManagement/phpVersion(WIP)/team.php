@@ -7,8 +7,8 @@ require "functions/teamFunctions.php";
 print'
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Manage Teams</h1>
-    <div align="left" style="display:table; width:95%; height: 500px; margin-right: 25px;" class="well">
-        <div class="panel panel-primary">';
+    <div align="left" style="display:table; width:1000px; height: 500px; margin-right: 25px;" class="well">
+        <div class="panel panel-primary" style="width: 1000px;">';
 
 $teamCount = countTeams();
 
@@ -17,14 +17,17 @@ if(!isset($teamCount)||$teamCount<1)
     //If user belongs to no teams or something weird happened
     print'      <div class="panel-heading">It seems you are not part of a team yet.</div>
                     <div class="panel-body" style="height: 400px;">
+                    <div class="col-lg-6" style="padding-left: 0;"></br>
                         To use the site, either create a team to become the manager of or ask another manager to add you to their team.</br></br>';
 }
+
 else if($teamCount>0)
 {
     //If user belongs to team(s)
+
     printTeamSelector();
 }
-print                 '<div class="col-lg-6" style="padding-left: 0;"></br>';
+
 if(isManager())
 {//If the user is a manager they may add users to the team
     print '
@@ -72,6 +75,12 @@ else if(isset($_SESSION["errorTeamGeneral"])&&$_SESSION["errorTeamGeneral"])
 }
 print'
                     </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-6" style="height:100%">
+                    ';
+printUsersInTeam();
+print '
+                    </br>
+                    </div>
                 </div><!--/panel-body-->
             </div><!--/panel-->
         </div><!--/well-->

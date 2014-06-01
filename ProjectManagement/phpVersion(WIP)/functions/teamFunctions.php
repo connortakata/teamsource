@@ -16,8 +16,9 @@ function printTeamSelector()
 {
     print'      <div class="panel-heading">Welcome Back!</div>
                     <div class="panel-body" style="height: 400px;">
+                    <div class="col-lg-6" style="padding-left: 0;"></br>
                         Please select a team to use or create a new team.</br></br>Team(s):</br>
-                        <ul class="nav nav-pills nav-stacked" style="width: 50%">';
+                        <ul class="nav nav-pills nav-stacked">';
     $id = $_SESSION["id"];
     $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
     $stmt= $mysqli->prepare("SELECT TEAM_NAME, ID
@@ -38,6 +39,44 @@ function printTeamSelector()
         print $row["TEAM_NAME"];
         print '</a></li>';
     }
-    print '</ul>';
+    print '</ul></br>';
     $mysqli->close();
+}
+
+function printUsersInTeam()
+{
+    print'<div class="col-lg-6" style="padding-left: 0;width: 950px"></br>
+                <div class="well" style="height: 330px;">
+                        Team members for current team:</br>
+                        <div class="list-group" style="width: 430px">';
+    if(isset($_SESSION["team"]))
+    {
+    $id = $_SESSION["team"];
+    $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
+    $stmt= $mysqli->prepare("SELECT USER_FIRSTNAME, USER_LASTNAME, ID
+                            FROM USER
+                            INNER JOIN TEAM_MEMBER_LIST
+                            ON USER.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID
+                            WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID ='$id'
+                            ORDER BY USER_LASTNAME ASC ");
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    while($row = mysqli_fetch_array($res))
+    {
+        if(($row["ID"]==$_SESSION["id"]))
+            print '<a class="list-group-item active"';
+        else
+            print '<a class="list-group-item" ';
+        if(isManager())
+            print ' href="#" onclick="RemoveFromTeam('.$row["ID"].');">';
+        else
+            print ' >';
+        print $row["USER_FIRSTNAME"].' '.$row["USER_LASTNAME"];
+        print '</a>';
+    }
+        $mysqli->close();
+    }
+    print '</div>';
+
 }
