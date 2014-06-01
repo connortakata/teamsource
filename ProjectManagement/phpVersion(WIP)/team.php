@@ -28,28 +28,7 @@ else if($teamCount>0)
     printTeamSelector();
 }
 
-if(isManager())
-{//If the user is a manager they may add users to the team
-    print '
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <button id="AddUserToTeamButton" class="btn btn-default" type="button" onclick="AddUserToTeam();" style="padding-right: 26px;">Add a user</button>
-                                </span>
-                                <input id="AddUserToTeam" type="text" placeholder="User email" onkeydown="if (event.keyCode == 13) document.getElementById(\'AddUserToTeamButton\').click()" class="form-control">
-                            </div><!-- /input-group -->';
-    if(isset($_SESSION["errorNoUserFound"])&&$_SESSION["errorNoUserFound"])
-    {
-        print '<p>Error: No user found with that email address.</p>';
-        unset($_SESSION["errorNoUserFound"]);
-    }
-    else if(isset($_SESSION["successUserAdded"])&&$_SESSION["successUserAdded"])
-    {
-        print '<p>Success! The user has been added to your team.</p>';
-        unset($_SESSION["successUserAdded"]);
-    }
-    else
-        print '</br>';
-}
+
 
 print'
                             <div class="input-group">

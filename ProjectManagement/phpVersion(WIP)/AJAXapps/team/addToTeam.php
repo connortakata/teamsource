@@ -65,6 +65,7 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                 if( $e->getCode() == 23000)
                 {
                     $message = 'Team Name already exists';
+                    $_SESSION["errorUserInTeam"] = true;
                 }
                 else
                 {
