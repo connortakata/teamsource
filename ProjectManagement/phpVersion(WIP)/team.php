@@ -30,18 +30,18 @@ if(isManager())
     print '
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" onclick="AddUserToTeam();" style="padding-right: 26px;">Add a user</button>
+                                    <button id="AddUserToTeamButton" class="btn btn-default" type="button" onclick="AddUserToTeam();" style="padding-right: 26px;">Add a user</button>
                                 </span>
-                                <input id="AddUserToTeam" type="text" placeholder="User email" class="form-control">
+                                <input id="AddUserToTeam" type="text" placeholder="User email" onkeydown="if (event.keyCode == 13) document.getElementById(\'AddUserToTeamButton\').click()" class="form-control">
                             </div></br><!-- /input-group -->';
 }
 
 print'
                             <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="AddTeam()">Create Team</button>
+                                <button id="CreateTeamButton" class="btn btn-default" type="button" onclick="AddTeam()">Create Team</button>
                             </span>
-                            <input id="CreateTeamName" type="text" placeholder="Team Name" class="form-control">
+                            <input id="CreateTeamName" type="text" placeholder="Team Name" class="form-control" onkeydown="if (event.keyCode == 13) document.getElementById(\'CreateTeamButton\').click()">
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div><!--/panel-body-->
