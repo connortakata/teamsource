@@ -154,17 +154,17 @@ function printCalendar()
                     if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
                     {//Here, we generate a link that contains the necessary information to edit only the current event selected.
                         if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
-                            print '<a href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                            print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
                         else
-                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].', event);" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
                         print substr($dayEvents[$days[$dayDetail]][$k]["title"],0,12)."...";
                     }
                     else
                     {
                         if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
-                            print '<a href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
+                            print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
                         else
-                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].', event);">'.$dayEvents[$days[$dayDetail]][$k]["title"];
+                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
                     }
                     print '</a>';
                     print "<br>";
@@ -209,7 +209,7 @@ function getEvents($calID, $monthYear, $prevMonthYear, $nextMonthYear)
         $i++;
     }
     //Now we insert all of the relevant tasks into the array
-    $stmt= $mysqli->prepare("SELECT ID, TASK_TITLE, TASK_DUE_DATE FROM TASK
+    $stmt= $mysqli->prepare("SELECT ID, TASK_TITLE, TASK_DUE_DATE, TASK_IS_FINISHED  FROM TASK
 	WHERE (TASK_DUE_DATE LIKE ('$monthYear%')
 OR TASK_DUE_DATE LIKE ('$prevMonthYear%')
 OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
@@ -233,6 +233,11 @@ OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
             $i=0;
         $dayEvents[$date][$i]["title"]=$row["TASK_TITLE"];
         $dayEvents[$date][$i]["TASK_ID"]=$row["ID"];
+        $dayEvents[$date][$i]["COLOR"]="Green";
+        if($row["TASK_IS_FINISHED"])
+            $dayEvents[$date][$i]["STYLE"]="text-decoration:line-through";
+        else
+            $dayEvents[$date][$i]["STYLE"]="";
         $i++;
     }
     return $dayEvents;

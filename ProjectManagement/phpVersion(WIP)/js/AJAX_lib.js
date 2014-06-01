@@ -438,7 +438,7 @@ function AddEvent(edit){
     }
 }
 
-function EditEvent(id, type)
+function EditEvent(id)
 {
     var xmlhttp;
     if (window.XMLHttpRequest)
@@ -459,7 +459,7 @@ function EditEvent(id, type)
     }
     xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("id=" + id + "&type=" + type);
+    xmlhttp.send("id=" + id);
 }
 
 function DeleteEvent()
