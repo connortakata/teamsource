@@ -627,3 +627,26 @@ function RemoveFromTeam(id)
         location.reload();
     }
 }
+
+function MakeManager(id)
+{
+    var xmlhttp;
+
+    if (id!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/team/makeManager.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + id);
+        location.reload();
+    }
+}

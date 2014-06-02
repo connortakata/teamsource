@@ -73,6 +73,8 @@ function printUsersInTeam()
         if(isManager()&&!isManager($row["ID"]))
             print '<button type="button" title="Remove user from team" class="btn btn-default btn-xs" onclick="RemoveFromTeam('.$row["ID"].');"><span class="glyphicon glyphicon-remove"></span></button> ';
         print $row["USER_FIRSTNAME"].' '.$row["USER_LASTNAME"];
+        if(isManager()&&!isManager($row["ID"]))
+            print '<button style="float:right;" type="button" title="Make this user the team manager" class="btn btn-default btn-xs" onclick="MakeManager('.$row["ID"].');"><span class="glyphicon glyphicon-plus-sign"></span></button> ';
         if(isManager($row["ID"]))
             print ' - Manager';
         print '</a>';
