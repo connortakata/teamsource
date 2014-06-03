@@ -106,6 +106,13 @@ function updatePassword() {
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
+    if(newPass.length < 6 || newPass.length > 20)
+    {
+        DisplayAlertPopUp("Error", "Please enter a password between 6 and 20 characters");
+        document.getElementById("txt-new-pass").value = "";
+        document.getElementById("txt-pass-confirm").value = ""; 
+        return;
+    }
     if (window.XMLHttpRequest)
       {// code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp=new XMLHttpRequest();
@@ -131,7 +138,8 @@ function updatePassword() {
     xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
     document.getElementById("txt-old-pass").value = "";
     document.getElementById("txt-new-pass").value = "";
-    document.getElementById("txt-pass-confirm").value = "";   
+    document.getElementById("txt-pass-confirm").value = "";
+    location.reload();   
 }
 
 function updateEmail() {
