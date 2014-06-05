@@ -172,7 +172,7 @@ function printCalendar()
             if(isset($dayEvents[$days[$dayDetail]]))
                 for($k=0;$k<count($dayEvents[$days[$dayDetail]]);$k++)
                 {//If statements here are to add some overflow behavior; maybe not necessary because of the css overflow property
-                    if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
+                    /*if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
                     {//Here, we generate a link that contains the necessary information to edit only the current event selected.
                         if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
                             print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
@@ -181,12 +181,12 @@ function printCalendar()
                         print substr($dayEvents[$days[$dayDetail]][$k]["title"],0,12)."...";
                     }
                     else
-                    {
+                    {*/
                         if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
                             print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
                         else
                             print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
-                    }
+                    //}
                     print '</a>';
                     print "<br>";
                 }
@@ -238,7 +238,7 @@ OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
     ORDER BY TASK_DUE_DATE ASC;");
     $stmt->execute();
     $res = $stmt->get_result();
-
+    $i--;
     while($row = mysqli_fetch_array($res))//Generate an array of dates that can be referred to by a format like $dayEvents[5/31]
     {
         $date=substr($row["TASK_DUE_DATE"],5,5);
@@ -252,6 +252,9 @@ OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
         $date=str_replace('-','/',$date);//Formatting the dates to form of 5/31
         if(!isset($dayEvents[$date]))
             $i=0;
+        else if(isset($dayEvents[$date]))
+            $i=count($dayEvents[$date]);
+
         $dayEvents[$date][$i]["title"]=$row["TASK_TITLE"];
         $dayEvents[$date][$i]["TASK_ID"]=$row["ID"];
         $dayEvents[$date][$i]["COLOR"]="Green";
@@ -259,7 +262,7 @@ OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
             $dayEvents[$date][$i]["STYLE"]="text-decoration:line-through";
         else
             $dayEvents[$date][$i]["STYLE"]="";
-        $i++;
+
     }
     return $dayEvents;
 }
