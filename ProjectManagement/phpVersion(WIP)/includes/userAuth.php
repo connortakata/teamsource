@@ -5,7 +5,7 @@ session_start();
 function isLoggedIn(){
     if(!isset($_SESSION['id']))
     {
-        $message = 'You must be logged in to access this page';
+        //$message = 'You must be logged in to access this page';
         return false;
     }
     else
@@ -47,20 +47,20 @@ function isLoggedIn(){
             // if we have nothing something is wrong
             if($email == false)
             {
-                $message = 'Access Error';
+                //$message = 'Access Error';
                 return false;
             }
             else
             {
                 //success
-                $message = 'Welcome';
+                //$message = 'Welcome';
                 return true;
             }
         }
         catch (Exception $e)
         {
             // if we are here, something is wrong in the database //
-            $message = 'We are unable to process your request. Please try again later"';
+            //$message = 'We are unable to process your request. Please try again later"';
             return false;
         }
     }
@@ -70,12 +70,12 @@ function isInTeam()
 {
     if(!isset($_SESSION['id']))
     {
-        $message = 'You must be logged in to access this page';
+        //$message = 'You must be logged in to access this page';
         return false;
     }
     else if(!isset($_SESSION['team']))
     {
-        $message = 'No team selected';
+        //$message = 'No team selected';
         return false;
     }
     else
@@ -89,7 +89,8 @@ function isInTeam()
         AND TEAM_MEMBER_LIST_TEAM_ID='$teamID';");
         $stmt->execute();
         $res = $stmt->get_result();
-        $count = $res->fetch_assoc()["COUNT(*)"];
+        $count = $res->fetch_assoc();
+        $count = $count["COUNT(*)"];
         $mysqli->close();
 
         if($count<1)
@@ -105,12 +106,12 @@ function isManager($id = null)
 {
     if(!isset($_SESSION['id']))
     {
-        $message = 'You must be logged in to access this page';
+        //$message = 'You must be logged in to access this page';
         return false;
     }
     else if(!isset($_SESSION['team']))
     {
-        $message = 'No team selected';
+        //$message = 'No team selected';
         return false;
     }
     else
@@ -127,7 +128,8 @@ function isManager($id = null)
         WHERE ID='$teamID';");
         $stmt->execute();
         $res = $stmt->get_result();
-        $teamManagerID = $res->fetch_assoc()["TEAM_MANAGER_ID"];
+        $teamManagerID = $res->fetch_assoc();
+        $teamManagerID = $teamManagerID["TEAM_MANAGER_ID"];
         $mysqli->close();
 
         if($teamManagerID!=$userID)
