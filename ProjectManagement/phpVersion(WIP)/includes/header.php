@@ -26,10 +26,10 @@ if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php"&& $_SERVER['PHP_SELF']!
     	<script src="js/AJAX_lib.js"></script>
 		<title>
             <?php
-            if($_SERVER['PHP_SELF']=="/index.php") print 'Team Source Dashboard';
-            else if($_SERVER['PHP_SELF']=="/calendar.php") print 'Team Source Calendar';
-            else if($_SERVER['PHP_SELF']=="/resources.php") print 'Team Source Resources';
-            else if($_SERVER['PHP_SELF']=="/tasks.php") print 'Team Source Tasks';
+            if($_SERVER['PHP_SELF']=="/index.php"||$_SERVER['PHP_SELF']=="/index") print 'Team Source Dashboard';
+            else if($_SERVER['PHP_SELF']=="/calendar.php"||$_SERVER['PHP_SELF']=="/calendar") print 'Team Source Calendar';
+            else if($_SERVER['PHP_SELF']=="/resources.php"||$_SERVER['PHP_SELF']=="/resources") print 'Team Source Resources';
+            else if($_SERVER['PHP_SELF']=="/tasks.php"||$_SERVER['PHP_SELF']=="/tasks") print 'Team Source Tasks';
             else print 'Team Source';
             ?>
         </title>
