@@ -77,11 +77,6 @@ function updateName() {
       {
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
         }
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
@@ -168,11 +163,6 @@ function updateEmail() {
       {
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
         }
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
@@ -521,11 +511,7 @@ function AddTeam()
 
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				var str = xmlhttp.responseText;
-	            if(str != "")
-	            {
-	                DisplayAlertPopUp("Error", str);
-	            }	
+				
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
@@ -576,11 +562,7 @@ function AddUserToTeam()
         }
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				var str = xmlhttp.responseText;
-	            if(str != "")
-	            {
-	                DisplayAlertPopUp("Error", str);
-	            }	
+				
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);

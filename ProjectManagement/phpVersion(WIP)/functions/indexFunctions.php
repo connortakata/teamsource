@@ -19,7 +19,7 @@ function getTeamChat($teamID)
         echo "<td style='width:20%; text-align:left;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
         echo ": </td>";
         echo "<td style='width:2%'/>";
-        echo "<td style='width:80%;'>" . $row['MESSAGE_TEXT'] . "</td>";
+        echo "<td style='width:72%;'>" . $row['MESSAGE_TEXT'] . "</td>";
         echo "<td style='width:10px'/>";
 
         if($row['MESSAGE_DATE'] == date('Y-m-d'))

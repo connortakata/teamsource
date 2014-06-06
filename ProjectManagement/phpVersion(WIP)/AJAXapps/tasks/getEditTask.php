@@ -37,7 +37,7 @@ if(isLoggedIn()&&isInTeam())
 		echo '			Issued by:<Label><input type="hidden" name="EditTaskItem" id="selIssuedBy" value="';
 						echo  $row['TASK_ISSUED_BY'] . '"/>' . $row['TASK_ISSUED_BY'];
 						echo '	</Label><br><br>';
-		echo '			Finish By: <input name="EditTaskItem" type="date" style="height:25px" value="' . $row['TASK_DUE_DATE'] . '"/><br><br>';
+		echo '			Finish By: <input name="EditTaskItem" type="date" max="9999-12-31" style="height:25px" value="' . $row['TASK_DUE_DATE'] . '"/><br><br>';
 		echo '			Issued To: <select name="EditTaskItem" id="selIssuedTo">';
 		 			for ($y = 0; $y < count($users); $y++)
 		 			{ 

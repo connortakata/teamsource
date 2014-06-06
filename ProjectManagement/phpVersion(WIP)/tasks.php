@@ -18,7 +18,7 @@
                     //Print the name of the person who issued the task
                     getTaskIssuer();
 					print '<br><br>
-					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px"/><br><br>
+					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px" max="9999-12-31"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
                     //Print options list of users on task's team
                     getTaskTeamMembers($teamID);
