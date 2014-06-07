@@ -19,7 +19,7 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
                         <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title"/>
                     </div>
                     <div class="panel-body">
-                        <input name="CalendarItem" id="CalendarDate" type="date" style="height:25px"/> at:
+                        <input name="CalendarItem" id="CalendarDate" type="date" max="9999-12-31" style="height:25px"/> at:
                         <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/>
                         <br /><br />
                         Description
