@@ -18,7 +18,10 @@ function buildCalArray($month = NULL, $year=NULL)
     {
         while($firstDay>-1)
         {
-            array_push($days, ($month-1)."/".($numDaysPrevMonth-$firstDay+1));
+            if($month==1)
+                array_push($days, (12)."/".($numDaysPrevMonth-$firstDay+1));
+            else
+                array_push($days, ($month-1)."/".($numDaysPrevMonth-$firstDay+1));
             $firstDay--; //Inserts the last days of the last month into the calendar
             if($firstDay<1)
                 break;
@@ -33,7 +36,10 @@ function buildCalArray($month = NULL, $year=NULL)
     $day = 1;
     while(count($days)<42)
     {
-        array_push($days, ($month+1)."/".$day); //Inserts the first days of the next month into the calendar
+        if($month==12)
+            array_push($days, (1)."/".$day);
+        else
+            array_push($days, ($month+1)."/".$day); //Inserts the first days of the next month into the calendar
         $day++;
     }
     return $days; //Finish with the built calendar array
@@ -136,10 +142,25 @@ function printCalendar()
         for( $j=0; $j<7; $j++)//Printing the day numbers
         {
             print '<td class="days" width="11.43%"';
-            if(($days[$dayNum][0]<$month)||($days[$dayNum][0]>$month))
+            $currMonth = substr($days[$dayNum],0,strpos($days[$dayNum],'/'));
+            if(($currMonth<$month)||($currMonth>$month))
+            {
                 print 'style="color:grey"';//Print grey color style for days not in the current month
+                if($currMonth<$month)
+                    $date = $prevMonthYear;
+                else
+                    $date = $nextMonthYear;
+            }
+            else
+                $date = $monthYear;
             print '>';
             print substr($days[$dayNum],strpos($days[$dayNum],'/')+1);
+            if(strlen(substr($days[$dayNum],strpos($days[$dayNum],'/')+1))==1)
+                $date = $date . '-0' . substr($days[$dayNum],strpos($days[$dayNum],'/')+1);
+            else
+                $date = $date . '-' . substr($days[$dayNum],strpos($days[$dayNum],'/')+1);
+            print '<a class="showMe" style="float:right;padding-right: 5px;font-weight: bold" href="#"'.
+                ' onclick="DisplayPopUp(\'CalendarPopUp\',\''.$date.'\')">+</a>';
             print '</td>';
             $dayNum++;
         }
@@ -147,17 +168,25 @@ function printCalendar()
         print '<tr class="dayDetail" style="vertical-align: top">';
         for( $j=0; $j<7; $j++)//Printing the details of each day
         {
-            print '<td class="days" width="11.43%"><div class=scrollable>';
+            print '<td class="daysDetail" width="11.43%"><div class="scrollable">';
             if(isset($dayEvents[$days[$dayDetail]]))
                 for($k=0;$k<count($dayEvents[$days[$dayDetail]]);$k++)
                 {//If statements here are to add some overflow behavior; maybe not necessary because of the css overflow property
-                    if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
+                    /*if(strlen($dayEvents[$days[$dayDetail]][$k]["title"])>15)
                     {//Here, we generate a link that contains the necessary information to edit only the current event selected.
-                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                        if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
+                            print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
+                        else
+                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');" title="'.$dayEvents[$days[$dayDetail]][$k]["title"].'">';
                         print substr($dayEvents[$days[$dayDetail]][$k]["title"],0,12)."...";
                     }
                     else
-                        print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
+                    {*/
+                        if(isset($dayEvents[$days[$dayDetail]][$k]["TASK_ID"]))
+                            print '<a style="color:'.$dayEvents[$days[$dayDetail]][$k]["COLOR"].';'.$dayEvents[$days[$dayDetail]][$k]["STYLE"].';" href="#" onclick="EditPopup('.$dayEvents[$days[$dayDetail]][$k]["TASK_ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
+                        else
+                            print '<a href="#" onclick="EditEvent('.$dayEvents[$days[$dayDetail]][$k]["ID"].');">'.$dayEvents[$days[$dayDetail]][$k]["title"];
+                    //}
                     print '</a>';
                     print "<br>";
                 }
@@ -199,6 +228,41 @@ function getEvents($calID, $monthYear, $prevMonthYear, $nextMonthYear)
         $dayEvents[$date][$i]["title"]=$row["EVENT_TITLE"];
         $dayEvents[$date][$i]["ID"]=$row["ID"];
         $i++;
+    }
+    //Now we insert all of the relevant tasks into the array
+    $stmt= $mysqli->prepare("SELECT ID, TASK_TITLE, TASK_DUE_DATE, TASK_IS_FINISHED  FROM TASK
+	WHERE (TASK_DUE_DATE LIKE ('$monthYear%')
+OR TASK_DUE_DATE LIKE ('$prevMonthYear%')
+OR TASK_DUE_DATE LIKE ('$nextMonthYear%'))
+    AND TASK_TASK_MANAGER_ID='$calID'
+    ORDER BY TASK_DUE_DATE ASC;");
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $i--;
+    while($row = mysqli_fetch_array($res))//Generate an array of dates that can be referred to by a format like $dayEvents[5/31]
+    {
+        $date=substr($row["TASK_DUE_DATE"],5,5);
+        if($date[0]=='0')
+            $date = substr($date,1);//shifts off the leading zero for month
+        if($date[2]=='0')
+        {
+            $day = substr($date,3);//shifts off the leading zero for day
+            $date=substr($date,0,2).$day;
+        }
+        $date=str_replace('-','/',$date);//Formatting the dates to form of 5/31
+        if(!isset($dayEvents[$date]))
+            $i=0;
+        else if(isset($dayEvents[$date]))
+            $i=count($dayEvents[$date]);
+
+        $dayEvents[$date][$i]["title"]=$row["TASK_TITLE"];
+        $dayEvents[$date][$i]["TASK_ID"]=$row["ID"];
+        $dayEvents[$date][$i]["COLOR"]="Green";
+        if($row["TASK_IS_FINISHED"])
+            $dayEvents[$date][$i]["STYLE"]="text-decoration:line-through";
+        else
+            $dayEvents[$date][$i]["STYLE"]="";
+
     }
     return $dayEvents;
 }

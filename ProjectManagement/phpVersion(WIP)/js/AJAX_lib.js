@@ -77,11 +77,6 @@ function updateName() {
       {
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
         }
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
@@ -102,6 +97,13 @@ function updatePassword() {
     if(newPass != confirm)
     {
         DisplayAlertPopUp("Error", "Passwords do not match, try again.");
+        document.getElementById("txt-new-pass").value = "";
+        document.getElementById("txt-pass-confirm").value = ""; 
+        return;
+    }
+    if(newPass.length < 6 || newPass.length > 20)
+    {
+        DisplayAlertPopUp("Error", "Please enter a password between 6 and 20 characters");
         document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
@@ -131,7 +133,8 @@ function updatePassword() {
     xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
     document.getElementById("txt-old-pass").value = "";
     document.getElementById("txt-new-pass").value = "";
-    document.getElementById("txt-pass-confirm").value = "";   
+    document.getElementById("txt-pass-confirm").value = "";
+    location.reload();   
 }
 
 function updateEmail() {
@@ -160,11 +163,6 @@ function updateEmail() {
       {
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
         }
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
@@ -497,6 +495,10 @@ function AddTeam()
 {
     var xmlhttp;
     var teamName = document.getElementById("CreateTeamName").value;
+    if(teamName == "")
+    {
+    	DisplayAlertPopUp("Error", "Team Name is empty");
+    }
 
     if (teamName!=''){
         if(window.XMLHttpRequest){
@@ -509,7 +511,7 @@ function AddTeam()
 
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
+				
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
@@ -546,6 +548,10 @@ function AddUserToTeam()
 {
     var xmlhttp;
     var email = document.getElementById("AddUserToTeam").value;
+    if (email == "")
+    {
+    	DisplayAlertPopUp("Error", "Email textbox is empty.");
+    }
 
     if (email!=''){
         if(window.XMLHttpRequest){
@@ -556,7 +562,7 @@ function AddUserToTeam()
         }
         xmlhttp.onreadystatechange = function() {
             if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
+				
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);
@@ -583,6 +589,52 @@ function LeaveTeam(id)
             }
         }
         xmlhttp.open("POST", "../AJAXapps/team/leaveTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + id);
+        location.reload();
+    }
+}
+
+function RemoveFromTeam(id)
+{
+    var xmlhttp;
+
+    if (id!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/team/removeFromTeam.php", false);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + id);
+        location.reload();
+    }
+}
+
+function MakeManager(id)
+{
+    var xmlhttp;
+
+    if (id!=''){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        else{
+            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
+
+            }
+        }
+        xmlhttp.open("POST", "../AJAXapps/team/makeManager.php", false);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("id=" + id);
         location.reload();

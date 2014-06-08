@@ -20,7 +20,8 @@ function getTeamSubId($teamID, $table)
     }
     $stmt->execute();
     $res = $stmt->get_result();
-    $fileID = $res->fetch_assoc()["ID"];
+    $fileID = $res->fetch_assoc();
+    $fileID = $fileID["ID"];
     $mysqli->close();
     return $fileID;
 }
@@ -31,7 +32,8 @@ function getTeamName($teamID)
     $stmt= $mysqli->prepare("SELECT TEAM_NAME FROM TEAM WHERE ID='$teamID'");
     $stmt->execute();
     $res = $stmt->get_result();
-    $teamName = $res->fetch_assoc()["TEAM_NAME"];
+    $teamName = $res->fetch_assoc();
+    $teamName = $teamName["TEAM_NAME"];
     $mysqli->close();
     return $teamName;
 }

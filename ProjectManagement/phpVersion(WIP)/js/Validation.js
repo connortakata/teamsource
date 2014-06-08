@@ -51,7 +51,7 @@ function DateValidation(Day) {
         month = month.toString();
     }
     if ((day = Today.getDate()) < 10) {
-        day = "0" + Today.getDate.toString()
+        day = "0" + day.toString()
     }
     else {
         day = day.toString();

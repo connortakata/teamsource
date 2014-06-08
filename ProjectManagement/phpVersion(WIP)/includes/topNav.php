@@ -15,31 +15,30 @@
                 <li>
                     <div style="padding-top:8px;padding-left:8px" class="btn-group">
                         <?php
+                        $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
                         if(isset($_SESSION["team"]))
                         {
-                            $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
                             $teamID = $_SESSION["team"];
-                            $sql = "SELECT TEAM_NAME FROM TEAM WHERE ID='$teamID';";
-                            $result = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_array($result))
+                            $stmt= $mysqli->prepare("SELECT TEAM_NAME FROM TEAM WHERE ID='$teamID'");
+                            $stmt->execute();
+                            $res = $stmt->get_result();
+                            while($row = mysqli_fetch_array($res))
                             {
                                 print'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">';
                                 print $row["TEAM_NAME"];
                                 print '  <span class="caret"></span></button>';
                             }
-                            mysqli_close($con);
                         }
                         print '<ul class="dropdown-menu" role="menu">';
-
-                        $con = mysqli_connect("localhost", "root", "TeamSource1!", "teamsource");
                         $id = $_SESSION["id"];
-                        $sql = "SELECT TEAM_NAME, ID
+                        $stmt= $mysqli->prepare("SELECT TEAM_NAME, ID
                                 FROM TEAM
                                 INNER JOIN TEAM_MEMBER_LIST ON TEAM.ID = TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_TEAM_ID
                                 WHERE TEAM_MEMBER_LIST.TEAM_MEMBER_LIST_USER_ID='$id'
-                                ORDER BY TEAM_NAME ASC;";
-                        $result = mysqli_query($con, $sql);
-                        while($row = mysqli_fetch_array($result))
+                                ORDER BY TEAM_NAME ASC;");
+                        $stmt->execute();
+                        $res = $stmt->get_result();
+                        while($row = mysqli_fetch_array($res))
                         {
                             if(isset($_SESSION["team"])&&($row["ID"]==$_SESSION["team"]))
                                 print '<li class="active">';
@@ -49,7 +48,7 @@
                             print $row["TEAM_NAME"];
                             print '</a></li>';
                         }
-                        mysqli_close($con);
+                        $mysqli->close();
 
                         print '</ul>';
 

@@ -37,6 +37,7 @@ if(isLoggedIn()&&isManager()&&isInTeam())
         {
             $userID = $row[0];
         }
+        $con->close();
         if(isset($userID))
         {
             try //adding the user
@@ -56,20 +57,25 @@ if(isLoggedIn()&&isManager()&&isInTeam())
                 //execute the prepared statement
                 $stmt->execute();
                 //All done!
-                $mysqli->close();
+                $_SESSION["successUserAdded"] = true;
             }
             catch(Exception $e)
             {
                 $_SESSION["error"]=$e->getCode();
                 if( $e->getCode() == 23000)
                 {
-                    $message = 'Team Name already exists';
+                    $message = 'The User already exists on your team.';
+                    $_SESSION["errorUserInTeam"] = true;
                 }
                 else
                 {
                     $message = 'We are unable to process your request. Please try again later"';
                 }
             }
+        }
+        else
+        {
+            $_SESSION["errorNoUserFound"] = true;
         }
     }
 }

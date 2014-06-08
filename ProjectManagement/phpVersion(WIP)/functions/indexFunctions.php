@@ -16,10 +16,10 @@ function getTeamChat($teamID)
         $stmt->execute();
         $userRes = $stmt->get_result();
         $userArray =  mysqli_fetch_array($userRes);//Getting the chatter's first and last name
-        echo "<td style='width:20%; text-align:right;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
+        echo "<td style='width:20%; text-align:left;'>" . $userArray['USER_FIRSTNAME'] . " " . $userArray['USER_LASTNAME'];
         echo ": </td>";
         echo "<td style='width:2%'/>";
-        echo "<td style='width:80%;'>" . $row['MESSAGE_TEXT'] . "</td>";
+        echo "<td style='width:72%;'>" . $row['MESSAGE_TEXT'] . "</td>";
         echo "<td style='width:10px'/>";
 
         if($row['MESSAGE_DATE'] == date('Y-m-d'))
