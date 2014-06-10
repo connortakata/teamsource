@@ -18,7 +18,10 @@
                     //Print the name of the person who issued the task
                     getTaskIssuer();
 					print '<br><br>
-					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px" max="9999-12-31"/><br><br>
+					Finish By: <input name="popItem" id="FinishBy" type="date" style="height:25px" max="9999-12-31"/>
+					<input name="popItemOutside" id="FinishByComp1" placeholder="Month" type="number" max="12" min="1" style="height:25px;display: none;"/>
+                    <input name="popItemOutside" id="FinishByComp2" placeholder="Day" type="number" max="31" min="1" style="height:25px;display: none;"/>
+                    <input name="popItemOutside" id="FinishByComp3" placeholder="Year" type="number" max="4000" min="1" style="height:25px;display: none;"/><br><br>
 					Issued To: <select name="popItem" id="IssuedTo">';
                     //Print options list of users on task's team
                     getTaskTeamMembers($teamID);
@@ -122,6 +125,7 @@
     	});
     	    	    	
     </script>';
-	
-	require "includes/footer.php";
+require "includes/compatibility.php";
+
+require "includes/footer.php";
 ?>

@@ -4,6 +4,7 @@ require "includes/topNav.php";
 require "includes/sidebar.php";
 require "functions/calendarFunctions.php";
 
+
 print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position:fixed; top:150px; left:27%; width:600px; height:auto;">
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -11,7 +12,6 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
         </div>
 		<link href="css/tables.css" rel="stylesheet">
 		<div style="display:table; margin-left: 23% ;float:none; width:70%" class="well">
-
         <div id="CalendarPopUp" class="PopupShadow" style="display:none; position:fixed; top:30%; left:35%; width:400px; height:auto; z-index:10;">
             <div class="well" style="width:100%; height:100%;">
                 <div class="panel panel-primary" style="top:25px; height:95%;">
@@ -19,7 +19,10 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
                         <input name="CalendarItem" id="CalendarTitle" type="text" class="form-control" placeholder="Event Title"/>
                     </div>
                     <div class="panel-body">
-                        <input name="CalendarItem" id="CalendarDate" type="date" max="9999-12-31" style="height:25px"/> at:
+                        <input name="CalendarItem" id="CalendarDate" type="date" max="9999-12-31" style="height:25px"/>
+                        <input name="CalendarItem" id="CalendarDateComp1" placeholder="Month" type="number" max="12" min="1" style="height:25px;display: none;"/>
+                        <input name="CalendarItem" id="CalendarDateComp2" placeholder="Day" type="number" max="31" min="1" style="height:25px;display: none;"/>
+                        <input name="CalendarItem" id="CalendarDateComp3" placeholder="Year" type="number" max="4000" min="1" style="height:25px;display: none;"/> at:
                         <input name="CalendarItem" id="CalendarTime" type="time" style="height:25px"/>
                         <br /><br />
                         Description
@@ -96,4 +99,5 @@ print '<div id="SelectedPopup" class="PopupShadow" style="display:none; position
     		document.getElementById("btnSelEdit").onclick=function(){ AddEvent(true); HideSelectedPopup();};
     }
     </script>';
+require "includes/compatibility.php";
 require "includes/footer.php";

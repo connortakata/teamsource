@@ -1,5 +1,18 @@
 ﻿function validatePopUp(object)
 {
+    if(document.getElementById("FinishByComp1").style.display!="none")
+    {
+        var date = document.getElementById("FinishByComp3").value;
+        if(document.getElementById("FinishByComp1").value<10)
+            date = date.concat("-0",document.getElementById("FinishByComp1").value);
+        else
+            date = date.concat("-",document.getElementById("FinishByComp1").value);
+        if(document.getElementById("FinishByComp2").value<10)
+            date = date.concat("-0",document.getElementById("FinishByComp2").value);
+        else
+            date = date.concat("-",document.getElementById("FinishByComp2").value);
+        object[2].value=date;
+    }
 	for(var i = 0; i < object.length; i++)
 	{
 		if ($(object[i]).val() == "")
@@ -25,6 +38,7 @@ function pushValidatedTasks(object)
 	  {// code for IE6, IE5
 	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 	  }
+
     xmlhttp.onreadystatechange=function()
 	  {
 	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -36,6 +50,7 @@ function pushValidatedTasks(object)
                 }
 	        }
 	  }
+
 	xmlhttp.open("POST","../AJAXapps/tasks/addToTasks.php",false);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +

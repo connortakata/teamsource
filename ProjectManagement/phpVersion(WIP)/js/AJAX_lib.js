@@ -409,7 +409,12 @@ function AddEvent(edit){
         description = document.getElementById("CalendarDes").value;
         theTime     = document.getElementById("CalendarTime").value;
     }
-
+    if(document.getElementById("CalendarDateComp1").style.display!="none")
+    {
+        date = document.getElementById("CalendarDateComp3").value;
+        date = date.concat("-",document.getElementById("CalendarDateComp1").value)
+        date = date.concat("-",document.getElementById("CalendarDateComp2").value);
+    }
     theTime = theTime.replace(":","");
 
     if( (title!='') && (date!=''))
