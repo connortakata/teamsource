@@ -50,11 +50,11 @@
   						</li>
   						<li class="list-group-item" id="div-edit-pass" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
-  								<div>Old Password: <input id="txt-old-pass" type="text" placeholder="*********"></input></div>
+  								<div>Old Password: <input id="txt-old-pass" type="password" placeholder="*********"></input></div>
   								<p></p>
-  								<div>New Password: <input id="txt-new-pass" type="text" ></input></div>
+  								<div>New Password: <input id="txt-new-pass" type="password" ></input></div>
   								<p></p>
-  								<div>Confirm Password: <input id="txt-pass-confirm" type="text" ></input></div>
+  								<div>Confirm Password: <input id="txt-pass-confirm" type="password" ></input></div>
   								<p></p>
   							</div>
   							<div>
@@ -69,6 +69,8 @@
   						</li>
   						<li class="list-group-item" id="div-edit-email" style="text-align:center">
   							<div style="text-align:right; display: inline-block">
+                                <div>Password: <input id="txt-email-pass" type="password" placeholder="*********"></input></div>
+                                <p></p>
   								<div>New Email: <input id="txt-new-email" type="text"></input></div>
   								<p></p>
   								<div>Confirm Email: <input id="txt-email-confirm" type="text" ></input></div>

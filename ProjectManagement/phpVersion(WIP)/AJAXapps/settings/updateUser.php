@@ -37,13 +37,27 @@ if(isLoggedIn())
                 echo "Incorrect password.  Please try again.";
             }
         }
-        if(isset($_POST["email"]))
+        if(isset($_POST["email"])&&isset($_POST["curPass"]))
         {
-            $email = $_POST["email"];
-            $stmt = $mysqli->prepare("UPDATE user SET USER_EMAIL = ? WHERE ID = ?");
-            $stmt->bind_param("si", $email, $id);
-            $stmt->execute();
-            $mysqli->close();
+            $curPass = $_POST["curPass"];
+            $curPass = crypt($curPass, 'PASSWORD_DEFAULT');
+
+            $newPass = $_POST["newPass"];
+            $user = mysqli_query($mysqli, "SELECT USER_PASSWORD FROM user WHERE ID = '$id';");
+            $userpass = mysqli_fetch_array($user);
+
+            if($curPass == $userpass["USER_PASSWORD"])
+            {
+                $email = $_POST["email"];
+                $stmt = $mysqli->prepare("UPDATE user SET USER_EMAIL = ? WHERE ID = ?");
+                $stmt->bind_param("si", $email, $id);
+                $stmt->execute();
+                $mysqli->close();
+            }
+            else
+            {
+                echo "Incorrect password.  Please try again.";
+            }
         }
 		
 

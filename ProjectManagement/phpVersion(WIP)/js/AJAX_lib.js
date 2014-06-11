@@ -141,13 +141,21 @@ function updateEmail() {
     var xmlhttp;
     var newEmail = document.getElementById("txt-new-email").value;
     var confirmEmail = document.getElementById("txt-email-confirm").value;
-    
+    var curPass = document.getElementById("txt-email-pass").value;
 
     if(newEmail != confirmEmail)
     {
         DisplayAlertPopUp("Error", "Emails do not match, try again.");
         document.getElementById("txt-new-email").value = "";
-        document.getElementById("txt-email-confirm").value = ""; 
+        document.getElementById("txt-email-pass").value = "";
+        document.getElementById("txt-email-confirm").value = "";
+        return;
+    }
+    else if(curPass=="")
+    {
+        DisplayAlertPopUp("Error", "You must enter your password.");
+        document.getElementById("txt-new-email").value = "";
+        document.getElementById("txt-email-confirm").value = "";
         return;
     }
     if (window.XMLHttpRequest)
@@ -167,7 +175,7 @@ function updateEmail() {
       }
     xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("email=" + newEmail);
+    xmlhttp.send("email=" + newEmail + "&curPass=" + curPass);
     document.getElementById("txt-new-email").value = "";
     document.getElementById("txt-email-confirm").value = "";
     location.reload();
