@@ -1,11 +1,23 @@
-﻿$import_js('js/firebase.js');
-function validatePopUp(object)
+﻿function validatePopUp(object)
 {
+    if(document.getElementById("FinishByComp1").style.display!="none")
+    {
+        var date = document.getElementById("FinishByComp3").value;
+        if(document.getElementById("FinishByComp1").value<10)
+            date = date.concat("-0",document.getElementById("FinishByComp1").value);
+        else
+            date = date.concat("-",document.getElementById("FinishByComp1").value);
+        if(document.getElementById("FinishByComp2").value<10)
+            date = date.concat("-0",document.getElementById("FinishByComp2").value);
+        else
+            date = date.concat("-",document.getElementById("FinishByComp2").value);
+        object[2].value=date;
+    }
 	for(var i = 0; i < object.length; i++)
 	{
 		if ($(object[i]).val() == "")
 		{
-			DisplayAlertPopUp("Validation Error","Task title and due date must be speificed when making a task.");
+			DisplayAlertPopUp("Validation Error","Task title and due date must be specified when making a task.");
     		return 1;
 		}
 	}
@@ -17,8 +29,32 @@ function validatePopUp(object)
 }
 function pushValidatedTasks(object)
 {
-	var fb = new Firebase('https://burning-fire-7708.firebaseio.com/tasks');
-	fb.push({Title: object[0].value, Priority: object[4].value, To: object[3].value, By: object[1].value, FinishDate: object[2].value, Description: object[5].value});
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+    xmlhttp.onreadystatechange=function()
+	  {
+	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	        {
+	        	var ServerResponse = xmlhttp.responseText;
+	        	if ( ServerResponse != "")
+	        	{
+                	DisplayAlertPopUp ("Server Error", ServerResponse);
+                }
+	        }
+	  }
+
+	xmlhttp.open("POST","../AJAXapps/tasks/addToTasks.php",false);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
+					"&priority=" + object[4].value + "&description=" + object[5].value + "&finished= 0");
 }
 function DateValidation(Day) {
     var Today = new Date();
@@ -30,7 +66,7 @@ function DateValidation(Day) {
         month = month.toString();
     }
     if ((day = Today.getDate()) < 10) {
-        day = "0" + Today.getDate.toString()
+        day = "0" + day.toString()
     }
     else {
         day = day.toString();
@@ -41,4 +77,28 @@ function DateValidation(Day) {
         return 1;
     }
     return 0;
+}
+function validateMessage(message) {
+	if (message == "")
+		return -1;
+	else 
+		return 0;
+}
+function validatePasswords(passwords)
+{
+	if (passwords[0].value.length < 6 || passwords[1].value.length < 6)
+	{
+		DisplayAlertPopUp("Validation Error", "Your password is too short")
+		return;
+	}
+    else if (passwords[0].value.length > 20 || passwords[1].value.length > 20)
+    {
+        DisplayAlertPopUp("Validation Error", "Your password is too short")
+        return;
+    }
+	else if(passwords[0].value != passwords[1].value)
+	{
+		DisplayAlertPopUp("Validation Error", "Your passwords are not the same");
+		return;
+	}
 }
