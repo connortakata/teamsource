@@ -123,7 +123,7 @@
                             }
                             print '</td>';
                             print '<td style="text-align: right;">
-                                        <button id="team-delete" type="button" class="btn btn-default btn-xs" onclick="LeaveTeam('.$row["ID"].')">
+                                        <button id="team-delete" type="button" class="btn btn-default btn-xs" onclick="ConfirmLeave('.$row["ID"].');">
                                         <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                    </td>
@@ -136,7 +136,10 @@
 		  	</div>
 
 		  	<script>
-
+            function ConfirmLeave(id)
+            {
+                DisplayConfirmationPopUp("Leaving Team", "Are you sure you want to leave this team?.", "LeaveTeam("+id+")");
+            }
 		  	$(document).ready(function(){
 		  		$("#div-edit-name").hide();
 		  		$("#div-edit-pass").hide();

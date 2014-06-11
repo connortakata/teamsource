@@ -16,3 +16,26 @@ function HideAlertPopUp() {
     aPopBody.innerText = "";
     aPopUp.style.display = "none";
 }
+
+function DisplayConfirmationPopUp(sTitle, sBody, func) {
+    var aPopUp = document.getElementById("ConfirmationPopUp");
+    var aPopTitle = document.getElementById("ConfirmationPopUpTitle");
+    var aPopBody = document.getElementById("ConfirmationPopUpBody");
+    var aPopConfirm = document.getElementById("PopUpConfirm");
+    aPopTitle.innerText = sTitle;
+    aPopBody.innerText = sBody;
+    aPopConfirm.setAttribute("onClick", func+";");
+    aPopUp.style.display = "inline";
+    aPopUp.style.zIndex = 11;
+}
+
+function HideConfirmationPopUp() {
+    var aPopUp = document.getElementById("ConfirmationPopUp");
+    var aPopTitle = document.getElementById("ConfirmationPopUpTitle");
+    var aPopBody = document.getElementById("ConfirmationPopUpBody");
+    var aPopConfirm = document.getElementById("PopUpConfirm");
+    aPopTitle.innerText = "";
+    aPopBody.innerText = "";
+    aPopConfirm.onclick = null;
+    aPopUp.style.display = "none";
+}

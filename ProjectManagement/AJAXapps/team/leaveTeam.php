@@ -52,9 +52,18 @@ if(isLoggedIn())
 
             if(isset($removeTeam)&&$removeTeam)
             {//delete team's entire entry
-                $stmt = $dbh->prepare("DELETE FROM TEAM_MEMBER_LIST
+                $stmt = $dbh->prepare("
+                DELETE FROM TEAM_MEMBER_LIST
                 WHERE TEAM_MEMBER_LIST_TEAM_ID=:teamID;
-                DELETE FROM TEAM WHERE ID=:teamID");
+                DELETE FROM EVENT WHERE EVENT_CALENDAR_ID = (SELECT ID FROM CALENDAR WHERE CALENDAR_TEAM_ID=:teamID);
+                DELETE FROM CALENDAR WHERE CALENDAR_TEAM_ID=:teamID;
+                DELETE FROM FILE WHERE FILE_FILE_MANAGER_ID = (SELECT ID FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID=:teamID);
+                DELETE FROM FILEMANAGER WHERE FILE_MANAGER_TEAM_ID=:teamID;
+                DELETE FROM MESSAGE WHERE MESSAGE_MESSAGE_BOARD_ID = (SELECT ID FROM MESSAGEBOARD WHERE MESSAGE_BOARD_TEAM_ID=:teamID);
+                DELETE FROM MESSAGEBOARD WHERE MESSAGE_BOARD_TEAM_ID=:teamID;
+                DELETE FROM TASK WHERE TASK_TASK_MANAGER_ID = (SELECT ID FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID=:teamID);
+                DELETE FROM TASK_MANAGER WHERE TASK_MANAGER_TEAM_ID=:teamID;
+                DELETE FROM TEAM WHERE ID=:teamID;");
             }
             else
             {//Only delete the user's entry for this team

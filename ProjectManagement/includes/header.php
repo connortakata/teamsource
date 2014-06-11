@@ -65,4 +65,19 @@ if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php"&& $_SERVER['PHP_SELF']!
 					</div>
 				</div>
 			</div>
-		</div>   
+		</div>
+        <div id="ConfirmationPopUp" class="PopupShadow" style="display:none; position:fixed; top:40%; left:35%; width:400px; height:auto">
+            <div class="well" style="width:100%; height:100%;">
+                <div class="panel panel-primary" style="height:100%;">
+                    <div class="panel-heading">
+                        <label id="ConfirmationPopUpTitle"></label>
+                    </div>
+                    <div id="ConfirmationPopUpBody" class="panel-body">
+                    </div>
+                    <div class="btn-group">
+                        <input id="PopUpConfirm" type="button" value="Yes" style="margin-left:125px; width:50px" onclick="" />
+                        <input type="button" value="Cancel" style="width:60px" onclick="HideConfirmationPopUp()" />
+                    </div>
+                </div>
+            </div>
+        </div>
