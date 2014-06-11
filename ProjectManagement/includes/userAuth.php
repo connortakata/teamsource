@@ -102,26 +102,30 @@ function isInTeam()
     }
 }
 
-function isManager($id = null)
+function isManager($user = null, $team = null)
 {
     if(!isset($_SESSION['id']))
     {
         //$message = 'You must be logged in to access this page';
         return false;
     }
-    else if(!isset($_SESSION['team']))
+    else if(!isset($_SESSION['team'])&&$team==null)
     {
         //$message = 'No team selected';
         return false;
     }
     else
     {
-        if($id==null)//Can check if any user is the manager of the currently selected team
+        if($user==null)//Can check if any user is the manager of the currently selected team
             $userID=$_SESSION["id"];
         else
-            $userID = $id;
+            $userID = $user;
+        if($team==null)//Can check if any user is the manager of the currently selected team
+            $teamID=$_SESSION["team"];
+        else
+            $teamID=$team;
 
-        $teamID=$_SESSION["team"];
+
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
         $stmt= $mysqli->prepare("
         SELECT TEAM_MANAGER_ID FROM TEAM

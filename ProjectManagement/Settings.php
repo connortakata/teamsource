@@ -122,12 +122,24 @@
                                 print $row2["USER_FIRSTNAME"] . " " . $row2["USER_LASTNAME"];
                             }
                             print '</td>';
-                            print '<td style="text-align: right;">
+                            if(isManager(null,$row["ID"]))
+                            {
+                                print '<td style="text-align: right;">
+                                        <button id="team-delete" type="button" class="btn btn-default btn-xs" onclick="ConfirmDeleteTeam('.$row["ID"].');">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                   </td>
+                                </tr>';
+                            }
+                            else
+                            {
+                                print '<td style="text-align: right;">
                                         <button id="team-delete" type="button" class="btn btn-default btn-xs" onclick="ConfirmLeave('.$row["ID"].');">
                                         <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                    </td>
                                 </tr>';
+                            }
                         }
                         mysqli_close($con);
                         ?>
@@ -139,6 +151,11 @@
             function ConfirmLeave(id)
             {
                 DisplayConfirmationPopUp("Leaving Team", "Are you sure you want to leave this team?.", "LeaveTeam("+id+")");
+            }
+
+            function ConfirmDeleteTeam(id)
+            {
+                DisplayConfirmationPopUp("Leaving Team", "Are you sure you want to delete this team?.", "LeaveTeam("+id+")");
             }
 		  	$(document).ready(function(){
 		  		$("#div-edit-name").hide();
