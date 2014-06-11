@@ -155,7 +155,7 @@
 
             function ConfirmDeleteTeam(id)
             {
-                DisplayConfirmationPopUp("Leaving Team", "Are you sure you want to delete this team?.", "LeaveTeam("+id+")");
+                DisplayConfirmationPopUp("Deleting Team", "Are you sure you want to delete this team?.", "LeaveTeam("+id+")");
             }
 		  	$(document).ready(function(){
 		  		$("#div-edit-name").hide();
