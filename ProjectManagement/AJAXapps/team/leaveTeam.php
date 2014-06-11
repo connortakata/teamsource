@@ -1,6 +1,6 @@
 <?php
 require "../../includes/userAuth.php";
-if(isLoggedIn()&&isInTeam())
+if(isLoggedIn())
 {
     if(!isset( $_POST["id"]))
     {
