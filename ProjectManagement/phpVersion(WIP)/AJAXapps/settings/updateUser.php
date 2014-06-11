@@ -1,7 +1,7 @@
 <?php
 require "../../includes/userAuth.php";
 
-if(isLoggedIn()&&isInTeam())
+if(isLoggedIn())
 {
 		$id = $_SESSION["id"];
         $mysqli = new mysqli("localhost", "root", "TeamSource1!", "teamsource");
