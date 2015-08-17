@@ -1,91 +1,53 @@
 ﻿function getChat(){
-	setTimeout(function(){}, 1000);
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-		  {// code for IE7+, Firefox, Chrome, Opera, Safari
-		  	xmlhttp=new XMLHttpRequest();
-		  }
-		else
-		  {// code for IE6, IE5
-		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		  }
-		  
-	    xmlhttp.onreadystatechange=function()
-		  {
-		      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		        {
-		            var test = document.getElementById("ChatBox");
-	                test.innerHTML=xmlhttp.responseText;
-	                test.scrollTop = test.scrollHeight;
-		        }
-		  }
-	var my = document.getElementById("ChatBox");
-	xmlhttp.open("GET","../AJAXapps/index/getChat.php",false);
-	xmlhttp.send();
+	$.ajax({
+		url: "../AJAXapps/index/getChat.php",
+		async: false,
+		success: function (response){
+			var box = document.getElementById("ChatBox");
+			$("#ChatBox").html(response);
+            box.scrollTop = box.scrollHeight;
+
+		}, 
+	});
 }
 
 function submitToChat() {
 	var xmlhttp;
-	var myMessage = document.getElementById("GrpChatTxtInput").value;
+	var myMessage = $("#GrpChatTxtInput").val();
 	if(validateMessage(myMessage) != 0)
 	{
 		DisplayAlertPopUp("Error", "no message entered");
 		return;
 	}
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {
-	        var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
-	    }
-	  }
-	xmlhttp.open("POST","../AJAXapps/index/addToChat.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("message=" + myMessage);
-    document.getElementById("GrpChatTxtInput").value = "";
-	
+	$.post(
+		"../AJAXapps/index/addToChat.php", 
+		{message: MyMessage}, 
+		function (res) {
+			if(res != "") {
+				DisplayAlertPopUp("Error", res);
+			}
+		}
+	);
+	$("#GrpChatTxtInput").val("");	
 }
 
 function updateName() {
-    var xmlhttp;
-    var firstName = document.getElementById("txt-edit-fname").value;
-    var lastName = document.getElementById("txt-edit-lname").value;
+    var firstName = $("#txt-edit-fname").val();
+    var lastName = $("#txt-edit-lname").val();
     
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
-    document.getElementById("txt-edit-fname").value = "";
-    document.getElementById("txt-edit-lname").value = "";
+    $.post(
+    	"../AJAXapps/settings/updateUser.php",
+    	{
+    		firstName: firstName,
+    		lastName: lastName
+    	},
+    	function (){
+    		DisplayAlertPopUp("Changed Name", "Name was successfully changed"); 
+    	}
+    );
+    $("#txt-edit-fname").val("");
+    $("txt-edit-lname").val("");
     location.reload();
-
 }
 
 function updatePassword() {
@@ -108,96 +70,70 @@ function updatePassword() {
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
-    document.getElementById("txt-old-pass").value = "";
-    document.getElementById("txt-new-pass").value = "";
-    document.getElementById("txt-pass-confirm").value = "";
+
+    $.post(
+    		"../AJAXapps/settings/updateUser.php",
+    		{
+    			curPass: pass,
+    			newPass: newPass
+    		},
+    		function(res) {
+    			DisplayAlertPopUp("Success", "User was updated");
+    		}
+    ).error(
+    	function (res) {
+    		DisplayAlertPopUp("Error", res);
+    	}
+    );
+    		
+    $("#txt-old-pass").val("");
+    $("#txt-new-pass").val("");
+    $("#txt-pass-confirm").val("");
     location.reload();   
 }
 
 function updateEmail() {
     var xmlhttp;
-    var newEmail = document.getElementById("txt-new-email").value;
-    var confirmEmail = document.getElementById("txt-email-confirm").value;
+    var newEmail = $("#txt-new-email").val();
+    var confirmEmail = $("#txt-email-confirm").val();
     
 
-    if(newEmail != confirmEmail)
+    if(newEmail != confirmEmail),
     {
         DisplayAlertPopUp("Error", "Emails do not match, try again.");
-        document.getElementById("txt-new-email").value = "";
-        document.getElementById("txt-email-confirm").value = ""; 
+        $("#txt-new-email").val("");
+        $("#txt-email-confirm").val(""); 
         return;
     }
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("email=" + newEmail);
-    document.getElementById("txt-new-email").value = "";
-    document.getElementById("txt-email-confirm").value = "";
+    
+    $.post(
+    	"../AJAXapps/settings/updateUser.php",
+    	{
+    		email: newEmail
+    	},
+    	function(){
+    		DisplayAlertPopUp("Success", "Email was updated");
+    	}
+    ).error(function (res) { 
+    	DisplayAlertPopUp("Error", res);
+    });
+    
+    $("#txt-new-email").val("");
+    $("#txt-email-confirm").val("");
     location.reload();
-
 }
 
 function EditPopup(task){
 	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	        {
-	            var test = document.getElementById("SelectedPopup");
-                test.innerHTML=xmlhttp.responseText;
-                DisplaySelectedPopup();
-	        }
-	  }
-	xmlhttp.open("POST","../AJAXapps/tasks/getTaskPopUp.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + task);
-	
+	$.post(
+		"../AJAXapps/tasks/getTaskPopUp.php",
+		{id: task},
+		function (res)
+		{
+			$("#SelectedPopup").html(res);
+            DisplaySelectedPopup();
+		}
+	).error(function (res) {DisplayAlertPopUp("Error", res});
 }
 
 function RefreshTasks(getItemSubset){
@@ -294,74 +230,68 @@ function isFinishTask(id, SetTo){
 }
 
 function LogIn(email, pass){
-    var xmlhttp;
-    var email = typeof email !== 'undefined' ? email: document.getElementById("txtUsernameLog").value;
-    var pass = typeof pass !== 'undefined' ? pass: document.getElementById("txtPasswordLog").value;
-    if(window.XMLHttpRequest){
-        xmlhttp = new XMLHttpRequest();
-    }
-
-    else{
-        xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-        }
-    }
-    xmlhttp.open("POST", "../AJAXapps/splash/login.php", false);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("email=" + email + "&pass=" + pass);
+    var email = typeof (email) !== 'undefined' ? email: $("#txtUsernameLog").val();
+    var pass = typeof (pass) !== 'undefined' ? pass: $("#txtPasswordLog").val();
+    
+    $.post(
+    	"../AJAXapps/splash/login.php",
+    	{
+    		email: email,
+    		pass: pass
+    	},
+    	function(){}
+    );
 }
 
 function CreateUser(){
 
     var xmlhttp;
-    var firstName = document.getElementById("txtFirstName").value;
-    var lastName = document.getElementById("txtLastName").value;
-    var email = document.getElementById("txtEmail").value;
-    var pass = document.getElementById("txtPassword").value;
-    var passConfirm = document.getElementById("txtPasswordConfirm").value;
-    var form_token = document.getElementById("token").value;
+    var firstName = $("#txtFirstName").val();
+    var lastName = $("#txtLastName").val();
+    var email = $("#txtEmail").val();
+    var pass = $("#txtPassword").val();
+    var passConfirm = $("#txtPasswordConfirm").val();
+    var form_token = $("#token").val();
 
     if( (firstName=='') || (lastName==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid first and last name.";
+        $("#loginError").html("Error: Please enter a valid first and last name.");
     }
 
     else if((email==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid email.";
+        $("#loginError").html("Error: Please enter a valid email.");
     }
 
     else if((pass==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid password over 6 characters and under 20.";
+        $("#loginError").html("Error: Please enter a valid password over 6 characters and under 20.");
     }
 
     else if(pass != passConfirm)
     {
-        document.getElementById("loginError").innerHTML = "Error: Your passwords did not match.";
+        $("#loginError").html("Error: Your passwords did not match.");
     }
     else
     {
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/splash/addUser.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
-        LogIn(email, pass);
-        window.location = "../team.php";
+    	$.post(
+    		"../AJAXapps/splash/addUser.php",
+    		{
+    			firstName: firstName, 
+    			lastName: lastName,
+    			email: email,
+    			pass: pass,
+    			form_token: form_token
+    		}
+    		function () { 
+	    		LogIn(email, pass);
+		        window.location = "../team.php";
+    		}
+    	).error(
+    		function() {
+				DisplayAlertPopUp("Error", "System failed to add User");
+			}
+    	);
     }
 }
 
@@ -388,51 +318,37 @@ function LogOut()
 
 function AddEvent(edit){
 
-    var xmlhttp;
-    var title;
-    var date;
-    var description;
-    var theTime;
-    var id;
-    if(edit==true)
+    var data = {};
+    
+    if(edit == true)
     {
-        title       = document.getElementById("CalendarEditTitle").value;
-        date        = document.getElementById("CalendarEditDate").value;
-        description = document.getElementById("CalendarEditDes").value;
-        theTime     = document.getElementById("CalendarEditTime").value;
-        id          = document.getElementById("CalendarEditId").value;
+    	data = {
+	        title: 			$("#CalendarEditTitle").val(),
+	        date: 			$("#CalendarEditDate").val(),
+	        description: 	$("#CalendarEditDes").val(),
+	        theTime:     	$("#CalendarEditTime").val(),
+	        id:          	$("#CalendarEditId").val()
+        };
     }
     else
     {
-        title       = document.getElementById("CalendarTitle").value;
-        date        = document.getElementById("CalendarDate").value;
-        description = document.getElementById("CalendarDes").value;
-        theTime     = document.getElementById("CalendarTime").value;
+    	data = {
+	        title:       $("#CalendarTitle").val(),
+	        date:        $("#CalendarDate").val(),
+	        description: $("#CalendarDes").val(),
+	        theTime:     $("#CalendarTime").val()
+    	};
     }
 
-    theTime = theTime.replace(":","");
+    data.theTime = data.theTime.replace(":", "");
 
-    if( (title!='') && (date!=''))
+    if((data.title != '') && (data.date != ''))
     {
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if(edit==true)
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit + "&id=" + id);
-        else
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
-
+        $.post(
+        	"../AJAXapps/calendar/addEvent.php",
+        	data,
+        	function(){}
+        );
     }
 }
 
