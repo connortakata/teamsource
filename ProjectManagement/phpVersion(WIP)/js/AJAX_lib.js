@@ -297,23 +297,13 @@ function CreateUser(){
 
 function LogOut()
 {
-    var xmlhttp;
-    if(window.XMLHttpRequest){
-        xmlhttp = new XMLHttpRequest();
-    }
-    else{
-        xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-        }
-    }
-    xmlhttp.open("POST", "../AJAXapps/splash/logout.php", false);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send();
-    window.location = "../Splash.php";
+	$.post(
+		"../AJAXapps/splash/logout.php",
+		{},
+		function() {
+			window.location = "../Splash.php";
+		}
+	);
 }
 
 function AddEvent(edit){
@@ -347,59 +337,37 @@ function AddEvent(edit){
         $.post(
         	"../AJAXapps/calendar/addEvent.php",
         	data,
-        	function(){}
+        	function(){
+        		location.reload();
+        	}
         );
     }
 }
 
 function EditEvent(id)
 {
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-            var test = document.getElementById("SelectedPopup");
-            test.innerHTML=xmlhttp.responseText;
-            DisplaySelectedPopup();
-        }
-    }
-    xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("id=" + id);
+	$.post(
+		"../AJAXapps/calendar/getEventDetail.php",
+		{id: id},
+		function (res){
+			$("#SelectedPopup").html(res);
+			DisplaySelectedPopup();
+		}
+	);
 }
 
 function DeleteEvent()
 {
-    var id = document.getElementById("CalendarEditId").value;
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-            var test = document.getElementById("SelectedPopup");
-            test.innerHTML=xmlhttp.responseText;
-            DisplaySelectedPopup();
-        }
-    }
-    xmlhttp.open("POST","../AJAXapps/calendar/deleteEvent.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("id=" + id);
-    location.reload();
+    var id = $("#CalendarEditId").val();
+    $.post(
+    	"../AJAXapps/calendar/deleteEvent.php",
+    	{id: id},
+    	function (res) {
+    		$("#SelectedPopup").html(res);
+    		DisplaySelectedPopup();	
+    		location.reload();
+    	}	
+    ).error(function (){ DisplayAlertPopup("Error", "Failed to Delete") });
 }
 
 function SwitchDisplayedTasks(object)
@@ -417,142 +385,86 @@ function AddTeam()
     }
 
     if (teamName!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-
-
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("teamName=" + teamName);
-        location.reload();
+        $.post(
+        	"../AJAXapps/team/addTeam.php",
+        	{teamName: teamName},
+        	function() {
+        		location.reload();
+        	}
+        ).error(function() { DisplayAlertPopup("Error", "failed to add team")});
     }
 }
 
 function SelectTeam(id)
 {
-    var xmlhttp;
-
-    if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/selectTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
-    }
+	$.post(
+		"../AJAXapps/team/selectTeam.php",
+		{id: id},
+		function () {
+		    location.reload();
+		}
+	).error();    
 }
 
 function AddUserToTeam()
 {
     var xmlhttp;
-    var email = document.getElementById("AddUserToTeam").value;
+    var email = $("#AddUserToTeam").val();
     if (email == "")
     {
     	DisplayAlertPopUp("Error", "Email textbox is empty.");
     }
-
-    if (email!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("email=" + email);
-        location.reload();
+	else {
+		$.post(
+			"../AJAXapps/team/addToTeam.php",
+			{email: email},
+			function() {
+				location.reload();
+			}
+		).error(function(){
+			DisplayAlertPopUp("Error", "Failed to add user to team. please try again");
+		});
     }
 }
 
 function LeaveTeam(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/leaveTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
+    	$.post(
+    		"../AJAXapps/team/leaveTeam.php",
+    		{id: id},
+    		function() {
+    			location.reload();
+    		}
+    	).error(function() {
+    		DisplayAlertPopup("Error", "Failed to leave team please try again");
+    	});
     }
 }
 
 function RemoveFromTeam(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/removeFromTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
+    	$.post(
+    		"../AJAXapps/team/removeFromTeam.php",
+    		{id: id},
+    		function() {
+    			location.reload();	
+    		}
+    	).error(function() {
+    	
+    	});
     }
 }
 
 function MakeManager(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/makeManager.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
-    }
+    	$.post(
+    		"../AJAXapps/team/makeManager.php",
+    		{id: id},
+    		function() {
+		        location.reload();
+    		}
+    	).error(function () { DisplayAlert("Error", "User was not made a manager please try again") });    }
 }
