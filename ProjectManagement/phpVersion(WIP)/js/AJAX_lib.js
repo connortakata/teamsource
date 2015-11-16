@@ -98,7 +98,7 @@ function updateEmail() {
     var confirmEmail = $("#txt-email-confirm").val();
     
 
-    if(newEmail != confirmEmail),
+    if(newEmail != confirmEmail)
     {
         DisplayAlertPopUp("Error", "Emails do not match, try again.");
         $("#txt-new-email").val("");
@@ -124,7 +124,6 @@ function updateEmail() {
 }
 
 function EditPopup(task){
-	var xmlhttp;
 	$.post(
 		"../AJAXapps/tasks/getTaskPopUp.php",
 		{id: task},
@@ -137,96 +136,57 @@ function EditPopup(task){
 }
 
 function RefreshTasks(getItemSubset){
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if ( xmlhttp.readyState==4 && xmlhttp.status==200 )
-	        {
-	        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
-	        }
-	  }
-	  xmlhttp.open("POST","../AJAXapps/tasks/getTasks.php",false);
-	  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	  xmlhttp.send("finished=" + getItemSubset);
+	$.post(
+        "../AJAXapps/tasks/getTasks.php",
+        {finished: getItemSubset},
+        function(res) {
+            document.getElementById("TaskList").innerHTML = res;
+        }
+    );
 }
 
 function UpdateTask(object, id){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }		
-		}
-	}
-	
-	xmlhttp.open("POST", "../AJAXapps/tasks/updateTask.php", false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id + "&title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
-					"&priority=" + object[4].value + "&description=" + object[5].value );
+	$.post(
+        "../AJAXapps/tasks/updateTask.php",
+        {
+            id: id,
+            title: object[0].value,
+            byWhom: object[1].value,
+            dueDate: object[2].value,
+            toWhom: object[3].value,
+            priority: object[4].value,
+            description: object[5].value
+        },
+        function(res) {
+            console.log(res);     
+        }
+    ).error(function(e) { 
+        DisplayAlertPopUp("Error", e); 
+    });
 }
 function EditTask(id){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var test = document.getElementById("SelectedPopup");
-                test.innerHTML=xmlhttp.responseText;
+	$.post(
+        "../AJAXapps/tasks/getEditTask.php",
+        {id: id},
+        function(res){
+            var test = document.getElementById("SelectedPopup");
+                test.innerHTML = res;
                 DisplaySelectedPopup();
-		}
-	}
-	
-	xmlhttp.open("POST", "../AJAXapps/tasks/getEditTask.php", false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id);
-
+        }
+    );
 }
 
 function isFinishTask(id, SetTo){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }	
-		}
-	}
-	xmlhttp.open("POST", "../AJAXapps/tasks/SetTaskToFinish.php", false);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
+	$.post(
+        "../AJAXapps/tasks/SetTaskToFinish.php",
+        {
+            id:id, 
+            Finished:SetTo
+        },
+        function(res){
+            
+        }
+    ).error(function(e){ DisplayAlertPopUp("Error", e); });
 }
 
 function LogIn(email, pass){
@@ -243,9 +203,7 @@ function LogIn(email, pass){
     );
 }
 
-function CreateUser(){
-
-    var xmlhttp;
+function CreateUser() { 
     var firstName = $("#txtFirstName").val();
     var lastName = $("#txtLastName").val();
     var email = $("#txtEmail").val();
@@ -282,7 +240,7 @@ function CreateUser(){
     			email: email,
     			pass: pass,
     			form_token: form_token
-    		}
+    		},
     		function () { 
 	    		LogIn(email, pass);
 		        window.location = "../team.php";
@@ -377,7 +335,6 @@ function SwitchDisplayedTasks(object)
 
 function AddTeam()
 {
-    var xmlhttp;
     var teamName = document.getElementById("CreateTeamName").value;
     if(teamName == "")
     {
