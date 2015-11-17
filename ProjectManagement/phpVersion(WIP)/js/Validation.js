@@ -1,4 +1,6 @@
-﻿function validatePopUp(object)
+﻿var alertPopUp = (typeof alertPopUp == "undefined") ?  new AlertPopUp() : alertPopUp;
+
+function validatePopUp(object)
 {
 	for(var i = 0; i < object.length; i++)
 	{
@@ -16,30 +18,23 @@
 }
 function pushValidatedTasks(object)
 {
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	        {
-	        	var ServerResponse = xmlhttp.responseText;
-	        	if ( ServerResponse != "")
-	        	{
-                	alertPopUp.Populate ("Server Error", ServerResponse);
-                }
-	        }
-	  }
-	xmlhttp.open("POST","../AJAXapps/tasks/addToTasks.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
-					"&priority=" + object[4].value + "&description=" + object[5].value + "&finished= 0");
+	$.post(
+		"../AJAXapps/tasks/addToTasks.php",
+		{
+			title: object[0].value,
+			byWhom: object[1].value,
+			dueDate: object[2].value,
+			toWhom: object[3].value, 
+			priority: object[4].value,
+			description: object[5].value,
+			finished: 0
+		},
+		function (res){
+			//nothing.
+		}
+	).error(function(e){
+		alertPopUp.populate("Server Error", e);
+	});
 }
 function DateValidation(Day) {
     var Today = new Date();
@@ -78,7 +73,7 @@ function validatePasswords(passwords)
 	}
     else if (passwords[0].value.length > 20 || passwords[1].value.length > 20)
     {
-        alertPopUp.Populate("Validation Error", "Your password is too short")
+        alertPopUp.Populate("Validation Error", "Your password is too Long")
         return;
     }
 	else if(passwords[0].value != passwords[1].value)
