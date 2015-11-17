@@ -1,4 +1,6 @@
-﻿function getChat(){
+﻿var alertPopUp = new AlertPopUp();
+
+function getChat(){
 	$.ajax({
 		url: "../AJAXapps/index/getChat.php",
 		async: false,
@@ -16,7 +18,7 @@ function submitToChat() {
 	var myMessage = $("#GrpChatTxtInput").val();
 	if(validateMessage(myMessage) != 0)
 	{
-		DisplayAlertPopUp("Error", "no message entered");
+		alertPopUp.Populate("Error", "no message entered");
 		return;
 	}
 	$.post(
@@ -24,7 +26,7 @@ function submitToChat() {
 		{message: MyMessage}, 
 		function (res) {
 			if(res != "") {
-				DisplayAlertPopUp("Error", res);
+				alertPopUp.Populate("Error", res);
 			}
 		}
 	);
@@ -42,7 +44,7 @@ function updateName() {
     		lastName: lastName
     	},
     	function (){
-    		DisplayAlertPopUp("Changed Name", "Name was successfully changed"); 
+    		alertPopUp.Populate("Changed Name", "Name was successfully changed"); 
     	}
     );
     $("#txt-edit-fname").val("");
@@ -58,14 +60,14 @@ function updatePassword() {
     
     if(newPass != confirm)
     {
-        DisplayAlertPopUp("Error", "Passwords do not match, try again.");
+        alertPopUp.Populate("Error", "Passwords do not match, try again.");
         document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
     if(newPass.length < 6 || newPass.length > 20)
     {
-        DisplayAlertPopUp("Error", "Please enter a password between 6 and 20 characters");
+        alertPopUp.Populate("Error", "Please enter a password between 6 and 20 characters");
         document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
@@ -78,11 +80,11 @@ function updatePassword() {
     			newPass: newPass
     		},
     		function(res) {
-    			DisplayAlertPopUp("Success", "User was updated");
+    			alertPopUp.Populate("Success", "User was updated");
     		}
     ).error(
     	function (res) {
-    		DisplayAlertPopUp("Error", res);
+    		alertPopUp.Populate("Error", res);
     	}
     );
     		
@@ -100,7 +102,7 @@ function updateEmail() {
 
     if(newEmail != confirmEmail)
     {
-        DisplayAlertPopUp("Error", "Emails do not match, try again.");
+        alertPopUp.Populate("Error", "Emails do not match, try again.");
         $("#txt-new-email").val("");
         $("#txt-email-confirm").val(""); 
         return;
@@ -112,10 +114,10 @@ function updateEmail() {
     		email: newEmail
     	},
     	function(){
-    		DisplayAlertPopUp("Success", "Email was updated");
+    		alertPopUp.Populate("Success", "Email was updated");
     	}
     ).error(function (res) { 
-    	DisplayAlertPopUp("Error", res);
+    	alertPopUp.Populate("Error", res);
     });
     
     $("#txt-new-email").val("");
@@ -132,7 +134,7 @@ function EditPopup(task){
 			$("#SelectedPopup").html(res);
             DisplaySelectedPopup();
 		}
-	).error(function (res) {DisplayAlertPopUp("Error", res});
+	).error(function (res) {alertPopUp.Populate("Error", res});
 }
 
 function RefreshTasks(getItemSubset){
@@ -161,7 +163,7 @@ function UpdateTask(object, id){
             console.log(res);     
         }
     ).error(function(e) { 
-        DisplayAlertPopUp("Error", e); 
+        alertPopUp.Populate("Error", e); 
     });
 }
 function EditTask(id){
@@ -186,7 +188,7 @@ function isFinishTask(id, SetTo){
         function(res){
             
         }
-    ).error(function(e){ DisplayAlertPopUp("Error", e); });
+    ).error(function(e){ alertPopUp.Populate("Error", e); });
 }
 
 function LogIn(email, pass){
@@ -247,7 +249,7 @@ function CreateUser() {
     		}
     	).error(
     		function() {
-				DisplayAlertPopUp("Error", "System failed to add User");
+				alertPopUp.Populate("Error", "System failed to add User");
 			}
     	);
     }
@@ -325,7 +327,7 @@ function DeleteEvent()
     		DisplaySelectedPopup();	
     		location.reload();
     	}	
-    ).error(function (){ DisplayAlertPopup("Error", "Failed to Delete") });
+    ).error(function (){ DisplayAlealertPopUp.PopulatertPopup("Error", "Failed to Delete") });
 }
 
 function SwitchDisplayedTasks(object)
@@ -338,7 +340,7 @@ function AddTeam()
     var teamName = document.getElementById("CreateTeamName").value;
     if(teamName == "")
     {
-    	DisplayAlertPopUp("Error", "Team Name is empty");
+    	alertPopUp.Populate("Error", "Team Name is empty");
     }
 
     if (teamName!=''){
@@ -348,7 +350,7 @@ function AddTeam()
         	function() {
         		location.reload();
         	}
-        ).error(function() { DisplayAlertPopup("Error", "failed to add team")});
+        ).error(function() { alertPopUp.Populate("Error", "failed to add team")});
     }
 }
 
@@ -369,7 +371,7 @@ function AddUserToTeam()
     var email = $("#AddUserToTeam").val();
     if (email == "")
     {
-    	DisplayAlertPopUp("Error", "Email textbox is empty.");
+    	alertPopUp.Populate("Error", "Email textbox is empty.");
     }
 	else {
 		$.post(
@@ -379,7 +381,7 @@ function AddUserToTeam()
 				location.reload();
 			}
 		).error(function(){
-			DisplayAlertPopUp("Error", "Failed to add user to team. please try again");
+			alertPopUp.Populate("Error", "Failed to add user to team. please try again");
 		});
     }
 }
@@ -394,7 +396,7 @@ function LeaveTeam(id)
     			location.reload();
     		}
     	).error(function() {
-    		DisplayAlertPopup("Error", "Failed to leave team please try again");
+    		alertPopUp.Populate("Error", "Failed to leave team please try again");
     	});
     }
 }
@@ -423,5 +425,5 @@ function MakeManager(id)
     		function() {
 		        location.reload();
     		}
-    	).error(function () { DisplayAlert("Error", "User was not made a manager please try again") });    }
+    	).error(function () { alertPopUp.Populate("Error", "User was not made a manager please try again") });    }
 }

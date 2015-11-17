@@ -61,7 +61,7 @@ if(isInTeam()!=true && $_SERVER['PHP_SELF']!="/team.php"&& $_SERVER['PHP_SELF']!
 	
 					</div>
 					<div class="btn-group">
-						<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+						<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="alertPopUp.Hide()" />
 					</div>
 				</div>
 			</div>

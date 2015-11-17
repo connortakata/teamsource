@@ -4,7 +4,7 @@
 	{
 		if ($(object[i]).val() == "")
 		{
-			DisplayAlertPopUp("Validation Error","Task title and due date must be specified when making a task.");
+			alertPopUp.Populate("Validation Error","Task title and due date must be specified when making a task.");
     		return 1;
 		}
 	}
@@ -32,7 +32,7 @@ function pushValidatedTasks(object)
 	        	var ServerResponse = xmlhttp.responseText;
 	        	if ( ServerResponse != "")
 	        	{
-                	DisplayAlertPopUp ("Server Error", ServerResponse);
+                	alertPopUp.Populate ("Server Error", ServerResponse);
                 }
 	        }
 	  }
@@ -58,7 +58,7 @@ function DateValidation(Day) {
     }
     var CompareValue = Today.getFullYear().toString() + "-" + month + "-" + day;
     if (CompareValue >= Day) {
-        DisplayAlertPopUp("Validation Error", "The date must be set to a day in the future.");
+        alertPopUp.Populate("Validation Error", "The date must be set to a day in the future.");
         return 1;
     }
     return 0;
@@ -73,17 +73,17 @@ function validatePasswords(passwords)
 {
 	if (passwords[0].value.length < 6 || passwords[1].value.length < 6)
 	{
-		DisplayAlertPopUp("Validation Error", "Your password is too short")
+		alertPopUp.Populate("Validation Error", "Your password is too short")
 		return;
 	}
     else if (passwords[0].value.length > 20 || passwords[1].value.length > 20)
     {
-        DisplayAlertPopUp("Validation Error", "Your password is too short")
+        alertPopUp.Populate("Validation Error", "Your password is too short")
         return;
     }
 	else if(passwords[0].value != passwords[1].value)
 	{
-		DisplayAlertPopUp("Validation Error", "Your passwords are not the same");
+		alertPopUp.Populate("Validation Error", "Your passwords are not the same");
 		return;
 	}
 }
