@@ -1,28 +1,19 @@
-﻿var transferTask = {
-	var id, title, byWhom, dueDate,  toWhom, description;
-	
-	function loadObject(myObject)
-	{
-		if (myObject.length != 5)
-			return;
-		
-		title = myObject[0];
-		byWhom = myObject[1];
-		dueDate = myObject[2];
-		toWhom = myObject[3];
-		description = myObject[4];
-		
-	} 
-	
-	function clearData() {
-		
-		id = "";
-		title = "";
-		byWhom = "";
-		dueDate = "";
-		toWhom = "";
-		description = "";
-
+﻿var TransferTask = (function(){
+	function TransferTask(params) {
+		this.id = params.id;
+		this.title = params.title;
+		this.byWhom = params.byWhom;
+		this.toWhom = params.toWhom;
+		this.description = params.description;
 	}
 	
-}
+	TransferTask.prototype.ClearData = function(){
+		for(var ele in this){
+			this[ele] = "";
+		}
+	}
+	
+	TransferTask.prototype.Delete = function() {
+		delete this;
+	}
+})();

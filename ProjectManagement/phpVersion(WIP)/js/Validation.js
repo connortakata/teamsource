@@ -1,10 +1,12 @@
-﻿function validatePopUp(object)
+﻿var alertPopUp = (typeof alertPopUp == "undefined") ?  new AlertPopUp() : alertPopUp;
+
+function validatePopUp(object)
 {
 	for(var i = 0; i < object.length; i++)
 	{
 		if ($(object[i]).val() == "")
 		{
-			DisplayAlertPopUp("Validation Error","Task title and due date must be specified when making a task.");
+			alertPopUp.Populate("Validation Error","Task title and due date must be specified when making a task.");
     		return 1;
 		}
 	}
@@ -16,30 +18,23 @@
 }
 function pushValidatedTasks(object)
 {
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	        {
-	        	var ServerResponse = xmlhttp.responseText;
-	        	if ( ServerResponse != "")
-	        	{
-                	DisplayAlertPopUp ("Server Error", ServerResponse);
-                }
-	        }
-	  }
-	xmlhttp.open("POST","../AJAXapps/tasks/addToTasks.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
-					"&priority=" + object[4].value + "&description=" + object[5].value + "&finished= 0");
+	$.post(
+		"../AJAXapps/tasks/addToTasks.php",
+		{
+			title: object[0].value,
+			byWhom: object[1].value,
+			dueDate: object[2].value,
+			toWhom: object[3].value, 
+			priority: object[4].value,
+			description: object[5].value,
+			finished: 0
+		},
+		function (res){
+			//nothing.
+		}
+	).error(function(e){
+		alertPopUp.populate("Server Error", e);
+	});
 }
 function DateValidation(Day) {
     var Today = new Date();
@@ -58,7 +53,7 @@ function DateValidation(Day) {
     }
     var CompareValue = Today.getFullYear().toString() + "-" + month + "-" + day;
     if (CompareValue >= Day) {
-        DisplayAlertPopUp("Validation Error", "The date must be set to a day in the future.");
+        alertPopUp.Populate("Validation Error", "The date must be set to a day in the future.");
         return 1;
     }
     return 0;
@@ -73,17 +68,17 @@ function validatePasswords(passwords)
 {
 	if (passwords[0].value.length < 6 || passwords[1].value.length < 6)
 	{
-		DisplayAlertPopUp("Validation Error", "Your password is too short")
+		alertPopUp.Populate("Validation Error", "Your password is too short")
 		return;
 	}
     else if (passwords[0].value.length > 20 || passwords[1].value.length > 20)
     {
-        DisplayAlertPopUp("Validation Error", "Your password is too short")
+        alertPopUp.Populate("Validation Error", "Your password is too Long")
         return;
     }
 	else if(passwords[0].value != passwords[1].value)
 	{
-		DisplayAlertPopUp("Validation Error", "Your passwords are not the same");
+		alertPopUp.Populate("Validation Error", "Your passwords are not the same");
 		return;
 	}
 }

@@ -1,91 +1,55 @@
-﻿function getChat(){
-	setTimeout(function(){}, 1000);
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-		  {// code for IE7+, Firefox, Chrome, Opera, Safari
-		  	xmlhttp=new XMLHttpRequest();
-		  }
-		else
-		  {// code for IE6, IE5
-		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		  }
-		  
-	    xmlhttp.onreadystatechange=function()
-		  {
-		      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		        {
-		            var test = document.getElementById("ChatBox");
-	                test.innerHTML=xmlhttp.responseText;
-	                test.scrollTop = test.scrollHeight;
-		        }
-		  }
-	var my = document.getElementById("ChatBox");
-	xmlhttp.open("GET","../AJAXapps/index/getChat.php",false);
-	xmlhttp.send();
+﻿var alertPopUp = new AlertPopUp();
+
+function getChat(){
+	$.ajax({
+		url: "../AJAXapps/index/getChat.php",
+		async: false,
+		success: function (response){
+			var box = document.getElementById("ChatBox");
+			$("#ChatBox").html(response);
+            box.scrollTop = box.scrollHeight;
+
+		}, 
+	});
 }
 
 function submitToChat() {
 	var xmlhttp;
-	var myMessage = document.getElementById("GrpChatTxtInput").value;
+	var myMessage = $("#GrpChatTxtInput").val();
 	if(validateMessage(myMessage) != 0)
 	{
-		DisplayAlertPopUp("Error", "no message entered");
+		alertPopUp.Populate("Error", "no message entered");
 		return;
 	}
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {
-	        var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
-	    }
-	  }
-	xmlhttp.open("POST","../AJAXapps/index/addToChat.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("message=" + myMessage);
-    document.getElementById("GrpChatTxtInput").value = "";
-	
+	$.post(
+		"../AJAXapps/index/addToChat.php", 
+		{message: MyMessage}, 
+		function (res) {
+			if(res != "") {
+				alertPopUp.Populate("Error", res);
+			}
+		}
+	);
+	$("#GrpChatTxtInput").val("");	
 }
 
 function updateName() {
-    var xmlhttp;
-    var firstName = document.getElementById("txt-edit-fname").value;
-    var lastName = document.getElementById("txt-edit-lname").value;
+    var firstName = $("#txt-edit-fname").val();
+    var lastName = $("#txt-edit-lname").val();
     
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName);
-    document.getElementById("txt-edit-fname").value = "";
-    document.getElementById("txt-edit-lname").value = "";
+    $.post(
+    	"../AJAXapps/settings/updateUser.php",
+    	{
+    		firstName: firstName,
+    		lastName: lastName
+    	},
+    	function (){
+    		alertPopUp.Populate("Changed Name", "Name was successfully changed"); 
+    	}
+    );
+    $("#txt-edit-fname").val("");
+    $("txt-edit-lname").val("");
     location.reload();
-
 }
 
 function updatePassword() {
@@ -96,394 +60,274 @@ function updatePassword() {
     
     if(newPass != confirm)
     {
-        DisplayAlertPopUp("Error", "Passwords do not match, try again.");
+        alertPopUp.Populate("Error", "Passwords do not match, try again.");
         document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
     if(newPass.length < 6 || newPass.length > 20)
     {
-        DisplayAlertPopUp("Error", "Please enter a password between 6 and 20 characters");
+        alertPopUp.Populate("Error", "Please enter a password between 6 and 20 characters");
         document.getElementById("txt-new-pass").value = "";
         document.getElementById("txt-pass-confirm").value = ""; 
         return;
     }
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("curPass=" + pass + "&newPass=" + newPass);
-    document.getElementById("txt-old-pass").value = "";
-    document.getElementById("txt-new-pass").value = "";
-    document.getElementById("txt-pass-confirm").value = "";
+
+    $.post(
+    		"../AJAXapps/settings/updateUser.php",
+    		{
+    			curPass: pass,
+    			newPass: newPass
+    		},
+    		function(res) {
+    			alertPopUp.Populate("Success", "User was updated");
+    		}
+    ).error(
+    	function (res) {
+    		alertPopUp.Populate("Error", res);
+    	}
+    );
+    		
+    $("#txt-old-pass").val("");
+    $("#txt-new-pass").val("");
+    $("#txt-pass-confirm").val("");
     location.reload();   
 }
 
 function updateEmail() {
     var xmlhttp;
-    var newEmail = document.getElementById("txt-new-email").value;
-    var confirmEmail = document.getElementById("txt-email-confirm").value;
+    var newEmail = $("#txt-new-email").val();
+    var confirmEmail = $("#txt-email-confirm").val();
     
 
     if(newEmail != confirmEmail)
     {
-        DisplayAlertPopUp("Error", "Emails do not match, try again.");
-        document.getElementById("txt-new-email").value = "";
-        document.getElementById("txt-email-confirm").value = ""; 
+        alertPopUp.Populate("Error", "Emails do not match, try again.");
+        $("#txt-new-email").val("");
+        $("#txt-email-confirm").val(""); 
         return;
     }
-    if (window.XMLHttpRequest)
-      {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-    else
-      {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        }
-      }
-    xmlhttp.open("POST","../AJAXapps/settings/updateUser.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("email=" + newEmail);
-    document.getElementById("txt-new-email").value = "";
-    document.getElementById("txt-email-confirm").value = "";
+    
+    $.post(
+    	"../AJAXapps/settings/updateUser.php",
+    	{
+    		email: newEmail
+    	},
+    	function(){
+    		alertPopUp.Populate("Success", "Email was updated");
+    	}
+    ).error(function (res) { 
+    	alertPopUp.Populate("Error", res);
+    });
+    
+    $("#txt-new-email").val("");
+    $("#txt-email-confirm").val("");
     location.reload();
-
 }
 
 function EditPopup(task){
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	        {
-	            var test = document.getElementById("SelectedPopup");
-                test.innerHTML=xmlhttp.responseText;
-                DisplaySelectedPopup();
-	        }
-	  }
-	xmlhttp.open("POST","../AJAXapps/tasks/getTaskPopUp.php",false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + task);
-	
+	$.post(
+		"../AJAXapps/tasks/getTaskPopUp.php",
+		{id: task},
+		function (res)
+		{
+			$("#SelectedPopup").html(res);
+            DisplaySelectedPopup();
+		}
+	).error(function (res) {alertPopUp.Populate("Error", res});
 }
 
 function RefreshTasks(getItemSubset){
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  	xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	  
-    xmlhttp.onreadystatechange=function()
-	  {
-	      if ( xmlhttp.readyState==4 && xmlhttp.status==200 )
-	        {
-	        	document.getElementById("TaskList").innerHTML = xmlhttp.responseText;
-	        }
-	  }
-	  xmlhttp.open("POST","../AJAXapps/tasks/getTasks.php",false);
-	  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	  xmlhttp.send("finished=" + getItemSubset);
+	$.post(
+        "../AJAXapps/tasks/getTasks.php",
+        {finished: getItemSubset},
+        function(res) {
+            document.getElementById("TaskList").innerHTML = res;
+        }
+    );
 }
 
 function UpdateTask(object, id){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }		
-		}
-	}
-	
-	xmlhttp.open("POST", "../AJAXapps/tasks/updateTask.php", false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id + "&title=" + object[0].value + "&byWhom=" + object[1].value + "&dueDate=" + object[2].value + "&toWhom=" + object[3].value +
-					"&priority=" + object[4].value + "&description=" + object[5].value );
+	$.post(
+        "../AJAXapps/tasks/updateTask.php",
+        {
+            id: id,
+            title: object[0].value,
+            byWhom: object[1].value,
+            dueDate: object[2].value,
+            toWhom: object[3].value,
+            priority: object[4].value,
+            description: object[5].value
+        },
+        function(res) {
+            console.log(res);     
+        }
+    ).error(function(e) { 
+        alertPopUp.Populate("Error", e); 
+    });
 }
 function EditTask(id){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var test = document.getElementById("SelectedPopup");
-                test.innerHTML=xmlhttp.responseText;
+	$.post(
+        "../AJAXapps/tasks/getEditTask.php",
+        {id: id},
+        function(res){
+            var test = document.getElementById("SelectedPopup");
+                test.innerHTML = res;
                 DisplaySelectedPopup();
-		}
-	}
-	
-	xmlhttp.open("POST", "../AJAXapps/tasks/getEditTask.php", false);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id);
-
+        }
+    );
 }
 
 function isFinishTask(id, SetTo){
-	var xmlhttp;
-	if(window.XMLHttpRequest){
-		xmlhttp = new XMLHttpRequest();
-	}
-	else{
-		xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-	}
-	
-	xmlhttp.onreadystatechange = function() {
-		if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-			var str = xmlhttp.responseText;
-            if(str != "")
-            {
-                DisplayAlertPopUp("Error", str);
-            }	
-		}
-	}
-	xmlhttp.open("POST", "../AJAXapps/tasks/SetTaskToFinish.php", false);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + id + "&Finished=" + SetTo);
+	$.post(
+        "../AJAXapps/tasks/SetTaskToFinish.php",
+        {
+            id:id, 
+            Finished:SetTo
+        },
+        function(res){
+            
+        }
+    ).error(function(e){ alertPopUp.Populate("Error", e); });
 }
 
 function LogIn(email, pass){
-    var xmlhttp;
-    var email = typeof email !== 'undefined' ? email: document.getElementById("txtUsernameLog").value;
-    var pass = typeof pass !== 'undefined' ? pass: document.getElementById("txtPasswordLog").value;
-    if(window.XMLHttpRequest){
-        xmlhttp = new XMLHttpRequest();
-    }
-
-    else{
-        xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-        }
-    }
-    xmlhttp.open("POST", "../AJAXapps/splash/login.php", false);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("email=" + email + "&pass=" + pass);
+    var email = typeof (email) !== 'undefined' ? email: $("#txtUsernameLog").val();
+    var pass = typeof (pass) !== 'undefined' ? pass: $("#txtPasswordLog").val();
+    
+    $.post(
+    	"../AJAXapps/splash/login.php",
+    	{
+    		email: email,
+    		pass: pass
+    	},
+    	function(){}
+    );
 }
 
-function CreateUser(){
-
-    var xmlhttp;
-    var firstName = document.getElementById("txtFirstName").value;
-    var lastName = document.getElementById("txtLastName").value;
-    var email = document.getElementById("txtEmail").value;
-    var pass = document.getElementById("txtPassword").value;
-    var passConfirm = document.getElementById("txtPasswordConfirm").value;
-    var form_token = document.getElementById("token").value;
+function CreateUser() { 
+    var firstName = $("#txtFirstName").val();
+    var lastName = $("#txtLastName").val();
+    var email = $("#txtEmail").val();
+    var pass = $("#txtPassword").val();
+    var passConfirm = $("#txtPasswordConfirm").val();
+    var form_token = $("#token").val();
 
     if( (firstName=='') || (lastName==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid first and last name.";
+        $("#loginError").html("Error: Please enter a valid first and last name.");
     }
 
     else if((email==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid email.";
+        $("#loginError").html("Error: Please enter a valid email.");
     }
 
     else if((pass==''))
     {
-        document.getElementById("loginError").innerHTML = "Error: Please enter a valid password over 6 characters and under 20.";
+        $("#loginError").html("Error: Please enter a valid password over 6 characters and under 20.");
     }
 
     else if(pass != passConfirm)
     {
-        document.getElementById("loginError").innerHTML = "Error: Your passwords did not match.";
+        $("#loginError").html("Error: Your passwords did not match.");
     }
     else
     {
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/splash/addUser.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&pass=" + pass + "&form_token=" + form_token);
-        LogIn(email, pass);
-        window.location = "../team.php";
+    	$.post(
+    		"../AJAXapps/splash/addUser.php",
+    		{
+    			firstName: firstName, 
+    			lastName: lastName,
+    			email: email,
+    			pass: pass,
+    			form_token: form_token
+    		},
+    		function () { 
+	    		LogIn(email, pass);
+		        window.location = "../team.php";
+    		}
+    	).error(
+    		function() {
+				alertPopUp.Populate("Error", "System failed to add User");
+			}
+    	);
     }
 }
 
 function LogOut()
 {
-    var xmlhttp;
-    if(window.XMLHttpRequest){
-        xmlhttp = new XMLHttpRequest();
-    }
-    else{
-        xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-        }
-    }
-    xmlhttp.open("POST", "../AJAXapps/splash/logout.php", false);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send();
-    window.location = "../Splash.php";
+	$.post(
+		"../AJAXapps/splash/logout.php",
+		{},
+		function() {
+			window.location = "../Splash.php";
+		}
+	);
 }
 
 function AddEvent(edit){
 
-    var xmlhttp;
-    var title;
-    var date;
-    var description;
-    var theTime;
-    var id;
-    if(edit==true)
+    var data = {};
+    
+    if(edit == true)
     {
-        title       = document.getElementById("CalendarEditTitle").value;
-        date        = document.getElementById("CalendarEditDate").value;
-        description = document.getElementById("CalendarEditDes").value;
-        theTime     = document.getElementById("CalendarEditTime").value;
-        id          = document.getElementById("CalendarEditId").value;
+    	data = {
+	        title: 			$("#CalendarEditTitle").val(),
+	        date: 			$("#CalendarEditDate").val(),
+	        description: 	$("#CalendarEditDes").val(),
+	        theTime:     	$("#CalendarEditTime").val(),
+	        id:          	$("#CalendarEditId").val()
+        };
     }
     else
     {
-        title       = document.getElementById("CalendarTitle").value;
-        date        = document.getElementById("CalendarDate").value;
-        description = document.getElementById("CalendarDes").value;
-        theTime     = document.getElementById("CalendarTime").value;
+    	data = {
+	        title:       $("#CalendarTitle").val(),
+	        date:        $("#CalendarDate").val(),
+	        description: $("#CalendarDes").val(),
+	        theTime:     $("#CalendarTime").val()
+    	};
     }
 
-    theTime = theTime.replace(":","");
+    data.theTime = data.theTime.replace(":", "");
 
-    if( (title!='') && (date!=''))
+    if((data.title != '') && (data.date != ''))
     {
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/calendar/addEvent.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if(edit==true)
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description + "&edit=" + edit + "&id=" + id);
-        else
-            xmlhttp.send("title=" + title + "&date=" + date  + "&theTime=" + theTime + "&description=" + description);
-
+        $.post(
+        	"../AJAXapps/calendar/addEvent.php",
+        	data,
+        	function(){
+        		location.reload();
+        	}
+        );
     }
 }
 
 function EditEvent(id)
 {
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-            var test = document.getElementById("SelectedPopup");
-            test.innerHTML=xmlhttp.responseText;
-            DisplaySelectedPopup();
-        }
-    }
-    xmlhttp.open("POST","../AJAXapps/calendar/getEventDetail.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("id=" + id);
+	$.post(
+		"../AJAXapps/calendar/getEventDetail.php",
+		{id: id},
+		function (res){
+			$("#SelectedPopup").html(res);
+			DisplaySelectedPopup();
+		}
+	);
 }
 
 function DeleteEvent()
 {
-    var id = document.getElementById("CalendarEditId").value;
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-            var test = document.getElementById("SelectedPopup");
-            test.innerHTML=xmlhttp.responseText;
-            DisplaySelectedPopup();
-        }
-    }
-    xmlhttp.open("POST","../AJAXapps/calendar/deleteEvent.php",false);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("id=" + id);
-    location.reload();
+    var id = $("#CalendarEditId").val();
+    $.post(
+    	"../AJAXapps/calendar/deleteEvent.php",
+    	{id: id},
+    	function (res) {
+    		$("#SelectedPopup").html(res);
+    		DisplaySelectedPopup();	
+    		location.reload();
+    	}	
+    ).error(function (){ DisplayAlealertPopUp.PopulatertPopup("Error", "Failed to Delete") });
 }
 
 function SwitchDisplayedTasks(object)
@@ -493,150 +337,93 @@ function SwitchDisplayedTasks(object)
 
 function AddTeam()
 {
-    var xmlhttp;
     var teamName = document.getElementById("CreateTeamName").value;
     if(teamName == "")
     {
-    	DisplayAlertPopUp("Error", "Team Name is empty");
+    	alertPopUp.Populate("Error", "Team Name is empty");
     }
 
     if (teamName!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-
-
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/addTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("teamName=" + teamName);
-        location.reload();
+        $.post(
+        	"../AJAXapps/team/addTeam.php",
+        	{teamName: teamName},
+        	function() {
+        		location.reload();
+        	}
+        ).error(function() { alertPopUp.Populate("Error", "failed to add team")});
     }
 }
 
 function SelectTeam(id)
 {
-    var xmlhttp;
-
-    if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/selectTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
-    }
+	$.post(
+		"../AJAXapps/team/selectTeam.php",
+		{id: id},
+		function () {
+		    location.reload();
+		}
+	).error();    
 }
 
 function AddUserToTeam()
 {
     var xmlhttp;
-    var email = document.getElementById("AddUserToTeam").value;
+    var email = $("#AddUserToTeam").val();
     if (email == "")
     {
-    	DisplayAlertPopUp("Error", "Email textbox is empty.");
+    	alertPopUp.Populate("Error", "Email textbox is empty.");
     }
-
-    if (email!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-				
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/addToTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("email=" + email);
-        location.reload();
+	else {
+		$.post(
+			"../AJAXapps/team/addToTeam.php",
+			{email: email},
+			function() {
+				location.reload();
+			}
+		).error(function(){
+			alertPopUp.Populate("Error", "Failed to add user to team. please try again");
+		});
     }
 }
 
 function LeaveTeam(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/leaveTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
+    	$.post(
+    		"../AJAXapps/team/leaveTeam.php",
+    		{id: id},
+    		function() {
+    			location.reload();
+    		}
+    	).error(function() {
+    		alertPopUp.Populate("Error", "Failed to leave team please try again");
+    	});
     }
 }
 
 function RemoveFromTeam(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/removeFromTeam.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
+    	$.post(
+    		"../AJAXapps/team/removeFromTeam.php",
+    		{id: id},
+    		function() {
+    			location.reload();	
+    		}
+    	).error(function() {
+    	
+    	});
     }
 }
 
 function MakeManager(id)
 {
-    var xmlhttp;
-
     if (id!=''){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }
-        else{
-            xmlhttp = new ActiveXoject("Mircosoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if( xmlhttp.readyState==4 && xmlhttp.status==200 ){
-
-            }
-        }
-        xmlhttp.open("POST", "../AJAXapps/team/makeManager.php", false);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=" + id);
-        location.reload();
-    }
+    	$.post(
+    		"../AJAXapps/team/makeManager.php",
+    		{id: id},
+    		function() {
+		        location.reload();
+    		}
+    	).error(function () { alertPopUp.Populate("Error", "User was not made a manager please try again") });    }
 }

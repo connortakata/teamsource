@@ -50,7 +50,7 @@ $_SESSION['form_token'] = $form_token;
 		
 						</div>
 						<div class="btn-group">
-							<input type="button" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
+							<input type="button" class="btn btn-primary" value="Ok" style="margin-left:300px; width:50px" onclick="HideAlertPopUp()" />
 						</div>
 					</div>
 				</div>
@@ -71,7 +71,7 @@ $_SESSION['form_token'] = $form_token;
 				<div class="navbar-collapse collapse">
 
 					<form action="team.php" class="navbar-form navbar-right">
-                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();window.location='team.php';" class="btn btn-default btn-sm" value="Log-in">
+                        <input id="btnLogIn" tabindex="3" type="button" onclick="LogIn();window.location='team.php';" class="btn btn-primary btn-sm" value="Log-in">
 					</form>
 					<form action="team.php" class="navbar-form navbar-right">
 						<input id="txtPasswordLog" tabindex="2" onkeydown="if (event.keyCode == 13){ LogIn();}" type="password" class="form-control" placeholder="Password">
